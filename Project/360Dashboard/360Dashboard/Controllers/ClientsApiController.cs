@@ -19,10 +19,10 @@ namespace _360Dashboard.Controllers
         public HttpResponseMessage Get()
         {
             // return all clients
-            IEnumerable<Lib_Primavera.Model.Cliente> clients = Lib_Primavera.PriIntegration.ListaClientes();
+          //  IEnumerable<Lib_Primavera.Model.Cliente> clients = Lib_Primavera.PriIntegration.ListaClientes();
 
 
-            var json = new JavaScriptSerializer().Serialize(clients);
+           // var json = new JavaScriptSerializer().Serialize(clients);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
