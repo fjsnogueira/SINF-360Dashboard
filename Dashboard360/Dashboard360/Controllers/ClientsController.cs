@@ -7,10 +7,11 @@ using System.Web.Mvc;
 namespace Dashboard360.Controllers
 {
     public class ClientsController : Controller
-    {
-        // GET: /Clients/
+    {   
+        //Get:      
 
-        public ActionResult Index()
+        // GET: /Clients/
+        public ActionResult List()
         {
             return View();
         }

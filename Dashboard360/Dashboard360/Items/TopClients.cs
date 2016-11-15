@@ -7,5 +7,6 @@ namespace Dashboard360.Items
 {
     public class TopClients
     {
+
     }
 }

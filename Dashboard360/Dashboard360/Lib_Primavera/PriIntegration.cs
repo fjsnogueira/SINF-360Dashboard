@@ -11,9 +11,8 @@ using ADODB;
 namespace Dashboard360.Lib_Primavera
 {
     public class PriIntegration
-    { }
-}
-        /*
+    {
+
 
         # region Cliente
 
@@ -236,7 +235,7 @@ namespace Dashboard360.Lib_Primavera
         #endregion Cliente;   // -----------------------------  END   CLIENTE    -----------------------
 
 
-        #region Artigo
+        /*  #region Artigo
 
         public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
         {
@@ -593,5 +592,6 @@ namespace Dashboard360.Lib_Primavera
         }
 
         #endregion DocsVenda
+    }*/
     }
-}*/
+}
