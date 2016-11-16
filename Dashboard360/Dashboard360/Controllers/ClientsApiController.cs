@@ -8,9 +8,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using System.Globalization;
-
-
-
+using System.Web.Script.Serialization;
 using Dashboard360.Lib_Primavera.Model;
 using Dashboard360.Items;
 
@@ -21,20 +19,36 @@ namespace Dashboard360.Controllers
         // GET:     api/Clients/
         // Returns: all clients
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage Get()
+        public HttpResponseMessage GetAllClients()
         {
-            IEnumerable<Lib_Primavera.Model.Cliente> clients = Lib_Primavera.PriIntegration.ListaClientes();
-           // var json = new JavaScriptSerializer().Serialize(clients);
-            string res = "deu";
+            IEnumerable<Lib_Primavera.Model.Cliente> clientList = Lib_Primavera.PriIntegration.ListaClientes();
+            var res = new JavaScriptSerializer().Serialize(clientList);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
-        // Test if it's working
+        // GET:     api/Clients/{clientID}
+        // Returns: clientID's information
         [System.Web.Http.HttpGet]
-        public string Test()
+        public Cliente GetClient(string clientCode)
         {
-            return "clients working";
+            Lib_Primavera.Model.Cliente client = Lib_Primavera.PriIntegration.GetCliente(clientCode);
+            if (client == null)
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+            return client;
         }
+
+        // GET:     api/clients/top
+        // Returns: Top 10 Clients
+/*        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetTop10Clients()
+        {
+            // TODO: check if there's top 10 clients in Enterprise View
+
+            var res = null;// new JavaScriptSerializer().Serialize(smth);
+            return Request.CreateResponse(HttpStatusCode.OK, res);
+        }*/
     }
 }
 

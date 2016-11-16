@@ -1,14 +1,19 @@
-﻿<div class="col-lg-12 col-md-12 col-xs-12" style="text-align: center;">
+﻿@section ExtraScripts {
+    @Scripts.Render("~/Scripts/Clients/getClients.js")
+}
+
+<div class="col-lg-12 col-md-12 col-xs-12" style="text-align: center;">
     <h1>Customer View </h1>
 </div>
 <div class="row">
-    <!-- Total Number of Customers-->
+     <!-- Total Number of Customers-->
      <div class="col col-lg-4 col-md-4">
          <h3> Number of Customers </h3>
+         <span class="numberOfCustomers"></span>
      </div>
     <!-- Expenses per Customer -->
     <div class="col col-lg-4 col-md-4">
-        <h3> Expenses per customer </h3>
+        <h3> Customer Acquisition Cost </h3>
     </div>
     <!-- Average expenses per customer -->
     <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">

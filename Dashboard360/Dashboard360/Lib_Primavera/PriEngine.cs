@@ -41,6 +41,7 @@ namespace Dashboard360.Lib_Primavera
             }
             catch (Exception ex)
             {
+                Console.Write("Exception");
                 throw new Exception("Error on open Primavera Platform.");
             }
 
