@@ -8,10 +8,8 @@ namespace Dashboard360.Controllers
 {
     public class ClientsController : Controller
     {   
-        //Get:      
 
-        // GET: /Clients/
-        public ActionResult List()
+        public ActionResult Index()
         {
             return View();
         }
