@@ -31,7 +31,6 @@ namespace Dashboard360.Lib_Primavera
 
                 objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo FROM  CLIENTES");
 
-
                 while (!objList.NoFim())
                 {
                     listClientes.Add(new Model.Cliente
