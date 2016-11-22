@@ -270,15 +270,25 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ClientsApiController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
-    <Compile Include="Controllers\FinancialController.cs" />
+    <Compile Include="Controllers\DocVendaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductsApiController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\PurchasesApiController.cs" />
+    <Compile Include="Controllers\PurchasesController.cs" />
+    <Compile Include="Controllers\SalesApiController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Items\TopClients.cs" />
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
+    <Compile Include="Lib_Primavera\Model\CabecDoc.cs" />
     <Compile Include="Lib_Primavera\Model\Cliente.cs" />
+    <Compile Include="Lib_Primavera\Model\DocCompra.cs" />
+    <Compile Include="Lib_Primavera\Model\DocVenda.cs" />
+    <Compile Include="Lib_Primavera\Model\LinhaDocCompra.cs" />
+    <Compile Include="Lib_Primavera\Model\LinhaDocVenda.cs" />
     <Compile Include="Lib_Primavera\Model\RespostaErro.cs" />
     <Compile Include="Lib_Primavera\PriEngine.cs" />
     <Compile Include="Lib_Primavera\PriIntegration.cs" />
@@ -363,6 +373,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\Clients\AvgSalePerCustomer.js" />
     <Content Include="Scripts\Clients\getClients.js" />
     <Content Include="Scripts\Clients\getTop10Clients.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -379,6 +390,12 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\Products\getProducts.js" />
+    <Content Include="Scripts\Products\getTop10Products.js" />
+    <Content Include="Scripts\Purchases\getPurchases.js" />
+    <Content Include="Scripts\Purchases\listPurchases.js" />
+    <Content Include="Scripts\Sales\getSales.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -409,12 +426,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
     <Content Include="Views\Shared\navigation.cshtml" />
-    <Content Include="Views\Financial\Index.cshtml" />
+    <Content Include="Views\Clients\ShowDetails.cshtml" />
+    <Content Include="Views\Sales\Index.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\Financial\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

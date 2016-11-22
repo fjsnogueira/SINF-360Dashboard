@@ -5,43 +5,53 @@ using System.Web;
 
 namespace Dashboard360.Lib_Primavera.Model
 {
-    public class Artigo
+    public class DocCompra
     {
-        public string CodArtigo
+
+        public string id
         {
             get;
             set;
         }
 
-        public string DescArtigo
+        public string NumDocExterno
         {
             get;
             set;
         }
 
-    }
 
-    public class ArtigoCounter
-    {
-        public string CodArtigo
+        public string Entidade
         {
             get;
             set;
         }
 
-        public string DescArtigo
+        public int NumDoc
         {
             get;
             set;
         }
 
-        public double QuantidadeVendida
+        public DateTime Data
         {
             get;
             set;
         }
 
-        public double VolumeVendas
+        public double TotalMerc
+        {
+            get;
+            set;
+        }
+
+        public string Serie
+        {
+            get;
+            set;
+        }
+
+        public List<Model.LinhaDocCompra> LinhasDoc
         {
             get;
             set;

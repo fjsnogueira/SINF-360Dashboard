@@ -1,0 +1,30 @@
+﻿@section ExtraScripts {
+    @Scripts.Render("~/Scripts/Sales/getSales.js")
+    @Scripts.Render("~/Scripts/moment.min.js")
+}
+
+<div class="col-lg-12 col-md-12 col-xs-12" style="text-align: center;">
+    <h1>Sales View </h1>
+</div>
+<div class="row">
+
+    <div class="col col-lg-4 col-md-4">
+        <h3> Total Sales </h3>
+        <span class="totalSales"></span>
+    </div>
+
+    <div class="col col-lg-4 col-md-4">
+        <h3> First Sale </h3>
+        <span class="firstSale"></span>
+    </div>
+
+    <div class="col col-lg-4 col-md-4">
+        <h3> Sales this year </h3>
+        <span class="salesThisYear"></span>
+    </div>
+
+    <div class="col col-lg-4 col-md-4">
+        <h3> Total in Sales this year </h3>
+        <span class="salesTotalThisYear"></span>
+    </div>
+</div>

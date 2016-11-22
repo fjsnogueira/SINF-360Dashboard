@@ -5,8 +5,10 @@ using System.Web;
 
 namespace Dashboard360.Lib_Primavera.Model
 {
-    public class Artigo
+    public class LinhaDocVenda
     {
+
+
         public string CodArtigo
         {
             get;
@@ -19,32 +21,50 @@ namespace Dashboard360.Lib_Primavera.Model
             set;
         }
 
-    }
-
-    public class ArtigoCounter
-    {
-        public string CodArtigo
+        public string IdCabecDoc
         {
             get;
             set;
         }
 
-        public string DescArtigo
+
+
+        public double Quantidade
         {
             get;
             set;
         }
 
-        public double QuantidadeVendida
+        public string Unidade
         {
             get;
             set;
         }
 
-        public double VolumeVendas
+        public double Desconto
         {
             get;
             set;
         }
+
+        public double PrecoUnitario
+        {
+            get;
+            set;
+        }
+
+        public double TotalILiquido
+        {
+            get;
+            set;
+        }
+
+        public double TotalLiquido
+        {
+            get;
+            set;
+        }
+
+
     }
 }

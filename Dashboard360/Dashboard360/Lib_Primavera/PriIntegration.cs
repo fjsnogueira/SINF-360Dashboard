@@ -18,18 +18,14 @@ namespace Dashboard360.Lib_Primavera
 
         public static List<Model.Cliente> ListaClientes()
         {
-
-
             StdBELista objList;
-
             List<Model.Cliente> listClientes = new List<Model.Cliente>();
-
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
-                Console.Write("Entrou");
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
                 objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo FROM  CLIENTES");
+
 
                 while (!objList.NoFim())
                 {
@@ -233,8 +229,81 @@ namespace Dashboard360.Lib_Primavera
 
         #endregion Cliente;   // -----------------------------  END   CLIENTE    -----------------------
 
+        #region Venda
 
-        /*  #region Artigo
+        public static List<Model.LinhaDocVenda> GetVendasProduto()
+        {
+            StdBELista objList;
+
+            List<Model.LinhaDocVenda> ListaVendas = new List<Model.LinhaDocVenda>();
+
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalIva, TotalILiquido, PrecoLiquido from LinhasDoc");
+                while (!objList.NoFim())
+                {
+                    ListaVendas.Add(new Model.LinhaDocVenda
+                    {
+                        IdCabecDoc = objList.Valor("idCabecDoc"),
+                        CodArtigo = objList.Valor("Artigo"),
+                        DescArtigo = objList.Valor("Descricao"),
+                        Quantidade = objList.Valor("Quantidade"),
+                        Unidade = objList.Valor("Unidade"),
+                        Desconto = objList.Valor("Desconto1"),
+                        PrecoUnitario = objList.Valor("PrecUnit"),
+                        TotalILiquido = objList.Valor("TotalILiquido"),
+                        TotalLiquido = objList.Valor("PrecoLiquido")
+                    });
+
+
+                    objList.Seguinte();
+                }
+
+
+
+
+                return ListaVendas;
+            }
+            else
+                return null;
+        }
+
+        // Returns a list of all sales
+        public static List<Model.CabecDoc> ListaVendas()
+        {
+            List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
+
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE CabecDoc.TipoDoc = 'FA'");
+
+                while (!objList.NoFim())
+                {
+                    sales.Add(new Model.CabecDoc
+                    {
+                        Data = objList.Valor("Data"),
+                        Entidade = objList.Valor("Entidade"),
+                        Nome = objList.Valor("Nome"),
+                        NumDoc = objList.Valor("NumDoc"),
+                        NumContribuinte = objList.Valor("NumContribuinte"),
+                        TotalMerc = objList.Valor("TotalMerc"),
+                        TotalIva = objList.Valor("TotalIva"),
+                    });
+
+                    objList.Seguinte();
+                }
+            }
+
+            return sales;
+        }
+
+        #endregion Venda;
+
+
+
+        #region Artigo
 
         public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
         {
@@ -306,6 +375,58 @@ namespace Dashboard360.Lib_Primavera
 
         #region DocCompra
 
+        public static List<Model.DocCompra> ListaCompras()
+        {
+            StdBELista objListCab;
+            StdBELista objListLin;
+            Model.DocCompra dc = new Model.DocCompra();
+            List<Model.DocCompra> listdc = new List<Model.DocCompra>();
+            Model.LinhaDocCompra lindc = new Model.LinhaDocCompra();
+            List<Model.LinhaDocCompra> listlindc = new List<Model.LinhaDocCompra>();
+
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras");
+                while (!objListCab.NoFim())
+                {
+                    dc = new Model.DocCompra();
+                    dc.id = objListCab.Valor("id");
+                    dc.NumDocExterno = objListCab.Valor("NumDocExterno");
+                    dc.Entidade = objListCab.Valor("Entidade");
+                    dc.NumDoc = objListCab.Valor("NumDoc");
+                    dc.Data = objListCab.Valor("DataDoc");
+                    dc.TotalMerc = objListCab.Valor("TotalMerc");
+                    dc.Serie = objListCab.Valor("Serie");
+                    objListLin = PriEngine.Engine.Consulta("SELECT idCabecCompras, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido, Armazem, Lote from LinhasCompras where IdCabecCompras='" + dc.id + "' order By NumLinha");
+                    listlindc = new List<Model.LinhaDocCompra>();
+
+                    while (!objListLin.NoFim())
+                    {
+                        lindc = new Model.LinhaDocCompra();
+                        lindc.IdCabecDoc = objListLin.Valor("idCabecCompras");
+                        lindc.CodArtigo = objListLin.Valor("Artigo");
+                        lindc.DescArtigo = objListLin.Valor("Descricao");
+                        lindc.Quantidade = objListLin.Valor("Quantidade");
+                        lindc.Unidade = objListLin.Valor("Unidade");
+                        lindc.Desconto = objListLin.Valor("Desconto1");
+                        lindc.PrecoUnitario = objListLin.Valor("PrecUnit");
+                        lindc.TotalILiquido = objListLin.Valor("TotalILiquido");
+                        lindc.TotalLiquido = objListLin.Valor("PrecoLiquido");
+                        lindc.Armazem = objListLin.Valor("Armazem");
+                        lindc.Lote = objListLin.Valor("Lote");
+
+                        listlindc.Add(lindc);
+                        objListLin.Seguinte();
+                    }
+
+                    dc.LinhasDoc = listlindc;
+
+                    listdc.Add(dc);
+                    objListCab.Seguinte();
+                }
+            }
+            return listdc;
+        }
 
         public static List<Model.DocCompra> VGR_List()
         {
@@ -591,6 +712,5 @@ namespace Dashboard360.Lib_Primavera
         }
 
         #endregion DocsVenda
-    }*/
     }
 }

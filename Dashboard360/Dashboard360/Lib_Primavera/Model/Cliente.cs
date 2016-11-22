@@ -48,4 +48,31 @@ namespace Dashboard360.Lib_Primavera.Model
         }
 
     }
+
+    public class ClienteCounter
+    {
+        public string Nome
+        {
+            get;
+            set;
+        }
+
+        public string CodCliente
+        {
+            get;
+            set;
+        }
+
+        public double TotalCompras
+        {
+            get;
+            set;
+        }
+
+        public int NumeroCompras
+        {
+            get;
+            set;
+        }
+    }
 }

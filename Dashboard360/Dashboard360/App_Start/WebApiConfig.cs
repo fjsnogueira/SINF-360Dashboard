@@ -17,23 +17,57 @@ namespace Dashboard360
             // Get all clients
             config.Routes.MapHttpRoute(
                 name: "Clients",
-                routeTemplate: "api/clients",
+                routeTemplate: "api/Clients",
                 defaults: new { controller = "ClientsApi", Action = "GetAllClients" }
-            );
-
-            // Get Client
-            config.Routes.MapHttpRoute(
-                name: "GetClient",
-                routeTemplate: "api/clients/{clientID}",
-                defaults: new { controller = "ClientsApi", Action = "GetClient" }
             );
 
             // Get top 10 Clients
             config.Routes.MapHttpRoute(
                 name: "GetTop10Clients",
-                routeTemplate: "api/clients/top10clients",
+                routeTemplate: "api/Clients/GetTop10Clients",
                 defaults: new { controller = "ClientsApi", Action = "GetTop10Clients" }
             );
+
+
+            /*
+             * Sales
+             */
+
+            // Get all sales
+            config.Routes.MapHttpRoute(
+                name: "Sales",
+                routeTemplate: "api/Sales",
+                defaults: new { controller = "SalesApi", Action = "GetAllSales" }
+            );
+
+            /*
+             * Purchases
+             */
+            config.Routes.MapHttpRoute(
+                name: "Purchases",
+                routeTemplate: "api/Purchases",
+                defaults: new { controller = "PurchasesApi", Action = "GetAllPurchases" }
+            );
+
+
+            /*
+             * Products
+             */
+
+            // Get all sales
+            config.Routes.MapHttpRoute(
+                name: "Products",
+                routeTemplate: "api/Products",
+                defaults: new { controller = "ProductsApi", Action = "GetAllProducts" }
+            );
+
+            // Get top 10 Clients
+            config.Routes.MapHttpRoute(
+                name: "GetTop10ProductsSold",
+                routeTemplate: "api/Products/GetTop10ProductsSold",
+                defaults: new { controller = "ProductsApi", Action = "GetTop10ProductsSold" }
+            );
+
 
             /*
              * Other
@@ -45,13 +79,7 @@ namespace Dashboard360
             );
 
 
-            // Uncomment the following line of code to enable query support for actions with an IQueryable or IQueryable<T> return type.
-            // To avoid processing unexpected or malicious queries, use the validation settings on QueryableAttribute to validate incoming queries.
-            // For more information, visit http://go.microsoft.com/fwlink/?LinkId=279712.
-            //config.EnableQuerySupport();
 
-            // To disable tracing in your application, please comment out or remove the following line of code
-            // For more information, refer to: http://www.asp.net/web-api
             config.EnableSystemDiagnosticsTracing();
         }
     }
