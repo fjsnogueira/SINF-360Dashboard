@@ -712,5 +712,29 @@ namespace Dashboard360.Lib_Primavera
         }
 
         #endregion DocsVenda
+
+        #region Pendentes
+        public static List<Model.Pendente> GetPending(bool receivable)
+        {
+            StdBELista objListCab;
+            List<Model.Pendente> result = new List<Model.Pendente>();
+
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objListCab = PriEngine.Engine.Consulta(
+                    "SELECT ValorPendente, Moeda" + 
+                    "FROM Pendentes" + 
+                    "WHERE TipoEntidade = " + (receivable? "'C'" : "'F'"));
+                while (!objListCab.NoFim())
+                {
+                    Model.Pendente p = new Model.Pendente();
+                    p.PendingValue = objListCab.Valor("Valor Pendente");
+                    p.PendingCurrency = objListCab.Valor("Moeda");
+                    objListCab.Seguinte();
+                }
+            }
+            return result;
+        }
+        #endregion
     }
 }

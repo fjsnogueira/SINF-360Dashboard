@@ -29,7 +29,6 @@ namespace Dashboard360.Controllers
             {
                 throw new HttpResponseException(
                         Request.CreateResponse(HttpStatusCode.NotFound));
-
             }
             else
             {
