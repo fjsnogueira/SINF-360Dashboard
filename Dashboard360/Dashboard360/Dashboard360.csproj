@@ -271,6 +271,7 @@
     <Compile Include="Controllers\ClientsApiController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DocVendaController.cs" />
+    <Compile Include="Controllers\FinancialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductsApiController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -425,6 +426,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
+    <Content Include="Views\Financial\Index.cshtml" />
     <Content Include="Views\Shared\navigation.cshtml" />
     <Content Include="Views\Clients\ShowDetails.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
