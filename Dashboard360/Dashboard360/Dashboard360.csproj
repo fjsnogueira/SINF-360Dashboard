@@ -273,6 +273,7 @@
     <Compile Include="Controllers\DocVendaController.cs" />
     <Compile Include="Controllers\FinancialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PayablesController.cs" />
     <Compile Include="Controllers\ReceivablesController.cs" />
     <Compile Include="Controllers\ProductsApiController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -379,6 +380,8 @@
     <Content Include="Scripts\Clients\AvgSalePerCustomer.js" />
     <Content Include="Scripts\Clients\getClients.js" />
     <Content Include="Scripts\Clients\getTop10Clients.js" />
+    <Content Include="Scripts\Financial\getAccountsReceivable.js" />
+    <Content Include="Scripts\Financial\getAccountsPayable.js" />
     <Content Include="Scripts\Financial\getAverageSalesPrice.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />

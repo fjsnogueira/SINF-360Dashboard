@@ -722,14 +722,15 @@ namespace Dashboard360.Lib_Primavera
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
                 objListCab = PriEngine.Engine.Consulta(
-                    "SELECT ValorPendente, Moeda" + 
-                    "FROM Pendentes" + 
+                    "SELECT ValorPendente, Moeda " + 
+                    "FROM Pendentes " + 
                     "WHERE TipoEntidade = " + (receivable? "'C'" : "'F'"));
                 while (!objListCab.NoFim())
                 {
                     Model.Pendente p = new Model.Pendente();
-                    p.PendingValue = objListCab.Valor("Valor Pendente");
+                    p.PendingValue = objListCab.Valor("ValorPendente");
                     p.PendingCurrency = objListCab.Valor("Moeda");
+                    result.Add(p);
                     objListCab.Seguinte();
                 }
             }
