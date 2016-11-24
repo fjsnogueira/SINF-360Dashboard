@@ -13,7 +13,7 @@ namespace Dashboard360.Controllers
     public class DocVendaController : ApiController
     {
         //
-        // GET: /DocVendas/
+        // GET: /Clientes/
 
         public IEnumerable<Lib_Primavera.Model.DocVenda> Get()
         {

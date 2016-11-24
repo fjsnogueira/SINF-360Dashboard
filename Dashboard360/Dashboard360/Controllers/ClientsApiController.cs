@@ -27,18 +27,20 @@ namespace Dashboard360.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
-
-        // GET:     
-        // Returns: 
-        [System.Web.Http.HttpGet]
-        public int GetNumClients()
+        // GET:     api/Clients/{clientID}
+        // Returns: clientID's information
+      /*  [System.Web.Http.HttpGet]
+        public Cliente GetClient(string clientID)
         {
-            IEnumerable<Lib_Primavera.Model.Cliente> clientList = Lib_Primavera.PriIntegration.ListaClientes();
-            return clientList.Count();
-        }
-
-
-
+            System.Diagnostics.Debug.WriteLine("[ClientsApiController] entrou");
+            Lib_Primavera.Model.Cliente client = Lib_Primavera.PriIntegration.GetCliente(clientID);
+            if (client == null)
+            {
+                System.Diagnostics.Debug.WriteLine("[ClientsApiController] ERROR: client not found");
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+            return client;
+        }*/
 
         // GET:     api/Clients/GetTop10Clients
         // Returns: Top 10 Clients
@@ -51,56 +53,26 @@ namespace Dashboard360.Controllers
 
             foreach (CabecDoc it in salesList)
             {
-                if (it.Data.Year == 2016)
-                {
-                    if (!topClients.Exists(cli => cli.CodCliente == it.Entidade))
+                if (!topClients.Exists(cli => cli.CodCliente == it.Entidade)){
+                    topClients.Add(new ClienteCounter
                     {
-                        topClients.Add(new ClienteCounter
-                        {
-                            CodCliente = it.Entidade,
-                            Nome = it.Nome,
-                            TotalCompras = (it.TotalMerc /*- it.TotalIva*/),
-                            NumeroCompras = 1
-                        });
+                        CodCliente = it.Entidade,
+                        Nome = it.Nome,
+                        TotalCompras = (it.TotalMerc + it.TotalIva),
+                        NumeroCompras = 1
+                    });
 
-                    }
-                    else
-                    {
-                        topClients.Find(cli => cli.CodCliente == it.Entidade).NumeroCompras++;
-                        topClients.Find(cli => cli.CodCliente == it.Entidade).TotalCompras += (it.TotalMerc /*+ it.TotalIva*/);
-                    }
                 }
-                
+                else
+                {
+                    topClients.Find(cli => cli.CodCliente == it.Entidade).NumeroCompras++;
+                    topClients.Find(cli => cli.CodCliente == it.Entidade).TotalCompras += (it.TotalMerc + it.TotalIva);
+                }
             }
             // order
             var toReturn = topClients.OrderByDescending(cli => cli.TotalCompras).ToList();
             var res = new JavaScriptSerializer().Serialize(toReturn);
             return Request.CreateResponse(HttpStatusCode.OK, res);
-        }
-
-
-        public int GetNumActiveClients()
-        {
-            List<Lib_Primavera.Model.ClienteCounter> CliCounter = new List<Lib_Primavera.Model.ClienteCounter>();
-            IEnumerable<Lib_Primavera.Model.CabecDoc> salesList = Lib_Primavera.PriIntegration.ListaVendas();
-
-            foreach (CabecDoc it in salesList)
-            {
-                if (it.Data.Year == 2016)
-                {
-                    if (!CliCounter.Exists(cli => cli.CodCliente == it.Entidade))
-                    {
-                        CliCounter.Add(new ClienteCounter
-                        {
-                            CodCliente = it.Entidade,
-                            Nome = it.Nome,
-                        });
-
-                    }
-                }
-
-            }
-            return CliCounter.Count();
         }
     }
 }

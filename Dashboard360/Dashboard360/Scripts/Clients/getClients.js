@@ -1,74 +1,62 @@
-﻿var totalClients;
+﻿
+var totalClients;
+
+
 var getTotalClients = function () {
+
+    var defer = $.Deferred();
+
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/Clients/GetNumClients",
-        success: function (numClients) {
-            $(".numberOfCustomers").html(numClients + " total");
+        url: "http://localhost:49751/api/clients",
+        success: function (clients) {
+            clients = JSON.parse(clients);
+            totalClients = clients.length;
+            //clients
+            $(".numberOfCustomers").html(totalClients + " total active clients");
         }
+
+
     }).fail(function () {
-        console.log("ERROR: getting NumClients");
+        alert("ERROR: getting client list");
     });
+
+    setTimeout(function () {
+        defer.resolve();
+    }, 5000);
+    return defer;
 };
 
+var getTotalSales = function () {
+    console.log("getTotalSales");
 
-// Get Avg Expense Per Customer
-var totalExpensesFinal;
-var getTotalExpenses = function () {
     var defer = $.Deferred();
+
+    $.getScript("Scripts/moment.min.js");
+    
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/purchases",
-        success: function (purchases) {
-            var totalExpenses = 0;
-            purchases = JSON.parse(purchases);
-            console.log(purchases);
-            var temp;
-            for (var i = 0; i < purchases.length; i++) {
-                if (purchases[i].TotalMerc < 0)
-                    totalExpenses += purchases[i].TotalMerc;
+        url: "http://localhost:49751/api/sales",
+        success: function (sales) {
+            sales = JSON.parse(sales);
+            console.log(sales);
+            var totalSales = 0;
+            // Total in sales this year
+            for (var i = 0; i < sales.length; i++) {
+                totalSales += (sales[i].TotalIva + sales[i].TotalMerc);
             }
-            var avgExpenseCustomer = Math.abs(totalExpenses) / totalClients;
-            console.log("getTotalExpenses --  totalPurchases: " + totalExpenses + "  totalClients: " + totalClients + "  avg:" + avgExpenseCustomer);
-            $(".avgExpenseCustomer").html("<p>" + avgExpenseCustomer.toFixed(2) + " € </p>");
-            totalExpensesFinal = totalExpenses;
+            console.log("totalSales: " + totalSales);
+            $(".avgSalePerCustomer").append("<p> " + (totalSales / totalClients).toFixed(2) + "€ </p>");
 
         }
     }).fail(function () {
-        alert("ERROR: getting purchases list");
+        alert("ERROR: getting sales list");
     });
     setTimeout(function () {
         defer.resolve();
-    }, 1000);
+    }, 5000);
     return defer;
 };
 
-// Get Avg Sale Per Active Customer
-var getAvgSaleActiveCustomer = function () {
-    var defer = $.Deferred();
-    while (totalSalesFinal === null) {
 
-    }
-    $.ajax({
-        dataType: "json",
-        url: "http://localhost:49751/api/Clients/GetTop10Clients",
-        success: function (topClients) {
-            topClients = JSON.parse(topClients);
-            var activeClients = topClients.length;
-            console.log("totalSales: " + totalSalesFinal + " activeClients: " + topClients.length)
-            var avgSaleActiveCustomer = totalSalesFinal / topClients.length;
-            $(".avgSalePerActiveCustomer").append("<p>" + avgSaleActiveCustomer + "€ </p>");
-
-        }
-    }).fail(function () {
-        console.log("ERROR: getting top 10 clients");
-    });
-
-    setTimeout(function () {
-        defer.resolve();
-    }, 1000);
-    return defer;
-}
-
-
-getTotalClients().then(getTotalSales).then(getTotalExpenses).then(getAvgSaleActiveCustomer);
+getTotalClients().then(getTotalSales);

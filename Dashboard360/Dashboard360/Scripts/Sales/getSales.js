@@ -8,30 +8,38 @@
         success: function (sales) {
             sales = JSON.parse(sales);
             console.log(sales);
-            $(".totalSales").html("<p>" + sales.length + " Total Sales </p>");
+            $(".totalSales").html(
+                "<p>" + sales.length + " Total Sales </p>"
+                );
+
+            $(".firstSale").html(
+                "<p> Entidade: " + sales[0].Entidade + "</p>" +
+                "<p> Valor: " + (sales[0].TotalIva + sales[0].TotalMerc) + "€ </p>" +
+                "<p> Data:  " + moment(sales[0].Data).toDate() + "</p>"
+                );
+
 
             // Number of sales this year
             var salesThisYear = 0;
             for (var i = 0; i < sales.length; i++) {
-                if (moment(sales[i].Data).year() == 2016)
+                if ((moment(sales[0].Data).toDate().getYear() + 1900) == 2016) {
                     salesThisYear++;
+                }
             }
-            $(".salesThisYear").html("<p>" + salesThisYear + "</p>");
+            $(".salesThisYear").html(
+                "<p>" + salesThisYear + "</p>"
+                );
+
 
             // Total in sales this year
             var totalInSales = 0;
             for (var i = 0; i < sales.length; i++) {
-                if (moment(sales[i].Data).year() == 2016) {
-                   // var tipoDoc = sales[i].TipoDoc;
-                    //console.log(moment(sales[i].Data).year() + " - " + tipoDoc + " - " + sales[i].TotalMerc);
-                    // if (tipoDoc == 'FA' || tipoDoc == 'ND' || tipoDoc == 'NC' || tipoDoc == 'VD' /*|| tipoDoc == 'ORC' || tipoDoc == 'GR'*/) {
-                    //      console.log(tipoDoc + " - " + sales[i].TotalMerc);
-                    totalInSales += (sales[i].TotalMerc /*+ sales[i].TotalIva*/);
-                    // }
-                }
+                totalInSales += (sales[i].TotalIva + sales[i].TotalMerc);
             }
-            $(".salesTotalThisYear").html("<p>" + totalInSales.toFixed(2) + "€</p>");
-
+            $(".salesTotalThisYear").html(
+               "<p>" + totalInSales + "</p>"
+              );
+            return sales;
         }
     }).fail(function () {
         alert("ERROR: getting sales list");

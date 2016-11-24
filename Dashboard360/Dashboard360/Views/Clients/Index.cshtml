@@ -1,39 +1,32 @@
 ﻿@section ExtraScripts {
+    @Scripts.Render("~/Scripts/Clients/getClients.js")
+    @Scripts.Render("~/Scripts/Clients/AvgSalePerCustomer.js")
     @Scripts.Render("~/Scripts/Clients/getTop10Clients.js")
-    @Scripts.Render("~/Scripts/Sales/Sales.js")
     @Scripts.Render("~/Scripts/Products/getTop10Products.js")
+    @Scripts.Render("~/Scripts/Purchases/listPurchases.js")
 }
 
 <div class="col-lg-12 col-md-12 col-xs-12" style="text-align: center;">
-    <h1>Customer View</h1>
-    <h2> 2016 </h2>
+    <h1>Customer View </h1>
 </div>
 <div class="row">
-    <!-- Total Number of Customers-->
-    <div class="col col-lg-4 col-md-4">
-        <h3> Number of Customers </h3>
-        <span class="activeClients"></span>
-        <br>
-        <span class="numberOfCustomers"></span>
-    </div>
+     <!-- Total Number of Customers-->
+     <div class="col col-lg-4 col-md-4">
+         <h3> Number of Customers </h3>
+         <span class="numberOfCustomers"></span>
+     </div>
     <!-- Total Sales in Current Year -->
     <div class="col col-lg-4 col-md-4">
-        <h3> Total Sales </h3>
-        <span class="salesTotalThisYear"></span>
+        <h3> Total Sales [2016] </h3>
     </div>
     <!-- Average expenses per customer -->
     <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
         <h3> Average expense per customer </h3>
-        <span class="avgExpenseCustomer"> </span>
     </div>
-</div>
-<div class="row">
     <!-- Average Annual sale per Customer -->
     <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <h3> Average sale per customer </h3>
+        <h3> Average sale per customer [2016] </h3>
         <span class="avgSalePerCustomer"> </span>
-        <h3> Average sale per active customer </h3>
-        <span class="avgSalePerActiveCustomer"> </span>
     </div>
     <!-- Top Customers [Table] -->
     <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -41,10 +34,14 @@
         <span class="topTenCustomers"></span>
     </div>
     <!-- Top Products Sold [Table] -->
-    <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <h3> Top Products Sold </h3>
+    <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12"> 
+         <h3> Top Products Sold [table] </h3>
         <span class="topTenProductsSold"></span>
     </div>
+
+    <!-- Top Products Sold [Table] -->
+    <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <h3> Purchases List </h3>
+        <span class="purchase-list"></span>
+    </div>
 </div>
-
-
