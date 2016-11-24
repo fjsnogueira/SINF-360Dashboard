@@ -268,23 +268,26 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\HumanResourcesController.cs" />
+    <Compile Include="Controllers\HumanResourcesApiController.cs" />
+    <Compile Include="Controllers\SupplyController.cs" />
+    <Compile Include="Controllers\SupplyApiController.cs" />
     <Compile Include="Controllers\ClientsApiController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\DocVendaController.cs" />
-    <Compile Include="Controllers\FinancialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PayablesController.cs" />
     <Compile Include="Controllers\ProductsApiController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchasesApiController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
-    <Compile Include="Controllers\ReceivablesController.cs" />
     <Compile Include="Controllers\SalesApiController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Lib_Primavera\Model\Empregado.cs" />
+    <Compile Include="Lib_Primavera\Model\Fornecedor.cs" />
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
     <Compile Include="Lib_Primavera\Model\CabecDoc.cs" />
     <Compile Include="Lib_Primavera\Model\Cliente.cs" />
@@ -292,7 +295,6 @@
     <Compile Include="Lib_Primavera\Model\DocVenda.cs" />
     <Compile Include="Lib_Primavera\Model\LinhaDocCompra.cs" />
     <Compile Include="Lib_Primavera\Model\LinhaDocVenda.cs" />
-    <Compile Include="Lib_Primavera\Model\Pendente.cs" />
     <Compile Include="Lib_Primavera\Model\RespostaErro.cs" />
     <Compile Include="Lib_Primavera\PriEngine.cs" />
     <Compile Include="Lib_Primavera\PriIntegration.cs" />
@@ -305,14 +307,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap\css\bootstrap.css" />
-    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
-    <Content Include="Content\bootstrap\js\bootstrap.js" />
-    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
-    <Content Include="Content\bootstrap\js\npm.js" />
-    <Content Include="Content\jquery-3.1.1.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -380,15 +374,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="Content\bootstrap\css\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap\css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap\css\bootstrap.css.map" />
-    <Content Include="Content\bootstrap\css\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -397,9 +382,9 @@
     <Content Include="Scripts\Clients\AvgSalePerCustomer.js" />
     <Content Include="Scripts\Clients\getClients.js" />
     <Content Include="Scripts\Clients\getTop10Clients.js" />
-    <Content Include="Scripts\Financial\getAccountsPayable.js" />
-    <Content Include="Scripts\Financial\getAccountsReceivable.js" />
-    <Content Include="Scripts\Financial\getAverageSalesPrice.js" />
+    <Content Include="Scripts\HumanResources\getAverageEmployeeByAge.js" />
+    <Content Include="Scripts\HumanResources\getNumberOfFemaleEmployees.js" />
+    <Content Include="Scripts\HumanResources\getNumberOfEmployees.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -420,8 +405,8 @@
     <Content Include="Scripts\Purchases\getPurchases.js" />
     <Content Include="Scripts\Purchases\listPurchases.js" />
     <Content Include="Scripts\Sales\getSales.js" />
-    <Content Include="Scripts\Sales\getTotalSalesValues.js" />
-    <Content Include="Scripts\Sales\Sales.js" />
+    <Content Include="Scripts\Supply\getTotalValueOfInventory.js" />
+    <Content Include="Scripts\Supply\getTopProductsPurchased.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -455,7 +440,8 @@
     <Content Include="Views\Clients\ShowDetails.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
-    <Content Include="Views\Financial\Index.cshtml" />
+    <Content Include="Views\Supply\Index.cshtml" />
+    <Content Include="Views\HumanResources\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

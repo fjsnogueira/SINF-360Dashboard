@@ -1,0 +1,39 @@
+﻿@section ExtraScripts {
+    @Scripts.Render("~/Scripts/Supply/getTopProductsPurchased.js")
+    @Scripts.Render("~/Scripts/Supply/getTotalValueOfInventory.js")
+    
+}
+
+<div class="col-lg-12 col-md-12 col-xs-12" style="text-align: center;">
+    <h1>Supply View </h1>
+</div>
+<div class="row">
+
+    <div class="col col-lg-4 col-md-4">
+        <h3> Top Products Purchased </h3>
+        <span class="topProductsPurchased"></span>
+    </div>
+
+    <div class="col col-lg-4 col-md-4">
+        <h3> Top Suppliers </h3>
+        <span class="topSuppliers"></span>
+    </div>
+
+    <div class="col col-lg-4 col-md-4">
+        <h3> Average Purchase Value </h3>
+        <span class="averagePurchaseValue"></span>
+    </div>
+
+    <div class="col col-lg-4 col-md-4">
+        <h3> Total Purchase Costs </h3>
+        <span class="totalPurchaseCosts"></span>
+    </div>
+    <div class="col col-lg-4 col-md-4">
+        <h3> Total Value Of Inventory </h3>
+        <span class="totalValueOfInventory"></span>
+    </div>
+    <div class="col col-lg-4 col-md-4">
+        <h3> Inventory/Orders Ratio For Top Products </h3>
+        <span class="ordersRatioForTopProducts"></span>
+    </div>
+</div>
