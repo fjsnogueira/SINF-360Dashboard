@@ -3,10 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Customer View</title>
-    @Scripts.Render("~/Content/jquery-3.1.1.js")
-    @Styles.Render("~/Content/bootstrap/css/bootstrap.min.css")
-    @Scripts.Render("~/Content/bootstrap/js/bootstrap.min.js")
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     @{Html.RenderPartial("navigation");}

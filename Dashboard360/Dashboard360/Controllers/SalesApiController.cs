@@ -22,26 +22,8 @@ namespace Dashboard360.Controllers
         {
 
             IEnumerable<Lib_Primavera.Model.CabecDoc> salesList = Lib_Primavera.PriIntegration.ListaVendas();
-
-
             var res = new JavaScriptSerializer().Serialize(salesList);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
-
-        [System.Web.Http.HttpGet]
-        public double GetAllSalesValues()
-        {
-            double totalSales = 0;
-            IEnumerable<Lib_Primavera.Model.CabecDoc> salesList = Lib_Primavera.PriIntegration.ListaVendas();
-
-            foreach (CabecDoc it in salesList)
-            {
-                if (it.Data.Year == 2016)
-                    totalSales += it.TotalMerc;
-            }
-
-            return totalSales;
-        }
-
     }
 }
