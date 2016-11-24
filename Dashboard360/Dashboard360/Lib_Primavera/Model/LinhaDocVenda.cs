@@ -27,7 +27,11 @@ namespace Dashboard360.Lib_Primavera.Model
             set;
         }
 
-
+        public DateTime Data
+        {
+            get;
+            set;
+        }
 
         public double Quantidade
         {

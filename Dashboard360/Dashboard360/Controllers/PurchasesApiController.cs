@@ -21,7 +21,7 @@ namespace Dashboard360.Controllers
         public HttpResponseMessage GetAllPurchases()
         {
 
-            List<Lib_Primavera.Model.DocCompra> PurchaseList = Lib_Primavera.PriIntegration.ListaCompras();
+            List<Lib_Primavera.Model.DocCompra> PurchaseList = Lib_Primavera.PriIntegration.ListaComprasFA();
             var res = new JavaScriptSerializer().Serialize(PurchaseList);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }

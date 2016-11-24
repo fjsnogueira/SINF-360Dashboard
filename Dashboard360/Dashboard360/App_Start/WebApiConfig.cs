@@ -28,6 +28,18 @@ namespace Dashboard360
                 defaults: new { controller = "ClientsApi", Action = "GetTop10Clients" }
             );
 
+            config.Routes.MapHttpRoute(
+                name: "GetNumClients",
+                routeTemplate: "api/Clients/GetNumClients",
+                defaults: new { controller = "ClientsApi", Action = "GetNumClients" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "GetNumActiveClients",
+                routeTemplate: "api/Clients/GetNumActiveClients",
+                defaults: new { controller = "ClientsApi", Action = "GetNumActiveClients" }
+            );
+
 
             /*
              * Sales
@@ -38,6 +50,12 @@ namespace Dashboard360
                 name: "Sales",
                 routeTemplate: "api/Sales",
                 defaults: new { controller = "SalesApi", Action = "GetAllSales" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "SalesValues",
+                routeTemplate: "api/SalesValues",
+                defaults: new { controller = "SalesApi", Action = "GetAllSalesValues" }
             );
 
             /*

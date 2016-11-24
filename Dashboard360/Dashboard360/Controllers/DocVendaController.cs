@@ -13,7 +13,7 @@ namespace Dashboard360.Controllers
     public class DocVendaController : ApiController
     {
         //
-        // GET: /Clientes/
+        // GET: /DocVendas/
 
         public IEnumerable<Lib_Primavera.Model.DocVenda> Get()
         {
@@ -29,6 +29,7 @@ namespace Dashboard360.Controllers
             {
                 throw new HttpResponseException(
                         Request.CreateResponse(HttpStatusCode.NotFound));
+
             }
             else
             {

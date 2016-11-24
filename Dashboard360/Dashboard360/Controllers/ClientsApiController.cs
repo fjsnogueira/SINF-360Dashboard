@@ -27,20 +27,18 @@ namespace Dashboard360.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
-        // GET:     api/Clients/{clientID}
-        // Returns: clientID's information
-      /*  [System.Web.Http.HttpGet]
-        public Cliente GetClient(string clientID)
+
+        // GET:     
+        // Returns: 
+        [System.Web.Http.HttpGet]
+        public int GetNumClients()
         {
-            System.Diagnostics.Debug.WriteLine("[ClientsApiController] entrou");
-            Lib_Primavera.Model.Cliente client = Lib_Primavera.PriIntegration.GetCliente(clientID);
-            if (client == null)
-            {
-                System.Diagnostics.Debug.WriteLine("[ClientsApiController] ERROR: client not found");
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
-            }
-            return client;
-        }*/
+            IEnumerable<Lib_Primavera.Model.Cliente> clientList = Lib_Primavera.PriIntegration.ListaClientes();
+            return clientList.Count();
+        }
+
+
+
 
         // GET:     api/Clients/GetTop10Clients
         // Returns: Top 10 Clients
@@ -53,26 +51,56 @@ namespace Dashboard360.Controllers
 
             foreach (CabecDoc it in salesList)
             {
-                if (!topClients.Exists(cli => cli.CodCliente == it.Entidade)){
-                    topClients.Add(new ClienteCounter
-                    {
-                        CodCliente = it.Entidade,
-                        Nome = it.Nome,
-                        TotalCompras = (it.TotalMerc + it.TotalIva),
-                        NumeroCompras = 1
-                    });
-
-                }
-                else
+                if (it.Data.Year == 2016)
                 {
-                    topClients.Find(cli => cli.CodCliente == it.Entidade).NumeroCompras++;
-                    topClients.Find(cli => cli.CodCliente == it.Entidade).TotalCompras += (it.TotalMerc + it.TotalIva);
+                    if (!topClients.Exists(cli => cli.CodCliente == it.Entidade))
+                    {
+                        topClients.Add(new ClienteCounter
+                        {
+                            CodCliente = it.Entidade,
+                            Nome = it.Nome,
+                            TotalCompras = (it.TotalMerc /*- it.TotalIva*/),
+                            NumeroCompras = 1
+                        });
+
+                    }
+                    else
+                    {
+                        topClients.Find(cli => cli.CodCliente == it.Entidade).NumeroCompras++;
+                        topClients.Find(cli => cli.CodCliente == it.Entidade).TotalCompras += (it.TotalMerc /*+ it.TotalIva*/);
+                    }
                 }
+                
             }
             // order
             var toReturn = topClients.OrderByDescending(cli => cli.TotalCompras).ToList();
             var res = new JavaScriptSerializer().Serialize(toReturn);
             return Request.CreateResponse(HttpStatusCode.OK, res);
+        }
+
+
+        public int GetNumActiveClients()
+        {
+            List<Lib_Primavera.Model.ClienteCounter> CliCounter = new List<Lib_Primavera.Model.ClienteCounter>();
+            IEnumerable<Lib_Primavera.Model.CabecDoc> salesList = Lib_Primavera.PriIntegration.ListaVendas();
+
+            foreach (CabecDoc it in salesList)
+            {
+                if (it.Data.Year == 2016)
+                {
+                    if (!CliCounter.Exists(cli => cli.CodCliente == it.Entidade))
+                    {
+                        CliCounter.Add(new ClienteCounter
+                        {
+                            CodCliente = it.Entidade,
+                            Nome = it.Nome,
+                        });
+
+                    }
+                }
+
+            }
+            return CliCounter.Count();
         }
     }
 }

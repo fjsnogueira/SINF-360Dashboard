@@ -37,23 +37,26 @@ namespace Dashboard360.Controllers
 
             foreach (LinhaDocVenda it in ListaVendas)
             {
-                if (!TopArtigos.Exists(art => art.CodArtigo == it.CodArtigo))
+                if (it.Data.Year == 2016)
                 {
-                    TopArtigos.Add(new ArtigoCounter
+                    if (!TopArtigos.Exists(art => art.CodArtigo == it.CodArtigo))
                     {
-                        CodArtigo = it.CodArtigo,
-                        DescArtigo = it.DescArtigo,
-                        QuantidadeVendida = it.Quantidade,
-                        VolumeVendas = it.TotalILiquido
+                        TopArtigos.Add(new ArtigoCounter
+                        {
+                            CodArtigo = it.CodArtigo,
+                            DescArtigo = it.DescArtigo,
+                            QuantidadeVendida = it.Quantidade,
+                            VolumeVendas = it.TotalILiquido
 
-                    });
-                }
-                else
-                {
-                    TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).VolumeVendas += it.TotalILiquido;
-                    TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).QuantidadeVendida += it.Quantidade;
-                }
+                        });
+                    }
+                    else
+                    {
+                        TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).VolumeVendas += it.TotalILiquido;
+                        TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).QuantidadeVendida += it.Quantidade;
+                    }
 
+                }
             }
 
             var toReturn = TopArtigos.OrderByDescending(prod => prod.VolumeVendas).ToList();
