@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+    @RenderSection("CustomStyles", false)
     @Scripts.Render("~/bundles/modernizr")
 
     <link href="@Url.Content("~/Content/plugins/morris.css")" rel="stylesheet" type="text/css" />
@@ -23,6 +24,7 @@
     @RenderSection("scripts", required: false)
 
     @RenderSection("CustomScripts", false)
+
 
 </body>
 </html>

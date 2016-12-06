@@ -130,8 +130,8 @@ var getTotalExpenses = function () {
             }
             var avgExpenseCustomer = Math.abs(totalExpenses) / totalClients;
             console.log("avgExpense: " + avgExpenseCustomer);
-            $(".avgExpenseCustomer").append("€ " + formatPrice(Math.floor(avgExpenseCustomer).toString()) +
-               " <span style='font-size: 20px!important;'>" + avgExpenseCustomer.toString().split(".")[1].slice(0, 2) + "</span>");
+            $(".avgExpenseCustomer").append(formatPrice(Math.floor(avgExpenseCustomer).toString()) +
+               " <span style='font-size: 20px!important;'>" + avgExpenseCustomer.toString().split(".")[1].slice(0, 2) + "</span> €");
 
             totalExpensesFinal = totalExpenses;
 

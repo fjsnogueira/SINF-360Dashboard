@@ -269,6 +269,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\FinancialController.cs" />
+    <Compile Include="Controllers\HomeApiController.cs" />
     <Compile Include="Controllers\HumanResourcesController.cs" />
     <Compile Include="Controllers\HumanResourcesApiController.cs" />
     <Compile Include="Controllers\SupplyController.cs" />

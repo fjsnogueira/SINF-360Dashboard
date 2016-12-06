@@ -3,9 +3,6 @@ var totalClients;
 
 
 var getTotalClients = function () {
-
-    var defer = $.Deferred();
-
     $.ajax({
         dataType: "json",
         url: "http://localhost:49751/api/clients",
@@ -15,16 +12,9 @@ var getTotalClients = function () {
             //clients
             $(".numberOfCustomers").html(totalClients + " total active clients");
         }
-
-
     }).fail(function () {
         alert("ERROR: getting client list");
     });
-
-    setTimeout(function () {
-        defer.resolve();
-    }, 5000);
-    return defer;
 };
 
 var getTotalSales = function () {

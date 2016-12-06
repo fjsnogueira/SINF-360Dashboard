@@ -9,6 +9,10 @@
     display: none;
 }
 
+.margin {
+    padding-top: 4%!important; 
+}
+
 .navbar {
     position: fixed;
     z-index: 999;

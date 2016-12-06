@@ -1,25 +1,29 @@
-﻿$(function () {
+﻿// Formatting price
+function formatPrice(price) {
+    return price.reverse().replace(/((?:\d{2})\d)/g, '$1 ').reverse();
+}
+String.prototype.reverse = function () {
+    return this.split('').reverse().join('');
+}
+
+$(function () {
 
     $.ajax({
         dataType: "json",
         url: "http://localhost:49751/api/Products/GetTop10ProductsSold/2016",
         success: function (topProductsSold) {
             topProductsSold = JSON.parse(topProductsSold);
-            //console.log(topProductsSold);
-            var productInfoHTML;
-            $(".topTenProductsSold").append("<p>");
+
             for (var i = 0; i < 10; i++) {
-                productInfoHTML = (i + 1) + " - " + topProductsSold[i].CodArtigo + " - " + /*topProductsSold[i].DescArtigo + " - "*/ +topProductsSold[i].QuantidadeVendida + " - " + topProductsSold[i].VolumeVendas.toFixed(2) + "€ <br>";
-                $(".topTenProductsSold").append(productInfoHTML);
+                console.log(topProductsSold[i].VolumeVendas.toFixed(2));
+                $(".top-products-modal-body").append("<tr> <td>" + topProductsSold[i].CodArtigo + "</td><td>" + topProductsSold[i].DescArtigo + "</td><td>" + topProductsSold[i].QuantidadeVendida + "</td><td>" + formatPrice(topProductsSold[i].VolumeVendas.toFixed(2)) + " €</td>");
             }
-            $(".topTenProductsSold").append("</p>");
 
             var productData = [];
             for (var i = 0; i < 10; i++) {
                 var temp = { prod: topProductsSold[i].CodArtigo, sale: topProductsSold[i].VolumeVendas.toFixed(2) };
                 productData.push(temp);
             }
-            console.log(productData);
 
             function shuffle(array) {
                 var currentIndex = array.length, temporaryValue, randomIndex;
