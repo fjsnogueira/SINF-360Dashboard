@@ -18,7 +18,7 @@ namespace Dashboard360.Controllers
         // GET:     api/Products/
         // Returns: all products
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetAllProducts()
+        public HttpResponseMessage GetAllProducts(string year)
         {
 
             IEnumerable<Lib_Primavera.Model.Artigo> ProductsList = Lib_Primavera.PriIntegration.ListaArtigos();
@@ -29,14 +29,15 @@ namespace Dashboard360.Controllers
         // GET:     api/Clients/GetTop10ProductsSold
         // Returns: Top 10 Products Sold
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetTop10ProductsSold()
+        public HttpResponseMessage GetTop10ProductsSold(string year)
         {
             // TODO: check if there's top 10 clients in Enterprise View
             List<Lib_Primavera.Model.ArtigoCounter> TopArtigos = new List<Lib_Primavera.Model.ArtigoCounter>();
-            List<Lib_Primavera.Model.LinhaDocVenda> ListaVendas = Lib_Primavera.PriIntegration.GetVendasProduto();
+            List<Lib_Primavera.Model.LinhaDocVenda> ListaVendas = Lib_Primavera.PriIntegration.GetVendasProduto(year);
 
             foreach (LinhaDocVenda it in ListaVendas)
             {
+
                 if (!TopArtigos.Exists(art => art.CodArtigo == it.CodArtigo))
                 {
                     TopArtigos.Add(new ArtigoCounter
@@ -44,18 +45,17 @@ namespace Dashboard360.Controllers
                         CodArtigo = it.CodArtigo,
                         DescArtigo = it.DescArtigo,
                         QuantidadeVendida = it.Quantidade,
-                        VolumeVendas = it.TotalILiquido
+                        VolumeVendas = it.TotalLiquido
 
                     });
                 }
                 else
                 {
-                    TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).VolumeVendas += it.TotalILiquido;
+                    TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).VolumeVendas += it.TotalLiquido;
                     TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).QuantidadeVendida += it.Quantidade;
                 }
 
             }
-
             var toReturn = TopArtigos.OrderByDescending(prod => prod.VolumeVendas).ToList();
             toReturn = toReturn.GetRange(0, 10);
             var res = new JavaScriptSerializer().Serialize(toReturn);

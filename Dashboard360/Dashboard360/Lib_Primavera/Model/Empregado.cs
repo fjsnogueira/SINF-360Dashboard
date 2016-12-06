@@ -25,6 +25,18 @@ namespace Dashboard360.Lib_Primavera.Model
             set;
         }
 
+        public DateTime dataNascimento
+        {
+            get;
+            set;
+        }
+
+        public double salario
+        {
+            get;
+            set;
+        }
+
         
     }
 }

@@ -14,6 +14,18 @@ namespace Dashboard360.Lib_Primavera.Model
             set;
         }
 
+        public string TipoDoc
+        {
+            get;
+            set;
+        }
+
+        public double TotalDespesasAdicionais
+        {
+            get;
+            set;
+        }
+
         public string NumDocExterno
         {
             get;
@@ -22,6 +34,18 @@ namespace Dashboard360.Lib_Primavera.Model
 
 
         public string Entidade
+        {
+            get;
+            set;
+        }
+
+        public string Nome
+        {
+            get;
+            set;
+        }
+
+        public string NumContribuinte
         {
             get;
             set;
@@ -40,6 +64,24 @@ namespace Dashboard360.Lib_Primavera.Model
         }
 
         public double TotalMerc
+        {
+            get;
+            set;
+        }
+
+        public double TotalDesc
+        {
+            get;
+            set;
+        }
+
+        public double TotalOutros
+        {
+            get;
+            set;
+        }
+
+        public double TotalIva
         {
             get;
             set;

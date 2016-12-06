@@ -34,5 +34,10 @@ namespace Dashboard360.Controllers
             return View();
         }
 
+
+        public ActionResult PreviousYear()
+        {
+            return View();
+        }
     }
 }

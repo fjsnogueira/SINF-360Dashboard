@@ -21,11 +21,32 @@ namespace Dashboard360
                 defaults: new { controller = "ClientsApi", Action = "GetAllClients" }
             );
 
+            // Get client details
+            config.Routes.MapHttpRoute(
+                name: "GetClientDetails",
+                routeTemplate: "api/Clients/{clientID}",
+                defaults: new { controller = "ClientsApi", Action = "GetClientDetails" }
+            );
+
+
+
             // Get top 10 Clients
             config.Routes.MapHttpRoute(
                 name: "GetTop10Clients",
-                routeTemplate: "api/Clients/GetTop10Clients",
+                routeTemplate: "api/Clients/GetTop10Clients/{year}",
                 defaults: new { controller = "ClientsApi", Action = "GetTop10Clients" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "GetNumClients",
+                routeTemplate: "api/Clients/GetNumClients",
+                defaults: new { controller = "ClientsApi", Action = "GetNumClients" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "GetNumActiveClients",
+                routeTemplate: "api/Clients/GetNumActiveClients/{year}",
+                defaults: new { controller = "ClientsApi", Action = "GetNumActiveClients" }
             );
 
 
@@ -36,8 +57,14 @@ namespace Dashboard360
             // Get all sales
             config.Routes.MapHttpRoute(
                 name: "Sales",
-                routeTemplate: "api/Sales",
+                routeTemplate: "api/Sales/{year}",
                 defaults: new { controller = "SalesApi", Action = "GetAllSales" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "SalesValues",
+                routeTemplate: "api/SalesValues/{year}",
+                defaults: new { controller = "SalesApi", Action = "GetAllSalesValues" }
             );
 
             /*
@@ -57,14 +84,14 @@ namespace Dashboard360
             // Get all sales
             config.Routes.MapHttpRoute(
                 name: "Products",
-                routeTemplate: "api/Products",
+                routeTemplate: "api/Products/",
                 defaults: new { controller = "ProductsApi", Action = "GetAllProducts" }
             );
 
             // Get top 10 Clients
             config.Routes.MapHttpRoute(
                 name: "GetTop10ProductsSold",
-                routeTemplate: "api/Products/GetTop10ProductsSold",
+                routeTemplate: "api/Products/GetTop10ProductsSold/{year}",
                 defaults: new { controller = "ProductsApi", Action = "GetTop10ProductsSold" }
             );
 
@@ -106,12 +133,9 @@ namespace Dashboard360
             // Get Average of employees by Age
             config.Routes.MapHttpRoute(
                 name: "GetAverageEmployeeByAge",
-                routeTemplate: "api/getNumberOfFemaleEmployees",
+                routeTemplate: "api/GetAverageEmployeeByAge",
                 defaults: new { controller = "HumanResourcesApi", Action = "GetAverageEmployeeByAge" }
             );
-
-        
-
 
             /*
              * Other

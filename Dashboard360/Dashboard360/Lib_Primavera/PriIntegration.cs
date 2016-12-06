@@ -24,7 +24,7 @@ namespace Dashboard360.Lib_Primavera
             {
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo FROM  CLIENTES");
+                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo FROM CLIENTES");
 
 
                 while (!objList.NoFim())
@@ -229,9 +229,10 @@ namespace Dashboard360.Lib_Primavera
 
         #endregion Cliente;   // -----------------------------  END   CLIENTE    -----------------------
 
+
         #region Venda
 
-        public static List<Model.LinhaDocVenda> GetVendasProduto()
+        public static List<Model.LinhaDocVenda> GetVendasProduto(string ano)
         {
             StdBELista objList;
 
@@ -240,7 +241,7 @@ namespace Dashboard360.Lib_Primavera
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalIva, TotalILiquido, PrecoLiquido from LinhasDoc");
+                objList = PriEngine.Engine.Consulta("SELECT idCabecDoc, Data, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalIva, TotalILiquido, PrecoLiquido from LinhasDoc WHERE year(Data)=" + ano);
                 while (!objList.NoFim())
                 {
                     ListaVendas.Add(new Model.LinhaDocVenda
@@ -253,7 +254,8 @@ namespace Dashboard360.Lib_Primavera
                         Desconto = objList.Valor("Desconto1"),
                         PrecoUnitario = objList.Valor("PrecUnit"),
                         TotalILiquido = objList.Valor("TotalILiquido"),
-                        TotalLiquido = objList.Valor("PrecoLiquido")
+                        TotalLiquido = objList.Valor("PrecoLiquido"),
+                        Data = objList.Valor("Data")
                     });
 
 
@@ -269,38 +271,9 @@ namespace Dashboard360.Lib_Primavera
                 return null;
         }
 
-        // Returns a list of all sales
-        public static List<Model.CabecDoc> ListaVendas()
-        {
-            List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
 
-            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
-            {
-                StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE CabecDoc.TipoDoc = 'FA'");
-
-                while (!objList.NoFim())
-                {
-                    sales.Add(new Model.CabecDoc
-                    {
-                        Data = objList.Valor("Data"),
-                        Entidade = objList.Valor("Entidade"),
-                        Nome = objList.Valor("Nome"),
-                        NumDoc = objList.Valor("NumDoc"),
-                        NumContribuinte = objList.Valor("NumContribuinte"),
-                        TotalMerc = objList.Valor("TotalMerc"),
-                        TotalIva = objList.Valor("TotalIva"),
-                    });
-
-                    objList.Seguinte();
-                }
-            }
-
-            return sales;
-        }
 
         #endregion Venda;
-
 
 
         #region Artigo
@@ -372,8 +345,8 @@ namespace Dashboard360.Lib_Primavera
         #endregion Artigo
 
 
-
         #region DocCompra
+
 
         public static List<Model.DocCompra> ListaCompras()
         {
@@ -386,7 +359,7 @@ namespace Dashboard360.Lib_Primavera
 
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras");
+                objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, TotalDespesasAdicionais, TipoDoc, TotalOutros, TotalDesc, Serie From CabecCompras");
                 while (!objListCab.NoFim())
                 {
                     dc = new Model.DocCompra();
@@ -396,6 +369,10 @@ namespace Dashboard360.Lib_Primavera
                     dc.NumDoc = objListCab.Valor("NumDoc");
                     dc.Data = objListCab.Valor("DataDoc");
                     dc.TotalMerc = objListCab.Valor("TotalMerc");
+                    dc.TotalDesc = objListCab.Valor("TotalDesc");
+                    dc.TipoDoc = objListCab.Valor("TipoDoc");
+                    dc.TotalDespesasAdicionais = objListCab.Valor("TotalDespesasAdicionais");
+                    dc.TotalOutros = objListCab.Valor("TotalOutros");
                     dc.Serie = objListCab.Valor("Serie");
                     objListLin = PriEngine.Engine.Consulta("SELECT idCabecCompras, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido, Armazem, Lote from LinhasCompras where IdCabecCompras='" + dc.id + "' order By NumLinha");
                     listlindc = new List<Model.LinhaDocCompra>();
@@ -427,6 +404,8 @@ namespace Dashboard360.Lib_Primavera
             }
             return listdc;
         }
+
+
 
         public static List<Model.DocCompra> VGR_List()
         {
@@ -607,6 +586,37 @@ namespace Dashboard360.Lib_Primavera
             }
         }
 
+        // Returns a list of all sales
+        public static List<Model.DocVenda> ListaVendas(string ano)
+        {
+            StdBELista objListCab;
+            Model.DocVenda dv = new Model.DocVenda();
+            List<Model.DocVenda> listdv = new List<Model.DocVenda>();
+            Model.LinhaDocVenda lindv = new Model.LinhaDocVenda();
+            List<Model.LinhaDocVenda> listlindv = new
+            List<Model.LinhaDocVenda>();
+
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TipoDoc, TotalMerc, TotalDesc, TotalOutros, Serie From CabecDoc WHERE year(Data)=" + ano);
+                while (!objListCab.NoFim())
+                {
+                    dv = new Model.DocVenda();
+                    dv.id = objListCab.Valor("id");
+                    dv.Entidade = objListCab.Valor("Entidade");
+                    dv.NumDoc = objListCab.Valor("NumDoc");
+                    dv.Data = objListCab.Valor("Data");
+                    dv.TotalMerc = objListCab.Valor("TotalMerc");
+                    dv.TotalDesc = objListCab.Valor("TotalDesc");
+                    dv.TotalOutros = objListCab.Valor("TotalOutros");
+                    dv.Serie = objListCab.Valor("Serie");
+                    dv.TipoDoc = objListCab.Valor("TipoDoc");
+                    listdv.Add(dv);
+                    objListCab.Seguinte();
+                }
+            }
+            return listdv;
+        }
 
 
         public static List<Model.DocVenda> Encomendas_List()
@@ -713,6 +723,33 @@ namespace Dashboard360.Lib_Primavera
 
         #endregion DocsVenda
 
+
+        #region Pendentes
+        public static List<Model.Pendente> GetPending(bool receivable)
+        {
+            StdBELista objListCab;
+            List<Model.Pendente> result = new List<Model.Pendente>();
+
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objListCab = PriEngine.Engine.Consulta(
+                    "SELECT ValorPendente, Moeda " +
+                    "FROM Pendentes " +
+                    "WHERE TipoEntidade = " + (receivable ? "'C'" : "'F'"));
+                while (!objListCab.NoFim())
+                {
+                    Model.Pendente p = new Model.Pendente();
+                    p.PendingValue = objListCab.Valor("ValorPendente");
+                    p.PendingCurrency = objListCab.Valor("Moeda");
+                    result.Add(p);
+                    objListCab.Seguinte();
+                }
+            }
+            return result;
+        }
+        #endregion
+
+
         # region Supply
 
         public static List<Model.FornecedorProductCounter> ListTopProducts()
@@ -722,7 +759,7 @@ namespace Dashboard360.Lib_Primavera
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, UnidadeEntrada FROM  ARTIGO ORDER BY UnidadeEntrada DESC");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, UnidadeEntrada FROM ARTIGO"); //ORDER BY UnidadeEntrada DESC
 
 
                 while (!objList.NoFim())
@@ -754,10 +791,10 @@ namespace Dashboard360.Lib_Primavera
                 objList = PriEngine.Engine.Consulta("SELECT SUM(PCPadrao) AS Soma FROM  ARTIGO");
 
                 InventaryValue.Add(new Model.Inventario
-                    {
-                        Valor = objList.Valor("Soma"),
-                    });
-                
+                {
+                    Valor = objList.Valor("Soma"),
+                });
+
 
                 return InventaryValue;
             }
@@ -780,13 +817,13 @@ namespace Dashboard360.Lib_Primavera
                 objList = PriEngine.Engine.Consulta("SELECT COUNT(*) AS Numero FROM  FUNCIONARIOS");
 
 
-               listOfEmployees.Add(new Model.Empregado
-                    {
-                        numeroEmpregados = objList.Valor("Numero"),
-                       
-                    });
+                listOfEmployees.Add(new Model.Empregado
+                {
+                    numeroEmpregados = objList.Valor("Numero"),
 
-                
+                });
+
+
 
                 return listOfEmployees;
             }
@@ -826,18 +863,48 @@ namespace Dashboard360.Lib_Primavera
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT COUNT(Sexo) AS Numero FROM  FUNCIONARIOS WHERE Sexo=1");
-
-
-                listOfAgeOfEmployees.Add(new Model.Empregado
+                objList = PriEngine.Engine.Consulta("SELECT DataNascimento FROM FUNCIONARIOS");
+                while (!objList.NoFim())
                 {
-                    numeroRaparigasEmpregadas = objList.Valor("Numero"),
+                    listOfAgeOfEmployees.Add(new Model.Empregado
+                    {
+                        dataNascimento = objList.Valor("DataNascimento"),
 
-                });
-
-
+                    });
+                    objList.Seguinte();
+                }
 
                 return listOfAgeOfEmployees;
+
+                // objList = PriEngine.Engine.Consulta("SELECT AVG (SELECT )")
+            }
+            else
+                return null;
+        }
+
+
+        // Get Salarios
+        public static List<Model.Empregado> ListOfEmployeeSalary()
+        {
+            StdBELista objList;
+            List<Model.Empregado> listofEmployeeSalary = new List<Model.Empregado>();
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT VencimentoMensal FROM FUNCIONARIOS");
+                while (!objList.NoFim())
+                {
+                    listofEmployeeSalary.Add(new Model.Empregado
+                    {
+                        salario = objList.Valor("VencimentoMensal"),
+
+                    });
+                    objList.Seguinte();
+                }
+
+                return listofEmployeeSalary;
+
+                // objList = PriEngine.Engine.Consulta("SELECT AVG (SELECT )")
             }
             else
                 return null;
@@ -850,3 +917,4 @@ namespace Dashboard360.Lib_Primavera
 
     }
 }
+

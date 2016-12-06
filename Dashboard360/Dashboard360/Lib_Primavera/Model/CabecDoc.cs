@@ -13,6 +13,12 @@ namespace Dashboard360.Lib_Primavera.Model
             set;
         }
 
+        public string TipoDoc
+        {
+            get;
+            set;
+        }
+
         public string Entidade
         {
             get;
@@ -38,6 +44,12 @@ namespace Dashboard360.Lib_Primavera.Model
         }
 
         public double TotalMerc
+        {
+            get;
+            set;
+        }
+
+        public double TotalDesc
         {
             get;
             set;

@@ -21,58 +21,98 @@ namespace Dashboard360.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetAllClients()
         {
-
             IEnumerable<Lib_Primavera.Model.Cliente> clientList = Lib_Primavera.PriIntegration.ListaClientes();
             var res = new JavaScriptSerializer().Serialize(clientList);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
-        // GET:     api/Clients/{clientID}
-        // Returns: clientID's information
-      /*  [System.Web.Http.HttpGet]
-        public Cliente GetClient(string clientID)
+
+        // Get Client details
+        // GET api/clients/{entity}
+        [System.Web.Http.HttpGet]
+        public Cliente GetClientDetails(string entity)
         {
-            System.Diagnostics.Debug.WriteLine("[ClientsApiController] entrou");
-            Lib_Primavera.Model.Cliente client = Lib_Primavera.PriIntegration.GetCliente(clientID);
-            if (client == null)
+            // return the target client through entity
+            Lib_Primavera.Model.Cliente cliente = Lib_Primavera.PriIntegration.GetCliente(entity);
+            if (cliente == null)
             {
-                System.Diagnostics.Debug.WriteLine("[ClientsApiController] ERROR: client not found");
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+                throw new HttpResponseException(
+                        Request.CreateResponse(HttpStatusCode.NotFound));
+
             }
-            return client;
-        }*/
+            else
+            {
+                return cliente;
+            }
+        }
+
+
 
         // GET:     api/Clients/GetTop10Clients
         // Returns: Top 10 Clients
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetTop10Clients()
+        public HttpResponseMessage GetTop10Clients(string year)
         {
             // TODO: check if there's top 10 clients in Enterprise View
             List<Lib_Primavera.Model.ClienteCounter> topClients = new List<Lib_Primavera.Model.ClienteCounter>();
-            IEnumerable<Lib_Primavera.Model.CabecDoc> salesList = Lib_Primavera.PriIntegration.ListaVendas();
+            IEnumerable<Lib_Primavera.Model.DocVenda> salesList = Lib_Primavera.PriIntegration.ListaVendas(year);
 
-            foreach (CabecDoc it in salesList)
+            foreach (DocVenda it in salesList)
             {
-                if (!topClients.Exists(cli => cli.CodCliente == it.Entidade)){
-                    topClients.Add(new ClienteCounter
-                    {
-                        CodCliente = it.Entidade,
-                        Nome = it.Nome,
-                        TotalCompras = (it.TotalMerc + it.TotalIva),
-                        NumeroCompras = 1
-                    });
-
-                }
-                else
+                if (it.TipoDoc != "CBA" && it.TipoDoc != "GR")
                 {
-                    topClients.Find(cli => cli.CodCliente == it.Entidade).NumeroCompras++;
-                    topClients.Find(cli => cli.CodCliente == it.Entidade).TotalCompras += (it.TotalMerc + it.TotalIva);
+                    if (!topClients.Exists(cli => cli.CodCliente == it.Entidade))
+                    {
+                        topClients.Add(new ClienteCounter
+                        {
+                            CodCliente = it.Entidade,
+                            TotalCompras = (it.TotalMerc - it.TotalDesc + it.TotalOutros),
+                            NumeroCompras = 1
+                        });
+
+                    }
+                    else
+                    {
+                        topClients.Find(cli => cli.CodCliente == it.Entidade).NumeroCompras++;
+                        topClients.Find(cli => cli.CodCliente == it.Entidade).TotalCompras += (it.TotalMerc - it.TotalDesc + it.TotalOutros);
+                    }
                 }
+
             }
             // order
             var toReturn = topClients.OrderByDescending(cli => cli.TotalCompras).ToList();
             var res = new JavaScriptSerializer().Serialize(toReturn);
             return Request.CreateResponse(HttpStatusCode.OK, res);
+        }
+
+        // GET:     
+        // Returns: 
+        [System.Web.Http.HttpGet]
+        public int GetNumClients()
+        {
+            IEnumerable<Lib_Primavera.Model.Cliente> clientList = Lib_Primavera.PriIntegration.ListaClientes();
+            return clientList.Count();
+        }
+
+        public int GetNumActiveClients(string year)
+        {
+            System.Diagnostics.Debug.WriteLine(year);
+            List<Lib_Primavera.Model.ClienteCounter> CliCounter = new List<Lib_Primavera.Model.ClienteCounter>();
+            IEnumerable<Lib_Primavera.Model.DocVenda> salesList = Lib_Primavera.PriIntegration.ListaVendas(year);
+
+            foreach (DocVenda it in salesList)
+            {
+                if (!CliCounter.Exists(cli => cli.CodCliente == it.Entidade))
+                {
+                    CliCounter.Add(new ClienteCounter
+                    {
+                        CodCliente = it.Entidade,
+                        Nome = it.Entidade,
+                    });
+                }
+
+            }
+            return CliCounter.Count();
         }
     }
 }
