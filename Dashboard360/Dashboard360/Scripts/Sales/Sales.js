@@ -56,10 +56,14 @@ var getTotalClients = function () {
                 $(".total-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td>" + customers[i].CodCliente + "</td><td>" + customers[i].NomeCliente + "</td><td>");
             }
 
+            $(".loadingNumCustomers").remove();
             $(".numberOfCustomers").append(customers.length);
+            
             var avg = totalSales / totalClients;
+            $(".loadingAvgSalePerCustomer").remove();
             $(".avgSalePerCustomer").append(formatPrice(Math.floor(avg).toString()) +
                 " <span style='font-size: 20px!important;'>" + avg.toString().split(".")[1].slice(0, 2) + "</span>");
+            
         }
     }).fail(function () {
         console.log("ERROR: getting total clients");
@@ -75,8 +79,10 @@ var getTotalActiveClients = function () {
         url: "http://localhost:49751/api/Clients/GetNumActiveClients/2016",
         success: function (numActiveCustomers) {
             totalActiveClients = numActiveCustomers;
+            $(".loadingActiveCustomers").remove();
             $(".activeClients").append(numActiveCustomers);
             var avg = totalSales / totalActiveClients;
+            $(".loadingAvgSalePerActiveCustomer").remove();
             $(".avgSalePerActiveCustomer").append(formatPrice(Math.floor(avg).toString()) +
                 " <span style='font-size: 20px!important;'>" + avg.toString().split(".")[1].slice(0, 2) + "</span>");
         }
@@ -106,6 +112,7 @@ var getTotalSales = function () {
             totalSales = salesValues;
             $(".salesTotalThisYear").append(formatPrice(Math.floor(salesValues).toString()) +
                 " <span style='font-size: 20px!important;'>" + salesValues.toString().split(".")[1].slice(0, 2) + "</span>");
+            $(".loadingSalesTotal").remove();
         },
         async: false
     }).fail(function () {
@@ -129,7 +136,7 @@ var getTotalExpenses = function () {
                     totalExpenses += (purchases[i].TotalMerc + purchases[i].TotalIva);
             }
             var avgExpenseCustomer = Math.abs(totalExpenses) / totalClients;
-            console.log("avgExpense: " + avgExpenseCustomer);
+            $(".loadingAvgExpense").remove();
             $(".avgExpenseCustomer").append(formatPrice(Math.floor(avgExpenseCustomer).toString()) +
                " <span style='font-size: 20px!important;'>" + avgExpenseCustomer.toString().split(".")[1].slice(0, 2) + "</span> €");
 

@@ -45,7 +45,7 @@ $(function () {
             }
 
             productData = shuffle(productData);
-
+            $(".loadingTopProducts").remove()
             Morris.Bar({
                 element: 'bar-example',
                 data: productData,

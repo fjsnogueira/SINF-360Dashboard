@@ -34,7 +34,7 @@
                     var temp = { label: codCliente, value: topClients[i].TotalCompras.toFixed(2) };
                     clientData.push(temp);
                 }
-
+                $(".loadingTopClients").remove()
                 Morris.Donut({
                     element: 'top-clients',
                     data: clientData

@@ -1,10 +1,13 @@
 ﻿@section CustomScripts {
-    @Scripts.Render("~/Scripts/Sales/Sales.js")
-    @Scripts.Render("~/Scripts/bootstrap.min.js")
-    @Scripts.Render("~/Scripts/Clients/getTop10Clients.js")
-    @Scripts.Render("~/Scripts/Products/getTop10Products.js")
-    @Scripts.Render("~/Scripts/plugins/morris/morris.min.js")
-    @Scripts.Render("~/Scripts/plugins/morris/raphael.min.js")
+@Scripts.Render("~/Scripts/Sales/Sales.js")
+@Scripts.Render("~/Scripts/bootstrap.min.js")
+@Scripts.Render("~/Scripts/Clients/getTop10Clients.js")
+@Scripts.Render("~/Scripts/Clients/yearManager.js")
+@Scripts.Render("~/Scripts/Products/getTop10Products.js")
+@Scripts.Render("~/Scripts/plugins/morris/morris.min.js")
+@Scripts.Render("~/Scripts/plugins/morris/raphael.min.js")
+@Scripts.Render("~/Scripts/Purchases/listPurchases.js")
+
 }
 
 @section CustomStyles{
@@ -13,7 +16,7 @@
 
 <!-- Page Title -->
 <div class="row page-title" style="text-align: center;">
-    <h2> <a href="/Clients/PreviousYear"> <i class="fa fa-arrow-left fa-1x"></i> </a> 2016 </h2>
+    <h2> <a id="previousYear" href="#"> <i class="fa fa-arrow-left fa-1x"></i> </a> | 2016 | </h2>
 </div>
 
 <div class="row">
@@ -30,7 +33,7 @@
                                 <i class="fa fa-euro fa-3x"></i>
                             </div>
                             <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="salesTotalThisYear"></span></div>
+                                <div class="huge"><span class="loadingSalesTotal"></span><span class="salesTotalThisYear"></span></div>
                             </div>
                         </div>
                     </div>
@@ -51,14 +54,14 @@
                                 <i class="fa fa-minus-square-o fa-3x"></i>
                             </div>
                             <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="avgExpenseCustomer"></span></div>
+                                <div class="huge"><span class="loadingAvgExpense"></span><span class="avgExpenseCustomer"></span></div>
 
                             </div>
                         </div>
                     </div>
                     <a href="#">
                         <div class="panel-footer">
-                            <span class="pull-right">Average Expense Per Customer</span>
+                            <span class="pull-right">Average Expense Per Customer [€]</span>
                             <div class="clearfix"></div>
                         </div>
                     </a>
@@ -75,7 +78,7 @@
                                 <i class="fa fa-users fa-3x"></i>
                             </div>
                             <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="numberOfCustomers"></span></div>
+                                <div class="huge"><span class="loadingNumCustomers"></span><span class="numberOfCustomers"></span></div>
                             </div>
                         </div>
                     </div>
@@ -96,7 +99,7 @@
                                 <i class="fa fa-user fa-3x"></i>
                             </div>
                             <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="activeClients"></span></div>
+                                <div class="huge"><span class="loadingActiveCustomers"></span><span class="activeClients"></span></div>
                             </div>
                         </div>
                     </div>
@@ -120,7 +123,7 @@
                                 <i class="fa fa-shopping-cart fa-3x"></i>
                             </div>
                             <div class="col-xs-10 text-right">
-                                <div class="huge"><span class=" avgSalePerCustomer"></span></div>
+                                <div class="huge"><span class="loadingAvgSalePerCustomer"></span><span class="avgSalePerCustomer"></span></div>
                             </div>
                         </div>
                     </div>
@@ -134,14 +137,14 @@
             </div>
             <!-- Avg Sale Per Active Customer -->
             <div class="col-lg-6 col-md-6">
-                <div class="panel panel-primary">
+                <div class="panel panel-purple">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-2">
                                 <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>
                             </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge"><span class=" avgSalePerActiveCustomer"></span></div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge"><span class="loadingAvgSalePerActiveCustomer"></span><span class="avgSalePerActiveCustomer"></span></div>
                             </div>
                         </div>
                     </div>
@@ -167,6 +170,7 @@
                 </div>
             </div>
             <div class="panel-footer">
+                <span class="loadingTopClients"></span>
                 <div id="top-clients"></div>
             </div>
         </div>
@@ -178,16 +182,21 @@
     <div class="col-lg-1"></div>
     <!-- Top Products Sold [Table] -->
     <div class="col-lg-10 col-md-6">
-        <div class="panel panel-primary">
+        <div class="panel panel-orange">
             <div class="panel-heading">
                 <div class="row" style="text-align: center;">
                     <div class="col-xs-12">
-                        <a data-toggle="modal" data-target="#topProductsList"> View </a>
-                        <div style="font-size: 25px;">Top 10 Products Sold</div>
+                        <span style="font-size: 25px;">Top 10 Products Sold</span>
+                        <span  class="pull-right">
+                            <a data-toggle="modal" data-target="#topProductsList" >
+                                 <i class="fa fa-plus-circle fa-2x"></i>
+                            </a>
+                        </span>
                     </div>
                 </div>
             </div>
             <div class="panel-footer">
+                <span class="loadingTopProducts" style="padding-left: 380px"></span>
                 <div id="bar-example"></div>
             </div>
         </div>
@@ -201,7 +210,7 @@
 <div class="modal fade" id="totalClientsList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header panel-green">
+            <div class="modal-header modal-header-yellow">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Registered Customers</h4>
             </div>
@@ -230,7 +239,7 @@
 <div class="modal fade" id="activeClientsList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header panel-green">
+            <div class="modal-header modal-header-green">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Active Customers</h4>
             </div>
@@ -260,9 +269,10 @@
 <!-- Top Products Modal -->
 <div class="modal fade" id="topProductsList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header panel-green">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-content panel-green">
+            <div class="modal-header modal-header-orange">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Top Products Sold</h4>
             </div>
             <div class="modal-body">

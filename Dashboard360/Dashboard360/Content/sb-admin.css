@@ -9,24 +9,43 @@
     display: none;
 }
 
-.margin {
-    padding-top: 4%!important; 
+.margin{
+    margin-top: 3.5%;
 }
 
 .navbar {
     position: fixed;
     z-index: 999;
     padding-top: 0;
-    margin-top: -2px;
     width: 100%;
-    background-color: #f8f8f8;
-    border-color: #e7e7e7;
+    background-color: #428bca !important;
+    border-color: #428bca !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    margin-left: -0.5px;
 }
 
     .navbar a {
-        color: #777 !important;
+        color: white !important;
     }
 
+.navbar-brand {
+    font-size: 24px;
+}
+
+.navbar-right a {
+    font-size: 18px;
+}
+
+    .navbar-right a:hover {
+        border-bottom: 2px solid white !important;
+        font-size: 18px;
+    }
+
+    .navbar-right a:active {
+        border: 1px solid white !important;
+        font-size: 18px;
+    }
 
 body {
     background-color: #222;
@@ -51,10 +70,10 @@ body {
 }
 
 .page-title {
-    background-color: #777;
-    margin-bottom: 15px;
-    margin-top: -2px;
-    color: white;
+    background-color: #EBE9E9;
+    margin-bottom: 10px;
+    margin-top: 18px;
+    color: #747373;
 }
 
 .huge {
@@ -248,3 +267,59 @@ ul.alert-dropdown {
         .panel-yellow a:hover {
             color: #df8a13;
         }
+
+
+.panel-orange {
+    border-color: #E98547;
+}
+
+    .panel-orange .panel-heading {
+        border-color: #E98547;
+        color: #fff;
+        background-color: #E98547;
+    }
+
+    .panel-orange a {
+        color: #E98547;
+    }
+
+        .panel-orange a:hover {
+            color: #E98547;
+        }
+
+.panel-purple {
+    border-color: #9370DB;
+}
+
+.panel-purple .panel-heading {
+    border-color: #9370DB;
+    color: #fff;
+    background-color: #9370DB;
+}
+
+.panel-purple a {
+    color: #9370DB;
+}
+
+    .panel-purple a:hover {
+        color: #9370DB;
+    }
+
+
+    modal-header-green{
+        background-color: #5cb85c!important;
+        border-color: #5cb85c!important;
+        color: white!important;
+    }
+
+    modal-header-yellow {
+        background-color: #f0ad4e!important;
+        border-color: #f0ad4e!important;
+        color: white!important;
+    }
+
+    modal-header-orange {
+        background-color: #E98547!important;
+        border-color: #E98547!important;
+        color: white!important;
+    }

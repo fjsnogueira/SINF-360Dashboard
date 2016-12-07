@@ -3,18 +3,16 @@
 }
 
 @section CustomScripts {
-    @Scripts.Render("~/Scripts/bootstrap.min.js")
-    @Scripts.Render("~/Scripts/Purchases/getPurchases.js")
-    @Scripts.Render("~/Scripts/Clients/getTop10Clients.js")
-    @Scripts.Render("~/Scripts/Products/getTop10Products.js")
-    @Scripts.Render("~/Scripts/plugins/morris/morris.min.js")
-    @Scripts.Render("~/Scripts/plugins/morris/raphael.min.js")
+@Scripts.Render("~/Scripts/bootstrap.min.js")
+@Scripts.Render("~/Scripts/Purchases/getPurchases.js")
+@Scripts.Render("~/Scripts/Clients/getTop10Clients.js")
+@Scripts.Render("~/Scripts/Products/getTop10Products.js")
+@Scripts.Render("~/Scripts/plugins/morris/morris.min.js")
+@Scripts.Render("~/Scripts/plugins/morris/raphael.min.js")
 }
 
 <!-- Page Title -->
 <div class="row page-title" style="text-align: center;">
-    <h1> Enterprise View </h1>
-    <hr />
     <h2> | 2016 | </h2>
 </div>
 
@@ -30,7 +28,10 @@
                             <i class="fa fa-euro fa-3x"></i>
                         </div>
                         <div class="col-xs-10 text-right">
-                            <div class="huge"><span class="salesTotalThisYear"></span></div>
+                            <div class="huge">
+                                <span class="loading"></span>
+                                <span class="salesTotalThisYear"></span>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 ﻿$(function () {
-    $.getScript("Scripts/moment.min.js", function () {
+    $.getScript("/Scripts/moment.min.js", function () {
     });
 
     $.ajax({
@@ -32,7 +32,7 @@
                 //$(".purchase-list").append("</p>");
 
 
-                if (/*temp.TotalMerc < 0  && */moment(temp.Data).year() == 2016) {
+                if (moment(temp.Data).year() == 2016) {
                     if ($.inArray(temp.TipoDoc, typesOfPurchase) === -1)
                         typesOfPurchase.push(temp.TipoDoc);
 
@@ -41,12 +41,8 @@
                     if (temp.Entidade == "F0001")
                         purchasesF0001 += Math.abs(temp.TotalMerc) + Math.abs(temp.TotalOutros) - Math.abs(temp.TotalDesc);
                     else if (temp.Entidade == "F0002") {
-
-
-                        if (temp.TotalMerc < 0) {
-                            purchasesF0002 += temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
-
-                        }
+                        if (temp.tipoDoc !== "COT")
+                            purchasesF0002 += Math.abs(temp.TotalMerc) + Math.abs(temp.TotalOutros) - Math.abs(temp.TotalDesc);
                     }
                     else if (temp.Entidade == "F0003")
                         purchasesF0003 += Math.abs(temp.TotalMerc) + Math.abs(temp.TotalOutros) - Math.abs(temp.TotalDesc);

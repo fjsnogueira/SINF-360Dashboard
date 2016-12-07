@@ -13,8 +13,10 @@ using Dashboard360.Lib_Primavera.Model;
 
 namespace Dashboard360.Controllers
 {
+
     public class SalesApiController : ApiController
     {
+        string[] tiposDocs = { "NC", "ND", "VD", "ECL", "ORC" };
         // GET:     api/Sales/
         // Returns: all sales
         [System.Web.Http.HttpGet]
@@ -31,12 +33,14 @@ namespace Dashboard360.Controllers
         [System.Web.Http.HttpGet]
         public double GetAllSalesValues(string year)
         {
+
             double totalSales = 0;
             IEnumerable<Lib_Primavera.Model.DocVenda> salesList = Lib_Primavera.PriIntegration.ListaVendas(year);
 
             foreach (DocVenda it in salesList)
             {
-                if (it.TipoDoc != "CBA" && it.TipoDoc != "GR")
+
+                if (tiposDocs.Contains(it.TipoDoc) || it.TipoDoc[0] == 'F')
                     totalSales += (it.TotalMerc - it.TotalDesc + it.TotalOutros);
             }
 

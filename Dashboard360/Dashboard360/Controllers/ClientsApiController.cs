@@ -16,6 +16,7 @@ namespace Dashboard360.Controllers
 {
     public class ClientsApiController : ApiController
     {
+        string[] tiposDocs = {"NC", "ND", "VD", "ECL", "ORC" };
         // GET:     api/Clients/
         // Returns: all clients
         [System.Web.Http.HttpGet]
@@ -59,7 +60,7 @@ namespace Dashboard360.Controllers
 
             foreach (DocVenda it in salesList)
             {
-                if (it.TipoDoc != "CBA" && it.TipoDoc != "GR")
+                if (tiposDocs.Contains(it.TipoDoc) || it.TipoDoc[0] == 'F')
                 {
                     if (!topClients.Exists(cli => cli.CodCliente == it.Entidade))
                     {

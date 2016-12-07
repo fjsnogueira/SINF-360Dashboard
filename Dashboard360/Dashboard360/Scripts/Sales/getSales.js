@@ -4,11 +4,20 @@
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/sales",
+        url: "http://localhost:49751/api/sales/2016",
         success: function (sales) {
             sales = JSON.parse(sales);
-            console.log(sales);
-            $(".totalSales").html(
+           // console.log(sales);
+            var typesOfSale = [];
+            for (var i = 0; i < sales.length; i++) {
+                var temp = sales[i];
+                if ($.inArray(temp.TipoDoc, typesOfSale) === -1)
+                    typesOfSale.push(temp.TipoDoc);
+            }
+            
+            console.log(typesOfSale);
+
+        /*    $(".totalSales").html(
                 "<p>" + sales.length + " Total Sales </p>"
                 );
 
@@ -39,7 +48,7 @@
             $(".salesTotalThisYear").html(
                "<p>" + totalInSales + "</p>"
               );
-            return sales;
+            return sales;*/
         }
     }).fail(function () {
         alert("ERROR: getting sales list");
