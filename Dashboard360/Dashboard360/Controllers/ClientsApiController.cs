@@ -16,7 +16,7 @@ namespace Dashboard360.Controllers
 {
     public class ClientsApiController : ApiController
     {
-        string[] tiposDocs = {"NC", "ND", "VD", "ECL", "ORC" };
+        string[] tiposDocs = {"NC", "ND", "VD", "DV", "AVE" };
         // GET:     api/Clients/
         // Returns: all clients
         [System.Web.Http.HttpGet]

@@ -27,16 +27,13 @@ namespace Dashboard360.Controllers
             return View(client);
         }
 
+        int Year;
         // Customer View
         // --/Clients/
         public ActionResult Index()
         {
-            return View();
-        }
-
-
-        public ActionResult PreviousYear()
-        {
+            Year = DateTime.Today.Year;
+            ViewData["Year"] = Year;
             return View();
         }
     }

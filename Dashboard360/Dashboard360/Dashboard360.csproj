@@ -424,7 +424,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Scripts\Clients\yearManager.js" />
+    <Content Include="Scripts\Clients\clientManager.js" />
     <Content Include="Scripts\Financial\getAccountsPayable.js" />
     <Content Include="Scripts\Financial\getAccountsReceivable.js" />
     <Content Include="Scripts\Financial\getAverageSalesPrice.js" />
@@ -473,8 +473,8 @@
     <Content Include="Scripts\Purchases\listPurchases.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\Sales\getSales.js" />
-    <Content Include="Scripts\Sales\Sales.js" />
+    <Content Include="Scripts\Clients\getSales.js" />
+    <Content Include="Scripts\Clients\Sales.js" />
     <Content Include="Scripts\Supply\getTotalValueOfInventory.js" />
     <Content Include="Scripts\Supply\getTopProductsPurchased.js" />
     <Content Include="Web.config" />
@@ -518,6 +518,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\Sales\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
