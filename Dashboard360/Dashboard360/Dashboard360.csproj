@@ -424,6 +424,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Scripts\Clients\clientDetailsManager.js" />
     <Content Include="Scripts\Clients\clientManager.js" />
     <Content Include="Scripts\Financial\getAccountsPayable.js" />
     <Content Include="Scripts\Financial\getAccountsReceivable.js" />

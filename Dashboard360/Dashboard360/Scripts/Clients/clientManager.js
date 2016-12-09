@@ -30,8 +30,7 @@ var getSalesList = function (year) {
                 var temp = sales[i];
                 if (temp.TipoDoc.charAt(0) == 'F' || $.inArray(temp.TipoDoc, salesDocs) !== -1) {
                     var liquid = temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
-                    moment().startOf('day');
-                    $(".sales-modal-body").append("<tr> <td>" + (i + 1) + "</td><td>" + temp.Entidade + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(liquid.toFixed(2)) + "€ </td></tr>");
+                    $(".sales-modal-body").append("<tr> <td>" + temp.Entidade + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(liquid.toFixed(2)) + "€ </td></tr>");
                 }
             }
         },
@@ -51,7 +50,7 @@ var getTotalClients = function () {
             customers = JSON.parse(customers);
             totalClients = customers.length;
             for (var i = 0; i < customers.length; i++) {
-                $(".total-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td>" + customers[i].CodCliente + "</td><td>" + customers[i].NomeCliente + "</td><td>");
+                $(".total-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td> <a href='localhost:49751/Clients/ShowDetails/" +  customers[i].CodCliente + "'>" + customers[i].CodCliente +  "</a></td><td>" + customers[i].NomeCliente + "</td><td>");
             }
 
             $(".loadingNumCustomers").hide();
@@ -100,7 +99,7 @@ var top10Products = function (year) {
             topProductsSold = JSON.parse(topProductsSold);
 
             for (var i = 0; i < 10; i++) {
-                $(".top-products-modal-body").append("<tr> <td>" + topProductsSold[i].DescArtigo + "</td><td>" + topProductsSold[i].QuantidadeVendida + "</td><td>" + formatPrice(topProductsSold[i].VolumeVendas.toFixed(2)) + " €</td>");
+                $(".top-products-modal-body").append("<tr><td>" + topProductsSold[i].DescArtigo + "</td><td>" + topProductsSold[i].QuantidadeVendida + "</td><td>" + formatPrice(topProductsSold[i].VolumeVendas.toFixed(2)) + " €</td>");
             }
 
             var productData = [];

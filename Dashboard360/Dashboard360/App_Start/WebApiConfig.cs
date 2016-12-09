@@ -28,8 +28,6 @@ namespace Dashboard360
                 defaults: new { controller = "ClientsApi", Action = "GetClientDetails" }
             );
 
-
-
             // Get top 10 Clients
             config.Routes.MapHttpRoute(
                 name: "GetTop10Clients",
@@ -49,6 +47,21 @@ namespace Dashboard360
                 defaults: new { controller = "ClientsApi", Action = "GetNumActiveClients" }
             );
 
+            // Total Sales for Client 
+            config.Routes.MapHttpRoute(
+                name: "GetTotalSalesByClient",
+                routeTemplate: "api/Clients/{clientID}/totalSalesByClient/{client}",
+                defaults: new { controller = "ClientsApi", Action = "GetTotalSalesByClient" }
+                );
+
+            // Top Products by client
+
+
+            config.Routes.MapHttpRoute(
+                name: "GetTopProductsByClient",
+                routeTemplate: "api/Products/GetTop10ProductsSold/{year}/{clientID}",
+                defaults: new { controller = "ProductsApi", Action = "GetTopProductsByClient" }
+            );
 
             /*
              * Sales

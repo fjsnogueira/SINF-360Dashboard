@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 using Dashboard360.Lib_Primavera.Model;
 
@@ -14,16 +15,15 @@ namespace Dashboard360.Controllers
     {
         // Customer Detail View
         // ../Clients/ShowDetails/{clientID}
-        public async Task<ActionResult> ShowDetails(string clientID)
+        public async Task<ActionResult> ShowDetails(string id)
         {
             var httpClient = new HttpClient();
-            System.Diagnostics.Debug.WriteLine("clientID: " + clientID);
-            var res = await httpClient.GetAsync("http://localhost:49751/api/Clients/ALCAD");
-            var _res = res.Content.ReadAsAsync<string>();
-            System.Diagnostics.Debug.WriteLine("_res: " + _res);
-            var client = await res.Content.ReadAsAsync<Cliente>();
-           // System.Diagnostics.Debug.WriteLine(client.getCodCliente());
-            ViewData["clientID"] = clientID;
+            var response = await httpClient.GetAsync("http://localhost:49751/api/clients/" + id);
+
+            var client = await response.Content.ReadAsAsync<Cliente>();
+
+          //  Cliente client =;//await response.Content.ReadAsAsync<Cliente>();
+            ViewData["clientID"] = id;
             return View(client);
         }
 

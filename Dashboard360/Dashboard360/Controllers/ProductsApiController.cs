@@ -61,5 +61,40 @@ namespace Dashboard360.Controllers
             var res = new JavaScriptSerializer().Serialize(toReturn);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
+
+
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetTopProductsByClient(string year, string client)
+        {
+            // TODO: check if there's top 10 clients in Enterprise View
+            List<Lib_Primavera.Model.ArtigoCounter> TopArtigos = new List<Lib_Primavera.Model.ArtigoCounter>();
+            List<Lib_Primavera.Model.LinhaDocVenda> ListaVendas = Lib_Primavera.PriIntegration.GetVendasProduto(year);
+
+            foreach (LinhaDocVenda it in ListaVendas)
+            {
+
+                if (!TopArtigos.Exists(art => art.CodArtigo == it.CodArtigo))
+                {
+                    TopArtigos.Add(new ArtigoCounter
+                    {
+                        CodArtigo = it.CodArtigo,
+                        DescArtigo = it.DescArtigo,
+                        QuantidadeVendida = it.Quantidade,
+                        VolumeVendas = it.TotalLiquido
+
+                    });
+                }
+                else
+                {
+                    TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).VolumeVendas += it.TotalLiquido;
+                    TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).QuantidadeVendida += it.Quantidade;
+                }
+
+            }
+            var toReturn = TopArtigos.OrderByDescending(prod => prod.VolumeVendas).ToList();
+            toReturn = toReturn.GetRange(0, 10);
+            var res = new JavaScriptSerializer().Serialize(toReturn);
+            return Request.CreateResponse(HttpStatusCode.OK, res);
+        }
     }
 }

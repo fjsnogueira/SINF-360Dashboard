@@ -16,7 +16,7 @@ namespace Dashboard360.Controllers
 {
     public class ClientsApiController : ApiController
     {
-        string[] tiposDocs = {"NC", "ND", "VD", "DV", "AVE" };
+        string[] tiposDocs = { "NC", "ND", "VD", "DV", "AVE" };
         // GET:     api/Clients/
         // Returns: all clients
         [System.Web.Http.HttpGet]
@@ -31,20 +31,27 @@ namespace Dashboard360.Controllers
         // Get Client details
         // GET api/clients/{entity}
         [System.Web.Http.HttpGet]
-        public Cliente GetClientDetails(string entity)
+        public Cliente GetClientDetails(string clientID)
         {
-            // return the target client through entity
-            Lib_Primavera.Model.Cliente cliente = Lib_Primavera.PriIntegration.GetCliente(entity);
-            if (cliente == null)
+            Lib_Primavera.Model.Cliente client = Lib_Primavera.PriIntegration.GetCliente(clientID);
+            if (client == null)
             {
-                throw new HttpResponseException(
-                        Request.CreateResponse(HttpStatusCode.NotFound));
-
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
             else
             {
-                return cliente;
+                return client;
             }
+        }
+
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetTotalSalesByClient(string client)
+        {
+            System.Diagnostics.Debug.WriteLine(client);
+            IEnumerable<Lib_Primavera.Model.DocVenda> salesList = Lib_Primavera.PriIntegration.ListaVendasCliente(client);
+
+            var res = new JavaScriptSerializer().Serialize(salesList);
+            return Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
 

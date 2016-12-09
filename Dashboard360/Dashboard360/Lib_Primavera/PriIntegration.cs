@@ -53,7 +53,6 @@ namespace Dashboard360.Lib_Primavera
 
             GcpBECliente objCli = new GcpBECliente();
 
-
             Model.Cliente myCli = new Model.Cliente();
 
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
@@ -612,6 +611,42 @@ namespace Dashboard360.Lib_Primavera
                     dv.Serie = objListCab.Valor("Serie");
                     dv.TipoDoc = objListCab.Valor("TipoDoc");
                     listdv.Add(dv);
+                    objListCab.Seguinte();
+                }
+            }
+            return listdv;
+        }
+
+        // Returns a list of all sales
+        public static List<Model.DocVenda> ListaVendasCliente(string cliente)
+        {
+            StdBELista objListCab;
+            Model.DocVenda dv = new Model.DocVenda();
+            List<Model.DocVenda> listdv = new List<Model.DocVenda>();
+            Model.LinhaDocVenda lindv = new Model.LinhaDocVenda();
+            List<Model.LinhaDocVenda> listlindv = new
+            List<Model.LinhaDocVenda>();
+
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TipoDoc, TotalMerc, TotalDesc, TotalOutros, Serie From CabecDoc");
+                while (!objListCab.NoFim())
+                {
+                    if (objListCab.Valor("Entidade").Equals(cliente))
+                    {
+                        dv = new Model.DocVenda();
+                        dv.id = objListCab.Valor("id");
+                        dv.Entidade = objListCab.Valor("Entidade");
+                        dv.NumDoc = objListCab.Valor("NumDoc");
+                        dv.Data = objListCab.Valor("Data");
+                        dv.TotalMerc = objListCab.Valor("TotalMerc");
+                        dv.TotalDesc = objListCab.Valor("TotalDesc");
+                        dv.TotalOutros = objListCab.Valor("TotalOutros");
+                        dv.Serie = objListCab.Valor("Serie");
+                        dv.TipoDoc = objListCab.Valor("TipoDoc");
+                        listdv.Add(dv);
+                    }
+
                     objListCab.Seguinte();
                 }
             }
