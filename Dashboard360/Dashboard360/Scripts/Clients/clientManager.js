@@ -50,7 +50,7 @@ var getTotalClients = function () {
             customers = JSON.parse(customers);
             totalClients = customers.length;
             for (var i = 0; i < customers.length; i++) {
-                $(".total-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td> <a href='localhost:49751/Clients/ShowDetails/" +  customers[i].CodCliente + "'>" + customers[i].CodCliente +  "</a></td><td>" + customers[i].NomeCliente + "</td><td>");
+                $(".total-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td> <a href='localhost:49751/Clients/ShowDetails/" + customers[i].CodCliente +  "' target='_blank'>" + customers[i].CodCliente + "</a></td><td>" + customers[i].NomeCliente + "</td><td>");
             }
 
             $(".loadingNumCustomers").hide();
@@ -99,7 +99,7 @@ var top10Products = function (year) {
             topProductsSold = JSON.parse(topProductsSold);
 
             for (var i = 0; i < 10; i++) {
-                $(".top-products-modal-body").append("<tr><td>" + topProductsSold[i].DescArtigo + "</td><td>" + topProductsSold[i].QuantidadeVendida + "</td><td>" + formatPrice(topProductsSold[i].VolumeVendas.toFixed(2)) + " €</td>");
+                $(".top-products-modal-body").append("<tr><td>" + topProductsSold[i].CodArtigo + "</td><td>" + topProductsSold[i].DescArtigo + "</td><td>" + topProductsSold[i].QuantidadeVendida + "</td><td>" + formatPrice(topProductsSold[i].VolumeVendas.toFixed(2)) + " €</td>");
             }
 
             var productData = [];
@@ -152,7 +152,7 @@ var getTotalExpenses = function (year) {
 
         }
     }).fail(function () {
-        alert("ERROR: getting purchases list");
+        console.log("ERROR: getting purchases list");
     });
 };
 
@@ -174,21 +174,49 @@ var getTopClients = function (year) {
             }
 
             // Get total sales and data for chart
-            var clientData = [];
-
-            for (var i = 0; i < topClients.length; i++) {
-                var codCliente = topClients[i].CodCliente;
-                var temp = { label: codCliente, value: topClients[i].TotalCompras.toFixed(2) };
-                if (topClients[i].TotalCompras.toFixed(2) > 0) {
-                    clientData.push(temp);
-                }
-
-            }
             $(".loadingTopClients").hide()
-            Morris.Donut({
-                element: 'top-clients',
-                data: clientData
+            $("#top-clients").show();
+
+            var graphLabels = [];
+            var graphValues = [];
+            var graphColors = ["#FF6384", "#36A2EB", "#FFCE56", "#9370DB", "#FF6384", "#36A2EB", "#FFCE56", "#9370DB", "#FF6384", "#36A2EB" ];
+            for (var i = 0; i < topClients.length; i++) {
+                if (topClients[i].TotalCompras.toFixed(2) > 0) {
+                    graphLabels.push(topClients[i].CodCliente);
+                    graphValues.push(topClients[i].TotalCompras.toFixed(2));
+                }
+            }
+
+            graphColors.slice(0, graphValues.length);
+            console.log("labels: " + graphLabels);
+            console.log("values: " + graphValues);
+            console.log("color: " + graphColors);
+
+
+            var data = {
+                labels: graphLabels,
+                datasets: [
+                    {
+                        data: graphValues,
+                        backgroundColor: graphColors,
+                        hoverBackgroundColor: graphColors
+                    }]
+            };
+            var ctx = $("#top-clients");
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    scales: {
+
+                    }
+                }
             });
+
+            
+            ////////
+
+            console.log("pintou");
         }
     }).fail(function () {
         console.log("ERROR: getting top 10 clients");
@@ -218,6 +246,12 @@ var hideValues = function () {
     $(".numberOfCustomers").html("");
     $("#top-clients").html("");
     $("#top-products").html("");
+    // Clear Modals
+    $(".sales-modal-body").html("");
+    $(".total-clients-modal-body").html("");
+    $(".top-products-modal-body").html("");
+    $(".active-clients-modal-body").html("");
+
 }
 
 
@@ -274,6 +308,114 @@ var validYear = function (year) {
 //Controlling Functions
 
 var getValues = function (year) {
+    /*  var data = {
+          labels: ["January", "February", "March",
+                    "April", "May", "June",
+                    "July", "Agost", "September",
+                    "October", "November", "December"],
+          datasets: [
+              {
+                  fillColor: "rgba(252,233,79,0.5)",
+                  strokeColor: "rgba(82,75,25,1)",
+                  pointColor: "rgba(166,152,51,1)",
+                  pointStrokeColor: "#fff",
+                  data: [65, 68, 75,
+                          81, 95, 105,
+                          130, 120, 105,
+                          90, 75, 70]
+              }
+          ]
+      }
+  
+  
+      var options = {
+          //Boolean - If we show the scale above the chart data			
+          scaleOverlay: false,
+  
+          //Boolean - If we want to override with a hard coded scale
+          scaleOverride: true,
+  
+          //** Required if scaleOverride is true **
+          //Number - The number of steps in a hard coded scale
+          scaleSteps: 14,
+          //Number - The value jump in the hard coded scale
+          scaleStepWidth: 5,
+          //Number - The scale starting value
+          scaleStartValue: 55,
+          //String - Colour of the scale line	
+          scaleLineColor: "rgba(20,20,20,.7)",
+  
+          //Number - Pixel width of the scale line	
+          scaleLineWidth: 1,
+  
+          //Boolean - Whether to show labels on the scale	
+          scaleShowLabels: true,
+  
+          //Interpolated JS string - can access value
+          scaleLabel: "<%=value%>",
+  
+          //String - Scale label font declaration for the scale label
+          scaleFontFamily: "'Arial'",
+  
+          //Number - Scale label font size in pixels	
+          scaleFontSize: 12,
+  
+          //String - Scale label font weight style	
+          scaleFontStyle: "normal",
+  
+          //String - Scale label font colour	
+          scaleFontColor: "#666",
+  
+          ///Boolean - Whether grid lines are shown across the chart
+          scaleShowGridLines: true,
+  
+          //String - Colour of the grid lines
+          scaleGridLineColor: "rgba(0,0,0,.3)",
+  
+          //Number - Width of the grid lines
+          scaleGridLineWidth: 1,
+  
+          //Boolean - Whether the line is curved between points
+          bezierCurve: true,
+  
+          //Boolean - Whether to show a dot for each point
+          pointDot: true,
+  
+          //Number - Radius of each point dot in pixels
+          pointDotRadius: 5,
+  
+          //Number - Pixel width of point dot stroke
+          pointDotStrokeWidth: 1,
+  
+          //Boolean - Whether to show a stroke for datasets
+          datasetStroke: true,
+  
+          //Number - Pixel width of dataset stroke
+          datasetStrokeWidth: 2,
+  
+          //Boolean - Whether to fill the dataset with a colour
+          datasetFill: true,
+  
+          //Boolean - Whether to animate the chart
+          animation: false,
+  
+          //Number - Number of animation steps
+          animationSteps: 60,
+  
+          //String - Animation easing effect
+          animationEasing: "easeOutQuart",
+  
+          //Function - Fires when the animation is complete
+          onAnimationComplete: null
+      };
+  
+  
+      //Get context with jQuery - using jQuery's .get() method.
+      var ctx = $("#myChart").get(0).getContext("2d");
+  
+  
+      new Chart(ctx).Line(data, options);*/
+
     getSalesList(year);
     getTotalSales(year);
     getTotalClients();

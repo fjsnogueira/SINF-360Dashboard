@@ -55,7 +55,7 @@ namespace Dashboard360.Lib_Primavera.Model
             set;
         }
 
-        public double TotalIva
+        public double TotalOutros
         {
             get;
             set;

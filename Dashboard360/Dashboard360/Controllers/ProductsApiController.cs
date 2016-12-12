@@ -26,6 +26,70 @@ namespace Dashboard360.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
+
+        // Get Product details
+        // GET api/products/{productID}
+        [System.Web.Http.HttpGet]
+        public List<Lib_Primavera.Model.DocVenda> GetProductSales(string productID)
+        {
+            List<Lib_Primavera.Model.DocVenda> vendas = Lib_Primavera.PriIntegration.ListaVendasArtigo(productID);
+            if (vendas == null)
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+            else
+            {
+                return vendas;
+            }
+        }
+
+
+        [System.Web.Http.HttpGet]
+        public Artigo GetProductInventory(string productID)
+        {
+            /* Lib_Primavera.Model.Artigo product = Lib_Primavera.PriIntegration.GetArtigo(productID);
+             if (product == null)
+             {
+                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+             }
+             else
+             {
+                 return product;
+             }*/
+            return null;
+        }
+
+
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetTopBuyers(string id, int year)
+        {
+            List<ClienteCounter> topBuyers = new List<ClienteCounter>();
+            List<CabecDoc> productSales = Lib_Primavera.PriIntegration.GetTopClientesArtigo(id, year);
+
+            foreach (CabecDoc it in productSales)
+            {
+                if (topBuyers.Exists(cli => cli.CodCliente == it.Entidade))
+                {
+                    topBuyers.Find(cli => cli.CodCliente == it.Entidade).TotalCompras += (it.TotalMerc + it.TotalOutros - it.TotalDesc);
+                    topBuyers.Find(cli => cli.CodCliente == it.Entidade).NumeroCompras++;
+                }
+                else
+                {
+                    topBuyers.Add(new ClienteCounter
+                    {
+                        CodCliente = it.Entidade,
+                        Nome = it.Nome,
+                        TotalCompras = (it.TotalMerc + it.TotalOutros - it.TotalDesc),
+                        NumeroCompras = 1
+                    });
+                }
+            }
+            var res = new JavaScriptSerializer().Serialize(topBuyers);
+            return Request.CreateResponse(HttpStatusCode.OK, res);
+        }
+
+
+
         // GET:     api/Clients/GetTop10ProductsSold
         // Returns: Top 10 Products Sold
         [System.Web.Http.HttpGet]
@@ -64,11 +128,11 @@ namespace Dashboard360.Controllers
 
 
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetTopProductsByClient(string year, string client)
+        public HttpResponseMessage GetTopProductsByClient(string id)
         {
             // TODO: check if there's top 10 clients in Enterprise View
             List<Lib_Primavera.Model.ArtigoCounter> TopArtigos = new List<Lib_Primavera.Model.ArtigoCounter>();
-            List<Lib_Primavera.Model.LinhaDocVenda> ListaVendas = Lib_Primavera.PriIntegration.GetVendasProduto(year);
+            List<Lib_Primavera.Model.LinhaDocVenda> ListaVendas = Lib_Primavera.PriIntegration.GetVendasCliente(id);
 
             foreach (LinhaDocVenda it in ListaVendas)
             {
@@ -92,7 +156,7 @@ namespace Dashboard360.Controllers
 
             }
             var toReturn = TopArtigos.OrderByDescending(prod => prod.VolumeVendas).ToList();
-            toReturn = toReturn.GetRange(0, 10);
+            // toReturn = toReturn.GetRange(0, 10);
             var res = new JavaScriptSerializer().Serialize(toReturn);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }

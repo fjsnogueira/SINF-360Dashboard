@@ -54,12 +54,17 @@ namespace Dashboard360
                 defaults: new { controller = "ClientsApi", Action = "GetTotalSalesByClient" }
                 );
 
+            // Get top 10 Clients
+            config.Routes.MapHttpRoute(
+                name: "GetTop10ProductsSold",
+                routeTemplate: "api/Products/GetTop10ProductsSold/{year}",
+                defaults: new { controller = "ProductsApi", Action = "GetTop10ProductsSold" }
+            );
+
             // Top Products by client
-
-
             config.Routes.MapHttpRoute(
                 name: "GetTopProductsByClient",
-                routeTemplate: "api/Products/GetTop10ProductsSold/{year}/{clientID}",
+                routeTemplate: "api/Products/topProductsByClient/{id}", 
                 defaults: new { controller = "ProductsApi", Action = "GetTopProductsByClient" }
             );
 
@@ -101,12 +106,51 @@ namespace Dashboard360
                 defaults: new { controller = "ProductsApi", Action = "GetAllProducts" }
             );
 
-            // Get top 10 Clients
+            // Get product details
             config.Routes.MapHttpRoute(
-                name: "GetTop10ProductsSold",
-                routeTemplate: "api/Products/GetTop10ProductsSold/{year}",
-                defaults: new { controller = "ProductsApi", Action = "GetTop10ProductsSold" }
+                name: "GetProductDetails",
+                routeTemplate: "api/products/{productID}",
+                defaults: new { controller = "ProductsApi", Action = "GetProductDetails" }
             );
+
+            // Get Top Buyers For Product 
+            config.Routes.MapHttpRoute(
+                name: "GetTopBuyers",
+                routeTemplate: "api/products/{id}/GetTopBuyers/{year}",
+                defaults: new { controller = "ProductsApi", Action = "GetTopBuyers" }
+            );
+
+            // Get Product Sales
+            config.Routes.MapHttpRoute(
+                name: "GetProductSales",
+                routeTemplate: "api/products/GetSales/{productID}",
+                defaults: new { controller = "ProductsApi", Action = "GetProductSales" }
+            );
+
+            // Get Product Inventory
+            config.Routes.MapHttpRoute(
+                name: "GetProductInventory",
+                routeTemplate: "api/products/GetProductInventory/{productID}",
+                defaults: new { controller = "ProductsApi", Action = "GetProductInventory" }
+            );
+
+            // Get Product Orders
+            config.Routes.MapHttpRoute(
+                name: "GetProductOrders",
+                routeTemplate: "api/Products/GetProductOrders/{productID}",
+                defaults: new { controller = "ProductsApi", Action = "GetProductOrders" }
+            );
+
+
+
+            // Get Seasonality
+            config.Routes.MapHttpRoute(
+                name: "GetSeasonality",
+                routeTemplate: "api/Products/GetSeasonality/{productID}",
+                defaults: new { controller = "ProductsApi", Action = "GetSeasonality" }
+            );
+
+
 
             /*
              * Supply

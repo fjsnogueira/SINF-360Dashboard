@@ -2,6 +2,7 @@
     @Scripts.Render("~/Scripts/bootstrap.min.js")
     @Scripts.Render("~/Scripts/plugins/morris/morris.min.js")
     @Scripts.Render("~/Scripts/plugins/morris/raphael.min.js")
+    @Scripts.Render("~/Scripts/Chart.min.js")
     @Scripts.Render("~/Scripts/Clients/clientManager.js")
 }
 
@@ -174,7 +175,7 @@
             </div>
             <div class="panel-footer">
                 <span class="loadingTopClients"></span>
-                <div id="top-clients"></div>
+                <canvas id="top-clients" width="300" height="300"></canvas>
             </div>
         </div>
     </div>
@@ -219,7 +220,7 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
-                    <table class="table table-hover total-clients-modal-body" style="width: 100%;">
+                    <table class="table table-hover" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th> # </th>
@@ -227,6 +228,7 @@
                                 <th> Name </th>
                             </tr>
                         </thead>
+                        <tbody class="total-clients-modal-body"></tbody>
 
                     </table>
                 </div>
@@ -248,7 +250,7 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
-                    <table class="table table-hover active-clients-modal-body" style="width: 100%;">
+                    <table class="table table-hover" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th> # </th>
@@ -257,6 +259,7 @@
                                 <th> Value </th>
                             </tr>
                         </thead>
+                        <tbody class="active-clients-modal-body"></tbody>
 
                     </table>
                 </div>
@@ -281,14 +284,16 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
-                    <table class="table table-hover top-products-modal-body" style="width: 100%;">
+                    <table class="table table-hover" style="width: 100%;">
                         <thead>
                             <tr>
+                                <th> Code </th>
                                 <th> Description </th>
                                 <th> Num. Sales </th>
                                 <th> Total </th>
                             </tr>
                         </thead>
+                        <tbody class="top-products-modal-body"></tbody>
 
                     </table>
                 </div>
@@ -301,7 +306,6 @@
 </div>
 
 <!-- Sales List Modal -->
-
 <div class="modal fade" id="salesList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -313,7 +317,7 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
-                    <table class="table table-hover sales-modal-body" style="width: 100%;">
+                    <table class="table table-hover" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th> Customer </th>
@@ -321,7 +325,7 @@
                                 <th> Total </th>
                             </tr>
                         </thead>
-
+                        <tbody class="sales-modal-body"></tbody>
                     </table>
                 </div>
             </div>

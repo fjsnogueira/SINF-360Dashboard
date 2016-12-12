@@ -424,6 +424,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Clients\clientDetailsManager.js" />
     <Content Include="Scripts\Clients\clientManager.js" />
     <Content Include="Scripts\Financial\getAccountsPayable.js" />
@@ -433,9 +435,6 @@
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\Clients\AvgSalePerCustomer.js" />
-    <Content Include="Scripts\Clients\getClients.js" />
-    <Content Include="Scripts\Clients\getTop10Clients.js" />
     <Content Include="Scripts\HumanResources\getAverageEmployeeByAge.js" />
     <Content Include="Scripts\HumanResources\getNumberOfFemaleEmployees.js" />
     <Content Include="Scripts\HumanResources\getNumberOfEmployees.js" />
@@ -470,12 +469,11 @@
     <Content Include="Scripts\plugins\morris\raphael.min.js" />
     <Content Include="Scripts\Products\getProducts.js" />
     <Content Include="Scripts\Products\getTop10Products.js" />
+    <Content Include="Scripts\Products\productDetailsManager.js" />
     <Content Include="Scripts\Purchases\getPurchases.js" />
     <Content Include="Scripts\Purchases\listPurchases.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\Clients\getSales.js" />
-    <Content Include="Scripts\Clients\Sales.js" />
     <Content Include="Scripts\Supply\getTotalValueOfInventory.js" />
     <Content Include="Scripts\Supply\getTopProductsPurchased.js" />
     <Content Include="Web.config" />
@@ -514,7 +512,7 @@
     <Content Include="Views\Supply\Index.cshtml" />
     <Content Include="Views\HumanResources\Index.cshtml" />
     <Content Include="Views\Financial\Index.cshtml" />
-    <Content Include="Views\Clients\PreviousYear.cshtml" />
+    <Content Include="Views\Products\ShowDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
