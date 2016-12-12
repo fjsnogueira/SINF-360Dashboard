@@ -73,9 +73,9 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#ordersList">
+                    <a href="#" data-toggle="modal" data-target="#">
                         <div class="panel-footer">
-                            <span class="pull-right"> Value Of Orders <i class="fa fa-plus-circle"></i></span>
+                            <span class="pull-right"> Value Of Orders</span>
                             <div class="clearfix"></div>
                         </div>
                     </a>
@@ -87,7 +87,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-2">
-                                <i class="fa fa-euro fa-3x"></i>
+                                <i class="fa fa-bars fa-3x"></i>
                             </div>
                             <div class="col-xs-10 text-right">
                                 <div class="huge"><span class="loadingNumberOrders"></span><span class="numberOrders"></span></div>
@@ -117,7 +117,7 @@
                     </div>
                     <a href="#" data-toggle="modal" data-target="#">
                         <div class="panel-footer">
-                            <span class="pull-right"> Unit Price <i class="fa fa-plus-circle"></i></span>
+                            <span class="pull-right"> Unit Price </span>
                             <div class="clearfix"></div>
                         </div>
                     </a>
@@ -136,7 +136,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#inventoryList">
+                    <a href="#" data-toggle="modal" data-target="#">
                         <div class="panel-footer">
                             <span class="pull-right"> Units in Inventory </span>
                             <div class="clearfix"></div>
@@ -178,6 +178,100 @@
                         <div id="top-buyers" style="width:100%;height:300px;"></div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Total Sales Modal -->
+<div class="modal fade" id="salesList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header yellow">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Sales List</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-hover" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th> Client </th>
+                                <th> Date </th>
+                                <th> Total </th>
+                            </tr>
+                        </thead>
+                        <tbody class="sales-modal-body"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align: center;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Yearly Sales List Modal -->
+<div class="modal fade" id="salesYearList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header green">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Sales List For Current Year</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-hover" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th> Client </th>
+                                <th> Date </th>
+                                <th> Total </th>
+                            </tr>
+                        </thead>
+                        <tbody class="sales-year-modal-body"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align: center;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Orders List Modal -->
+<div class="modal fade" id="ordersList" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header green">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Orders List</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-hover" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th> Client </th>
+                                <th> Date </th>
+                                <th> Total </th>
+                            </tr>
+                        </thead>
+                        <tbody class="orders-modal-body"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align: center;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

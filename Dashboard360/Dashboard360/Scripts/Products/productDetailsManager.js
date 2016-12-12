@@ -15,6 +15,7 @@ var getTotalSales = function () {
         dataType: "json",
         url: "http://localhost:49751/api/products/GetSales/" + productID,
         success: function (sales) {
+            console.log(sales);
             var totalSales = 0;
             var totalSalesThisYear = 0;
             var totalOrders = 0;
@@ -30,7 +31,7 @@ var getTotalSales = function () {
                 if (temp.TipoDoc.charAt(0) == 'F' || $.inArray(temp.TipoDoc, salesDocs) !== -1) {
                     if (temp.LinhasDoc.length > 0) {
                         var liquid = temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
-                        
+                        $(".sales-modal-body").append("<tr> <td>" + temp.Entidade + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(liquid.toFixed(2)) + "€ </td></tr>");
                         if (unitPrice == 0) {
                             unitPrice = temp.LinhasDoc[0].PrecoUnitario;
                         }
@@ -47,12 +48,15 @@ var getTotalSales = function () {
                             fall++;
 
                         if (moment(temp.Data).year() == 2016) {
+                            $(".sales-year-modal-body").append("<tr> <td>" + temp.Entidade + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(liquid.toFixed(2)) + "€ </td></tr>");
                             totalSalesThisYear += liquid;
                         }
                     }
                 } else if (temp.TipoDoc == "ECL" && moment(temp.Data).year() == 2016) {
                     ordersCounter++;
-                    totalOrders += temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
+                    var liq = temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
+                    totalOrders += liq;
+                    $(".sales-year-modal-body").append("<tr> <td>" + temp.Entidade + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(liq.toFixed(2)) + "€ </td></tr>");
                 }
             }
 
@@ -75,12 +79,12 @@ var getTotalSales = function () {
             console.log("Total Orders: " + totalOrders);
 
             // Number of Orders
-            $(".numberOrders").append(ordersCounter);
+            $(".numberOrders").append(formatPrice(Math.floor(ordersCounter).toString()));
             $(".loadingNumberOrders").hide();
             console.log("Number Orders: " + ordersCounter);
 
             // Number of Orders
-            $(".unitPrice").append(ordersCounter);
+            $(".unitPrice").append(formatPrice(Math.floor(unitPrice).toString()));
             $(".loadingUnitPrice").hide();
             console.log("Unit Price: " + unitPrice);
 
