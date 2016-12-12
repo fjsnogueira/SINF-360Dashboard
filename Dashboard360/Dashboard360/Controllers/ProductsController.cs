@@ -23,8 +23,9 @@ namespace Dashboard360.Controllers
         {
             var httpClient = new HttpClient();
             var response = await httpClient.GetAsync("http://localhost:49751/api/products/" + id);
-
             var product = await response.Content.ReadAsAsync<Artigo>();
+
+            System.Diagnostics.Debug.WriteLine("desc: " + product.CodArtigo);
             System.Diagnostics.Debug.WriteLine("id: " + id);
             ViewData["productID"] = id;
             return View(product);

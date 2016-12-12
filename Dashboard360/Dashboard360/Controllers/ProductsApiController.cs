@@ -27,7 +27,6 @@ namespace Dashboard360.Controllers
         }
 
 
-        // Get Product details
         // GET api/products/{productID}
         [System.Web.Http.HttpGet]
         public List<Lib_Primavera.Model.DocVenda> GetProductSales(string productID)
@@ -88,6 +87,20 @@ namespace Dashboard360.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
+
+        [System.Web.Http.HttpGet]
+        public Artigo GetProductDetails(string productID)
+        {
+            Lib_Primavera.Model.Artigo product = Lib_Primavera.PriIntegration.GetArtigo(productID);
+            if (product == null)
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+            else
+            {
+                return product;
+            }
+        }
 
 
         // GET:     api/Clients/GetTop10ProductsSold

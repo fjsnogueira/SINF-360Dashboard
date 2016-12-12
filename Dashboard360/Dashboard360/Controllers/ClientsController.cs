@@ -22,7 +22,7 @@ namespace Dashboard360.Controllers
 
             var client = await response.Content.ReadAsAsync<Cliente>();
 
-          //  Cliente client =;//await response.Content.ReadAsAsync<Cliente>();
+            System.Diagnostics.Debug.WriteLine(client.CodCliente);
             ViewData["clientID"] = id;
             return View(client);
         }
