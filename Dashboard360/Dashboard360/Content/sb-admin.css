@@ -48,8 +48,7 @@
     }
 
     .navbar-right a:active {
-        border: 1px solid white !important;
-        font-size: 18px;
+        font-weight: bold;
     }
 
 body {

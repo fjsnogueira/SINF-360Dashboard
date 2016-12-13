@@ -21,20 +21,23 @@ var getAllSales = function () {
             for (var i = 0; i < sales.length; i++) {
                 var temp = sales[i];
                 if (temp.TipoDoc.charAt(0) == 'F' || $.inArray(temp.TipoDoc, salesDocs) !== -1) {
-                    var liquid = temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
+                    var liquid = 0;
+                    for (var j = 0; j < temp.LinhasDoc.length; j++) {
+                        liquid += temp.LinhasDoc[j].TotalLiquido;
+                    }
+                    var month = moment(temp.Data).month();
+                    if (month == 12 || month == 1 || month == 2)
+                        winter++;
+                    if (month == 3 || month == 4 || month == 5)
+                        spring++;
+                    if (month == 6 || month == 7 || month == 8)
+                        summer++;
+                    if (month == 9 || month == 10 || month == 11)
+                        fall++;
                     // Modal Total Sales
                     $(".sales-modal-body").append("<tr> <td>" + temp.TipoDoc + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(liquid.toFixed(2)) + "€ </td></tr>");
                     totalEver += liquid;
                     if (moment(temp.Data).year() == year) {
-                        var month = moment(temp.Data).month();
-                        if (month == 12 || month == 1 || month == 2)
-                            winter++;
-                        if (month == 3 || month == 4 || month == 5)
-                            spring++;
-                        if (month == 6 || month == 7 || month == 8)
-                            summer++;
-                        if (month == 9 || month == 10 || month == 11)
-                            fall++;
                         totalThisYear += liquid;
                         totalSalesThisYear++;
                         // Modal Year Sales
@@ -43,9 +46,12 @@ var getAllSales = function () {
                     
                 }
                 if (temp.TipoDoc === "ECL") {
-                    var total = temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
-                    $(".orders-modal-body").append("<tr> <td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(total.toFixed(2)) + "€ </td></tr>");
-                    totalOrders += total;
+                    var ecl = 0;
+                    for (var j = 0; j < temp.LinhasDoc.length; j++) {
+                        ecl += temp.LinhasDoc[j].TotalLiquido;
+                    }
+                    $(".orders-modal-body").append("<tr> <td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(ecl.toFixed(2)) + "€ </td></tr>");
+                    totalOrders += ecl;
                 }
             }
             $(".totalSales").append(formatPrice(Math.floor(totalEver).toString()) +
@@ -121,10 +127,10 @@ var getTopProducts = function () {
         url: "http://localhost:49751/api/Products/topProductsByClient/" + clientID,
         success: function (products) {
             products = JSON.parse(products);
-
+         //   console.log(products);
             var productData = [];
             var descriptions = [];
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < products.length; i++) {
                 if (products[i].VolumeVendas > 0) {
                     var temp = { prod: products[i].CodArtigo, sale: products[i].VolumeVendas.toFixed(2) };
                     productData.push(temp);
@@ -143,7 +149,6 @@ var getTopProducts = function () {
                 hoverCallback: function (index, options, content) {
                     console.log(content.prod);
                     content += descriptions[index];
-
                     return (content);
                 },
                 labels: ['Value [€]']
