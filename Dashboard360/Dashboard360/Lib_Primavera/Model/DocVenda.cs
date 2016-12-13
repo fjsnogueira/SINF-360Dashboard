@@ -7,6 +7,11 @@ namespace Dashboard360.Lib_Primavera.Model
 {
     public class DocVenda
     {
+        public string Nome
+        {
+            get;
+            set;
+        }
 
         public string id
         {
@@ -56,7 +61,7 @@ namespace Dashboard360.Lib_Primavera.Model
             get;
             set;
         }
-           
+
 
         public string Serie
         {

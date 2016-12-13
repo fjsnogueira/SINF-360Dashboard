@@ -143,7 +143,10 @@ var getTopBuyers = function () {
         url: "http://localhost:49751/api/products/" + productID + "/GetTopBuyers/" + year,
         success: function (topBuyers) {
             topBuyers = JSON.parse(topBuyers);
-            console.log("topbuyers" + topBuyers);
+            console.log(topBuyers);
+
+
+            
             var productData = [];
             var len = topBuyers.length;
             if (len >= 10)

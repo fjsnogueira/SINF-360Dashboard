@@ -79,41 +79,61 @@ namespace Dashboard360.Lib_Primavera
         }
 
         // Top Clients for a certain product
-        public static List<Model.CabecDoc> GetTopClientesArtigo(string id, int year)
+        public static List<Model.DocVenda> GetTopClientesArtigo(string id, int year)
         {
-            StdBELista objList;
-
-            List<Model.CabecDoc> vendasProduto = new List<Model.CabecDoc>();
-
-            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.TipoDoc,  CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalDesc, CabecDoc.TotalOutros FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND LinhasDoc.Artigo = '" + id + "' AND YEAR(CabecDoc.Data) = " + year);
-                while (!objList.NoFim())
+                StdBELista objListCab;
+                StdBELista objListLin;
+                Model.DocVenda dv = new Model.DocVenda();
+                List<Model.DocVenda> listdv = new List<Model.DocVenda>();
+                Model.LinhaDocVenda lindv = new Model.LinhaDocVenda();
+                List<Model.LinhaDocVenda> listlindv = new
+                List<Model.LinhaDocVenda>();
+
+                if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
                 {
-                    vendasProduto.Add(new Model.CabecDoc
+                    objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade,Nome, Data, NumDoc, TotalMerc, TipoDoc, Serie From CabecDoc ");
+                    while (!objListCab.NoFim())
                     {
-                        Entidade = objList.Valor("Entidade"),
-                        Nome = objList.Valor("Nome"),
-                        NumDoc = objList.Valor("NumDoc"),
-                        NumContribuinte = objList.Valor("NumContribuinte"),
-                        TotalMerc = objList.Valor("TotalMerc"),
-                        TotalDesc = objList.Valor("TotalDesc"),
-                        TotalOutros = objList.Valor("TotalOutros"),
-                        TipoDoc = objList.Valor("TipoDoc"),
-                        Data = objList.Valor("Data")
-                    });
+                        dv = new Model.DocVenda();
+                        dv.id = objListCab.Valor("id");
+                        dv.Entidade = objListCab.Valor("Entidade");
+                        dv.NumDoc = objListCab.Valor("NumDoc");
+                        dv.Data = objListCab.Valor("Data");
+                        dv.TotalMerc = objListCab.Valor("TotalMerc");
+                        dv.TipoDoc = objListCab.Valor("TipoDoc");
+                        dv.Serie = objListCab.Valor("Serie");
+                        dv.Nome = objListCab.Valor("Nome");
+                        objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + dv.id + "' and Artigo = '" + id + "' order By NumLinha");
+                        listlindv = new List<Model.LinhaDocVenda>();
 
-                    objList.Seguinte();
+                        while (!objListLin.NoFim())
+                        {
+                            lindv = new Model.LinhaDocVenda();
+                            lindv.IdCabecDoc = objListLin.Valor("idCabecDoc");
+                            lindv.CodArtigo = objListLin.Valor("Artigo");
+                            lindv.DescArtigo = objListLin.Valor("Descricao");
+                            lindv.Quantidade = objListLin.Valor("Quantidade");
+                            lindv.Unidade = objListLin.Valor("Unidade");
+                            lindv.Desconto = objListLin.Valor("Desconto1");
+                            lindv.PrecoUnitario = objListLin.Valor("PrecUnit");
+                            lindv.TotalILiquido = objListLin.Valor("TotalILiquido");
+                            lindv.TotalLiquido = objListLin.Valor("PrecoLiquido");
+
+                            listlindv.Add(lindv);
+                            objListLin.Seguinte();
+                        }
+
+                        dv.LinhasDoc = listlindv;
+                        listdv.Add(dv);
+                        objListCab.Seguinte();
+                    }
+
+                    return listdv;
                 }
-
-                return vendasProduto;
-
+                else return null;
             }
-            else
-                return null;
-
         }
-
 
         public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Cliente cliente)
         {
@@ -268,38 +288,55 @@ namespace Dashboard360.Lib_Primavera
 
         #region Venda
 
-        public static List<Model.LinhaDocVenda> GetVendasCliente(string cliente)
+        public static List<Model.DocVenda> GetVendasCliente(string cliente)
         {
-            StdBELista objList;
-            List<Model.LinhaDocVenda> linhasDoc = new List<Model.LinhaDocVenda>();
-
+            StdBELista objListCab;
+            StdBELista objListLin;
+            Model.DocVenda dv = new Model.DocVenda();
+            List<Model.DocVenda> listdv = new List<Model.DocVenda>();
+            Model.LinhaDocVenda lindv = new Model.LinhaDocVenda();
+            List<Model.LinhaDocVenda> listlindv = new
+            List<Model.LinhaDocVenda>();
 
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Data, LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.Quantidade, LinhasDoc.Unidade, LinhasDoc.DescontoComercial, LinhasDoc.PrecUnit, LinhasDoc.TotalILiquido, LinhasDoc.TotalIva, LinhasDoc.PrecoLiquido, LinhasDoc.PCM FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.Entidade = '" + cliente + "'");
-
-                while (!objList.NoFim())
+                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, TipoDoc, Serie From CabecDoc where Entidade = '" + cliente + "'");
+                while (!objListCab.NoFim())
                 {
-                    linhasDoc.Add(new Model.LinhaDocVenda
+                    dv = new Model.DocVenda();
+                    dv.id = objListCab.Valor("id");
+                    dv.Entidade = objListCab.Valor("Entidade");
+                    dv.NumDoc = objListCab.Valor("NumDoc");
+                    dv.Data = objListCab.Valor("Data");
+                    dv.TotalMerc = objListCab.Valor("TotalMerc");
+                    dv.TipoDoc = objListCab.Valor("TipoDoc");
+                    dv.Serie = objListCab.Valor("Serie");
+                    objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
+                    listlindv = new List<Model.LinhaDocVenda>();
+
+                    while (!objListLin.NoFim())
                     {
-                        Data = objList.Valor("Data"),
-                        CodArtigo = objList.Valor("Artigo"),
-                        DescArtigo = objList.Valor("Descricao"),
-                        Quantidade = objList.Valor("Quantidade"),
-                        Unidade = objList.Valor("Unidade"),
-                        Desconto = objList.Valor("DescontoComercial"),
-                        PrecoUnitario = objList.Valor("PrecUnit"),
-                        TotalILiquido = objList.Valor("TotalILiquido"),
-                        TotalLiquido = objList.Valor("PrecoLiquido")
-                    });
+                        lindv = new Model.LinhaDocVenda();
+                        lindv.IdCabecDoc = objListLin.Valor("idCabecDoc");
+                        lindv.CodArtigo = objListLin.Valor("Artigo");
+                        lindv.DescArtigo = objListLin.Valor("Descricao");
+                        lindv.Quantidade = objListLin.Valor("Quantidade");
+                        lindv.Unidade = objListLin.Valor("Unidade");
+                        lindv.Desconto = objListLin.Valor("Desconto1");
+                        lindv.PrecoUnitario = objListLin.Valor("PrecUnit");
+                        lindv.TotalILiquido = objListLin.Valor("TotalILiquido");
+                        lindv.TotalLiquido = objListLin.Valor("PrecoLiquido");
 
-                    objList.Seguinte();
+                        listlindv.Add(lindv);
+                        objListLin.Seguinte();
+                    }
+
+                    dv.LinhasDoc = listlindv;
+                    listdv.Add(dv);
+                    objListCab.Seguinte();
                 }
-
-                return linhasDoc;
             }
-            else
-                return null;
+            return listdv;
         }
 
 
@@ -352,41 +389,7 @@ namespace Dashboard360.Lib_Primavera
                 }
             }
             return listdv;
-            /*StdBELista objList;
-
-            List<Model.LinhaDocVenda> ListaVendas = new List<Model.LinhaDocVenda>();
-
-            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
-            {
-
-                objList = PriEngine.Engine.Consulta("SELECT idCabecDoc, Data, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalIva, TotalILiquido, PrecoLiquido from LinhasDoc WHERE year(Data)=" + ano);
-                while (!objList.NoFim())
-                {
-                    ListaVendas.Add(new Model.LinhaDocVenda
-                    {
-                        IdCabecDoc = objList.Valor("idCabecDoc"),
-                        CodArtigo = objList.Valor("Artigo"),
-                        DescArtigo = objList.Valor("Descricao"),
-                        Quantidade = objList.Valor("Quantidade"),
-                        Unidade = objList.Valor("Unidade"),
-                        Desconto = objList.Valor("Desconto1"),
-                        PrecoUnitario = objList.Valor("PrecUnit"),
-                        TotalILiquido = objList.Valor("TotalILiquido"),
-                        TotalLiquido = objList.Valor("PrecoLiquido"),
-                        Data = objList.Valor("Data")
-                    });
-
-
-                    objList.Seguinte();
-                }
-
-
-
-
-                return ListaVendas;
-            }
-            else
-                return null;*/
+            
         }
 
 

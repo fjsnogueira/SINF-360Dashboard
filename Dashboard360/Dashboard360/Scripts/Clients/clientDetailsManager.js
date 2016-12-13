@@ -123,10 +123,12 @@ var getTopProducts = function () {
             products = JSON.parse(products);
 
             var productData = [];
+            var descriptions = [];
             for (var i = 0; i < 10; i++) {
                 if (products[i].VolumeVendas > 0) {
                     var temp = { prod: products[i].CodArtigo, sale: products[i].VolumeVendas.toFixed(2) };
                     productData.push(temp);
+                    descriptions.push(products[i].DescArtigo);
                 }
 
             }
@@ -138,6 +140,12 @@ var getTopProducts = function () {
                 data: productData,
                 xkey: 'prod',
                 ykeys: ['sale'],
+                hoverCallback: function (index, options, content) {
+                    console.log(content.prod);
+                    content += descriptions[index];
+
+                    return (content);
+                },
                 labels: ['Value [€]']
             });
         }
