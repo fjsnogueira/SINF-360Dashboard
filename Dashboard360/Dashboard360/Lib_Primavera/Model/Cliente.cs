@@ -35,6 +35,12 @@ namespace Dashboard360.Lib_Primavera.Model
             set;
         }
 
+        public DateTime DataCriacao
+        {
+            get;
+            set;
+        }
+
         public string NumContribuinte
         {
             get;

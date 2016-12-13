@@ -42,21 +42,30 @@ var getSalesList = function (year) {
 
 // Get Total Clients
 var totalClients;
-var getTotalClients = function () {
+var clientsYear;
+var getTotalClients = function (year) {
     $.ajax({
         dataType: "json",
         url: "http://localhost:49751/api/Clients/",
         success: function (customers) {
             customers = JSON.parse(customers);
             totalClients = customers.length;
+            clientsYear = 0;
             for (var i = 0; i < customers.length; i++) {
-                $(".total-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td> <a href='localhost:49751/Clients/ShowDetails/" + customers[i].CodCliente +  "' target='_blank'>" + customers[i].CodCliente + "</a></td><td>" + customers[i].NomeCliente + "</td><td>");
+                $(".total-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td> <a href='localhost:49751/Clients/ShowDetails/" + customers[i].CodCliente + "' target='_blank'>" + customers[i].CodCliente + "</a></td><td>" + customers[i].NomeCliente + "</td><td>");
+                if (moment(customers[i].DataCriacao).year() == year) {
+                    clientsYear++;
+                }
+            }
+
+            if (clientsYear == 0) {
+                clientsYear = totalClients;
             }
 
             $(".loadingNumCustomers").hide();
-            $(".numberOfCustomers").append(customers.length);
+            $(".numberOfCustomers").append(clientsYear);
 
-            var avg = totalSales / totalClients;
+            var avg = totalSales / clientsYear;
             $(".loadingAvgSalePerCustomer").hide();
             $(".avgSalePerCustomer").append(formatPrice(Math.floor(avg).toString()) +
                 " <span style='font-size: 20px!important;'>" + avg.toString().split(".")[1].slice(0, 2) + "</span>");
@@ -96,16 +105,19 @@ var top10Products = function (year) {
         dataType: "json",
         url: "http://localhost:49751/api/Products/GetTop10ProductsSold/" + year,
         success: function (topProductsSold) {
+            
             topProductsSold = JSON.parse(topProductsSold);
-
+            console.log(topProductsSold);
             for (var i = 0; i < 10; i++) {
                 $(".top-products-modal-body").append("<tr><td>" + topProductsSold[i].CodArtigo + "</td><td>" + topProductsSold[i].DescArtigo + "</td><td>" + topProductsSold[i].QuantidadeVendida + "</td><td>" + formatPrice(topProductsSold[i].VolumeVendas.toFixed(2)) + " €</td>");
             }
 
             var productData = [];
+            var descriptions = []
             for (var i = 0; i < 10; i++) {
-                var temp = { prod: topProductsSold[i].CodArtigo/*, desc: topProductsSold[i].DescArtigo*/, sale: topProductsSold[i].VolumeVendas.toFixed(2) };
+                var temp = { prod: topProductsSold[i].CodArtigo, sale: topProductsSold[i].VolumeVendas.toFixed(2) };
                 productData.push(temp);
+                descriptions.push(topProductsSold[i].DescArtigo);
             }
 
             productData = shuffle(productData);
@@ -113,9 +125,15 @@ var top10Products = function (year) {
             Morris.Bar({
                 element: 'top-products',
                 data: productData,
+                hoverCallback: function (index, options, content) {
+                    console.log(content.prod);
+                    content += descriptions[index];
+
+                    return (content);
+                },
                 xkey: 'prod',
-                ykeys: ['sale'],
-                labels: ['Value [€]'/*, ' '*/]
+                ykeys: [/*'desc', */'sale'],
+                labels: ['Value [€]']
             });
         }
 
@@ -129,31 +147,50 @@ var typesOfPurchase = ['VNC', 'VND', 'VVD', 'VFA', 'VFG', 'VFI', 'VFM', 'VFO', '
 var getTotalExpenses = function (year) {
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/purchases",
+        url: "http://localhost:49751/api/purchases/" + year,
         success: function (purchases) {
-            var totalExpenses = 0;
             purchases = JSON.parse(purchases);
-
+            var purchasesF0001 = 0;
+            var purchasesF0002 = 0;
+            var purchasesF0003 = 0;
+            var purchasesF0004 = 0;
+            var purchasesF0005 = 0;
+            var purchasesSER = 0;
+            var totalExpenses = 0;
             for (var i = 0; i < purchases.length; i++) {
-                if (moment(purchases[i].Data).year() == year) {
-                    if ($.inArray(purchases[i].TipoDoc, typesOfPurchase) !== -1) {
-                        console.log(purchases[i].TipoDoc + " - " + purchases[i].TotalMerc);
-                        totalExpenses += Math.abs(purchases[i].TotalMerc) + Math.abs(purchases[i].TotalOutros) - Math.abs(purchases[i].TotalDesc);
+                var temp = purchases[i];
+                if (moment(temp.Data).year() == 2016) {
+                    if ($.inArray(temp.TipoDoc, typesOfPurchase) !== -1) {
+                        var salesVolume = temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
+                        if (temp.Entidade == "F0001")
+                            purchasesF0001 += salesVolume;
+                        else if (temp.Entidade == "F0002")
+                            purchasesF0002 += salesVolume;
+                        else if (temp.Entidade == "F0003")
+                            purchasesF0003 += salesVolume;
+                        else if (temp.Entidade == "F0004")
+                            purchasesF0004 += salesVolume;
+                        else if (temp.Entidade == "F0005")
+                            purchasesF0005 += salesVolume;
+                        else if (temp.Entidade == "SER")
+                            purchasesSER += temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
+                        $(".expenses-modal-body").append("<tr><td>" + temp.Entidade + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align:right'>" + formatPrice(salesVolume.toFixed(2).toString()) + " €</td>");
                     }
                 }
             }
-            console.log("total expenses: " + totalExpenses);
-            var avgExpenseCustomer = Math.abs(totalExpenses) / totalClients;
-            $(".loadingAvgExpense").hide();
-            $(".avgExpenseCustomer").append(formatPrice(Math.floor(avgExpenseCustomer).toString()) +
-               " <span style='font-size: 20px!important;'>" + avgExpenseCustomer.toString().split(".")[1].slice(0, 2) + "</span>");
 
-            totalExpensesFinal = totalExpenses;
+            totalExpenses = purchasesF0001 + purchasesF0002 + purchasesF0003 + purchasesF0004 + purchasesF0005 + purchasesSER;
+            $(".expenses-modal-body").append("<tr><td>" + "TOTAL" + "</td><td>" + "    " + "</td><td style='text-align:right'>" + formatPrice(totalExpenses.toFixed(2).toString()) + " €</td>");
+            var avgExpense = totalExpenses / totalClients;
+            $(".loadingAvgExpense").hide();
+            $(".avgExpenseCustomer").append(formatPrice(Math.abs(Math.floor(avgExpense)).toString()) + " <span style='font-size: 20px!important;'>" + totalExpenses.toString().split(".")[1].slice(0, 2) + "</span>");
+
 
         }
     }).fail(function () {
-        console.log("ERROR: getting purchases list");
+        alert("ERROR: getting purchases list");
     });
+
 };
 
 // Get Top 10 Clients in Year 'year'
@@ -174,8 +211,21 @@ var getTopClients = function (year) {
             }
 
             // Get total sales and data for chart
-            $(".loadingTopClients").hide()
+
+            var clientData = [];
+            for (var i = 0; i < topClients.length; i++) {
+                clientData.push({ label: topClients[i].CodCliente, value: topClients[i].TotalCompras.toFixed(2) });
+                console.log({ label: topClients[i].CodCliente, value: topClients[i].TotalCompras.toFixed(2) });
+            }
+            $(".loadingTopClients").hide();
             $("#top-clients").show();
+            Morris.Donut({
+                element: 'top-clients',
+                data: clientData
+            });
+
+            /*
+            $("#").show();
 
             var graphLabels = [];
             var graphValues = [];
@@ -188,10 +238,6 @@ var getTopClients = function (year) {
             }
 
             graphColors.slice(0, graphValues.length);
-            console.log("labels: " + graphLabels);
-            console.log("values: " + graphValues);
-            console.log("color: " + graphColors);
-
 
             var data = {
                 labels: graphLabels,
@@ -216,7 +262,7 @@ var getTopClients = function (year) {
             
             ////////
 
-            console.log("pintou");
+            console.log("pintou");*/
         }
     }).fail(function () {
         console.log("ERROR: getting top 10 clients");
@@ -229,13 +275,15 @@ $.getScript("/Scripts/moment.min.js", function () {
 });
 
 
+String.prototype.reverse = function () {
+    return this.split('').reverse().join('');
+}
+
 function formatPrice(price) {
     return price.reverse().replace(/((?:\d{2})\d)/g, '$1 ').reverse();
 }
 
-String.prototype.reverse = function () {
-    return this.split('').reverse().join('');
-}
+
 
 var hideValues = function () {
     $(".avgExpenseCustomer").html("");
@@ -251,6 +299,7 @@ var hideValues = function () {
     $(".total-clients-modal-body").html("");
     $(".top-products-modal-body").html("");
     $(".active-clients-modal-body").html("");
+    $(".expenses-modal-body").html("");
 
 }
 
@@ -308,117 +357,9 @@ var validYear = function (year) {
 //Controlling Functions
 
 var getValues = function (year) {
-    /*  var data = {
-          labels: ["January", "February", "March",
-                    "April", "May", "June",
-                    "July", "Agost", "September",
-                    "October", "November", "December"],
-          datasets: [
-              {
-                  fillColor: "rgba(252,233,79,0.5)",
-                  strokeColor: "rgba(82,75,25,1)",
-                  pointColor: "rgba(166,152,51,1)",
-                  pointStrokeColor: "#fff",
-                  data: [65, 68, 75,
-                          81, 95, 105,
-                          130, 120, 105,
-                          90, 75, 70]
-              }
-          ]
-      }
-  
-  
-      var options = {
-          //Boolean - If we show the scale above the chart data			
-          scaleOverlay: false,
-  
-          //Boolean - If we want to override with a hard coded scale
-          scaleOverride: true,
-  
-          //** Required if scaleOverride is true **
-          //Number - The number of steps in a hard coded scale
-          scaleSteps: 14,
-          //Number - The value jump in the hard coded scale
-          scaleStepWidth: 5,
-          //Number - The scale starting value
-          scaleStartValue: 55,
-          //String - Colour of the scale line	
-          scaleLineColor: "rgba(20,20,20,.7)",
-  
-          //Number - Pixel width of the scale line	
-          scaleLineWidth: 1,
-  
-          //Boolean - Whether to show labels on the scale	
-          scaleShowLabels: true,
-  
-          //Interpolated JS string - can access value
-          scaleLabel: "<%=value%>",
-  
-          //String - Scale label font declaration for the scale label
-          scaleFontFamily: "'Arial'",
-  
-          //Number - Scale label font size in pixels	
-          scaleFontSize: 12,
-  
-          //String - Scale label font weight style	
-          scaleFontStyle: "normal",
-  
-          //String - Scale label font colour	
-          scaleFontColor: "#666",
-  
-          ///Boolean - Whether grid lines are shown across the chart
-          scaleShowGridLines: true,
-  
-          //String - Colour of the grid lines
-          scaleGridLineColor: "rgba(0,0,0,.3)",
-  
-          //Number - Width of the grid lines
-          scaleGridLineWidth: 1,
-  
-          //Boolean - Whether the line is curved between points
-          bezierCurve: true,
-  
-          //Boolean - Whether to show a dot for each point
-          pointDot: true,
-  
-          //Number - Radius of each point dot in pixels
-          pointDotRadius: 5,
-  
-          //Number - Pixel width of point dot stroke
-          pointDotStrokeWidth: 1,
-  
-          //Boolean - Whether to show a stroke for datasets
-          datasetStroke: true,
-  
-          //Number - Pixel width of dataset stroke
-          datasetStrokeWidth: 2,
-  
-          //Boolean - Whether to fill the dataset with a colour
-          datasetFill: true,
-  
-          //Boolean - Whether to animate the chart
-          animation: false,
-  
-          //Number - Number of animation steps
-          animationSteps: 60,
-  
-          //String - Animation easing effect
-          animationEasing: "easeOutQuart",
-  
-          //Function - Fires when the animation is complete
-          onAnimationComplete: null
-      };
-  
-  
-      //Get context with jQuery - using jQuery's .get() method.
-      var ctx = $("#myChart").get(0).getContext("2d");
-  
-  
-      new Chart(ctx).Line(data, options);*/
-
     getSalesList(year);
     getTotalSales(year);
-    getTotalClients();
+    getTotalClients(year);
     getTotalActiveClients(year);
     getTotalExpenses(year);
     getTopClients(year);

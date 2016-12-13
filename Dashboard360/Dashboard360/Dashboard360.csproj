@@ -468,7 +468,6 @@
     <Content Include="Scripts\plugins\morris\morris.min.js" />
     <Content Include="Scripts\plugins\morris\raphael.min.js" />
     <Content Include="Scripts\Products\getProducts.js" />
-    <Content Include="Scripts\Products\getTop10Products.js" />
     <Content Include="Scripts\Products\productDetailsManager.js" />
     <Content Include="Scripts\Purchases\getPurchases.js" />
     <Content Include="Scripts\Purchases\listPurchases.js" />

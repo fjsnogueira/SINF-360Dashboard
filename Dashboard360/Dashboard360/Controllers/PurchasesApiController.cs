@@ -18,10 +18,10 @@ namespace Dashboard360.Controllers
         // GET:     api/Purchases/
         // Returns: all purchases
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage GetAllPurchases()
+        public HttpResponseMessage GetAllPurchases(string year)
         {
 
-            List<Lib_Primavera.Model.DocCompra> PurchaseList = Lib_Primavera.PriIntegration.ListaCompras();
+            List<Lib_Primavera.Model.DocCompra> PurchaseList = Lib_Primavera.PriIntegration.ListaCompras(year);
             var res = new JavaScriptSerializer().Serialize(PurchaseList);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }

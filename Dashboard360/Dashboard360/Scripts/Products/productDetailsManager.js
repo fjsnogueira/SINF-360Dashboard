@@ -143,7 +143,7 @@ var getTopBuyers = function () {
         url: "http://localhost:49751/api/products/" + productID + "/GetTopBuyers/" + year,
         success: function (topBuyers) {
             topBuyers = JSON.parse(topBuyers);
-
+            console.log("topbuyers" + topBuyers);
             var productData = [];
             var len = topBuyers.length;
             if (len >= 10)
@@ -151,12 +151,13 @@ var getTopBuyers = function () {
 
             for (var i = 0; i < len; i++) {
                 if (topBuyers[i].TotalCompras > 0) {
+                    console.log(topBuyers[i]);
                     var temp = { name: topBuyers[i].Nome, sale: topBuyers[i].TotalCompras.toFixed(2) };
                     productData.push(temp);
                 }
             }
 
-            // productData = shuffle(productData);
+            productData = shuffle(productData);
             $(".loadingTopBuyers").remove();
             Morris.Bar({
                 element: 'top-buyers',
@@ -179,7 +180,7 @@ var getInventory = function () {
 }
 
 $(function () {
-    getTotalSales();
+ //   getTotalSales();
     getTopBuyers();
     // getInventory();
 });
@@ -194,4 +195,23 @@ function formatPrice(price) {
 
 String.prototype.reverse = function () {
     return this.split('').reverse().join('');
+}
+
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
 }

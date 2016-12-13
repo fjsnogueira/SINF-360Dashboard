@@ -334,3 +334,9 @@ modal-header-green {
     border-color: #5cb85c !important;
     color: white !important;
 }
+
+.red {
+    background-color: #d9534f !important;
+    border-color: #d9534f !important;
+    color: white !important;
+}

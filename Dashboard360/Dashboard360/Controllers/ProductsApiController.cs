@@ -64,24 +64,28 @@ namespace Dashboard360.Controllers
         {
             List<ClienteCounter> topBuyers = new List<ClienteCounter>();
             List<CabecDoc> productSales = Lib_Primavera.PriIntegration.GetTopClientesArtigo(id, year);
-
+            string[] DocTypes = { "NC", "ND", "VD", "DV", "AVE" };
             foreach (CabecDoc it in productSales)
             {
-                if (topBuyers.Exists(cli => cli.CodCliente == it.Entidade))
+                if (it.Data.Year == year && (it.TipoDoc[0] == 'F' || DocTypes.Contains(it.TipoDoc)))
                 {
-                    topBuyers.Find(cli => cli.CodCliente == it.Entidade).TotalCompras += (it.TotalMerc + it.TotalOutros - it.TotalDesc);
-                    topBuyers.Find(cli => cli.CodCliente == it.Entidade).NumeroCompras++;
-                }
-                else
-                {
-                    topBuyers.Add(new ClienteCounter
+                    if (topBuyers.Exists(cli => cli.CodCliente == it.Entidade))
                     {
-                        CodCliente = it.Entidade,
-                        Nome = it.Nome,
-                        TotalCompras = (it.TotalMerc + it.TotalOutros - it.TotalDesc),
-                        NumeroCompras = 1
-                    });
+                        topBuyers.Find(cli => cli.CodCliente == it.Entidade).TotalCompras += (it.TotalMerc + it.TotalOutros - it.TotalDesc);
+                        topBuyers.Find(cli => cli.CodCliente == it.Entidade).NumeroCompras++;
+                    }
+                    else
+                    {
+                        topBuyers.Add(new ClienteCounter
+                        {
+                            CodCliente = it.Entidade,
+                            Nome = it.Nome,
+                            TotalCompras = (it.TotalMerc + it.TotalOutros - it.TotalDesc),
+                            NumeroCompras = 1
+                        });
+                    }
                 }
+
             }
             var res = new JavaScriptSerializer().Serialize(topBuyers);
             return Request.CreateResponse(HttpStatusCode.OK, res);
@@ -108,32 +112,64 @@ namespace Dashboard360.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage GetTop10ProductsSold(string year)
         {
-            // TODO: check if there's top 10 clients in Enterprise View
+            string[] tiposDocs = { "NC", "ND", "VD", "DV", "AVE" };
+            List<Lib_Primavera.Model.DocVenda> DocsVenda = Lib_Primavera.PriIntegration.GetVendasProduto(year);
             List<Lib_Primavera.Model.ArtigoCounter> TopArtigos = new List<Lib_Primavera.Model.ArtigoCounter>();
-            List<Lib_Primavera.Model.LinhaDocVenda> ListaVendas = Lib_Primavera.PriIntegration.GetVendasProduto(year);
-
-            foreach (LinhaDocVenda it in ListaVendas)
+            foreach (DocVenda itDocVenda in DocsVenda)
             {
-
-                if (!TopArtigos.Exists(art => art.CodArtigo == it.CodArtigo))
+                if (itDocVenda.Data.Year == 2016 && (itDocVenda.TipoDoc[0] == 'F' || tiposDocs.Contains(itDocVenda.TipoDoc)))
                 {
-                    TopArtigos.Add(new ArtigoCounter
+                    List<LinhaDocVenda> linhasDoc = itDocVenda.LinhasDoc;
+                    foreach (LinhaDocVenda it in linhasDoc)
                     {
-                        CodArtigo = it.CodArtigo,
-                        DescArtigo = it.DescArtigo,
-                        QuantidadeVendida = it.Quantidade,
-                        VolumeVendas = it.TotalLiquido
+                        if (!TopArtigos.Exists(art => art.CodArtigo == it.CodArtigo))
+                        {
+                            TopArtigos.Add(new ArtigoCounter
+                            {
+                                CodArtigo = it.CodArtigo,
+                                DescArtigo = it.DescArtigo,
+                                QuantidadeVendida = it.Quantidade,
+                                VolumeVendas = it.TotalLiquido
 
-                    });
+                            });
+                        }
+                        else
+                        {
+                            TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).VolumeVendas += it.TotalLiquido;
+                            TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).QuantidadeVendida += it.Quantidade;
+                        }
+                    }
                 }
-                else
-                {
-                    TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).VolumeVendas += it.TotalLiquido;
-                    TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).QuantidadeVendida += it.Quantidade;
-                }
-
             }
+
+            /* List<Lib_Primavera.Model.LinhaDocVenda> ListaVendas = Lib_Primavera.PriIntegration.GetVendasProduto(year);
+              List<Lib_Primavera.Model.ArtigoCounter> TopArtigos = new List<Lib_Primavera.Model.ArtigoCounter>();
+              foreach (LinhaDocVenda it in ListaVendas)
+              {
+                  if (it.Data.Year == 2016)
+                  {
+                      if (!TopArtigos.Exists(art => art.CodArtigo == it.CodArtigo))
+                      {
+                          TopArtigos.Add(new ArtigoCounter
+                          {
+                              CodArtigo = it.CodArtigo,
+                              DescArtigo = it.DescArtigo,
+                              QuantidadeVendida = it.Quantidade,
+                              VolumeVendas = it.TotalLiquido
+
+                          });
+                      }
+                      else
+                      {
+                          TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).VolumeVendas += it.TotalLiquido;
+                          TopArtigos.Find(art => art.CodArtigo == it.CodArtigo).QuantidadeVendida += it.Quantidade;
+                      }
+                  }
+
+
+              }*/
             var toReturn = TopArtigos.OrderByDescending(prod => prod.VolumeVendas).ToList();
+
             toReturn = toReturn.GetRange(0, 10);
             var res = new JavaScriptSerializer().Serialize(toReturn);
             return Request.CreateResponse(HttpStatusCode.OK, res);

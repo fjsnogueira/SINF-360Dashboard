@@ -90,7 +90,7 @@ namespace Dashboard360
              */
             config.Routes.MapHttpRoute(
                 name: "Purchases",
-                routeTemplate: "api/Purchases",
+                routeTemplate: "api/Purchases/{year}",
                 defaults: new { controller = "PurchasesApi", Action = "GetAllPurchases" }
             );
 
