@@ -19,8 +19,9 @@
     $(".loadingTotalOrders").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
 
     // Product Details
-    $(".loadngInventory").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingInventory").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingNumberOrders").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingUnitPrice").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
-        
+    $(".loadingTopBuyers").append("<img src='/Content/images/loading.gif' width='342' height='342'>");
+    
 });

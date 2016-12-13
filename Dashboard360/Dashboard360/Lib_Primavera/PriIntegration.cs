@@ -417,6 +417,7 @@ namespace Dashboard360.Lib_Primavera
                     objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
                     myArt.CodArtigo = objArtigo.get_Artigo();
                     myArt.DescArtigo = objArtigo.get_Descricao();
+                    myArt.Stock = objArtigo.get_StkActual();
 
                     return myArt;
                 }
@@ -428,6 +429,24 @@ namespace Dashboard360.Lib_Primavera
             }
 
         }
+
+
+        public static double GetStockArtigo(string codArtigo)
+        { 
+            StdBELista stockArtigo;
+            double stock = 0;
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                stockArtigo = PriEngine.Engine.Consulta("select STKActual from Artigo where Artigo ='" + codArtigo + "'");
+                while (!stockArtigo.NoFim())
+                {
+                    stock = stockArtigo.Valor("STKActual");
+                }
+            }
+            return stock;
+        }
+
+
 
         public static List<Model.Artigo> ListaArtigos()
         {

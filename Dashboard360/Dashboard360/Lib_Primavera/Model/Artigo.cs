@@ -19,6 +19,12 @@ namespace Dashboard360.Lib_Primavera.Model
             set;
         }
 
+        public double Stock
+        {
+            get;
+            set;
+        }
+
     }
 
     public class ArtigoCounter

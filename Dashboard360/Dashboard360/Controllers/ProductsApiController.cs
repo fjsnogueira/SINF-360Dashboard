@@ -196,5 +196,12 @@ namespace Dashboard360.Controllers
             var res = new JavaScriptSerializer().Serialize(toReturn);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
+
+
+        public double GetStock(string productID)
+        {
+            Artigo art = Lib_Primavera.PriIntegration.GetArtigo(productID);
+            return art.Stock;
+        }
     }
 }

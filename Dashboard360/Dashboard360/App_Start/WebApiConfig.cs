@@ -150,6 +150,13 @@ namespace Dashboard360
                 defaults: new { controller = "ProductsApi", Action = "GetSeasonality" }
             );
 
+            // Get Product Stock
+            config.Routes.MapHttpRoute(
+               name: "GetStock",
+               routeTemplate: "api/products/GetStock/{productID}",
+               defaults: new { controller = "ProductsApi", Action = "GetStock" }
+           );
+
 
 
             /*
@@ -193,6 +200,8 @@ namespace Dashboard360
                 routeTemplate: "api/GetAverageEmployeeByAge",
                 defaults: new { controller = "HumanResourcesApi", Action = "GetAverageEmployeeByAge" }
             );
+
+            
 
             /*
              * Other
