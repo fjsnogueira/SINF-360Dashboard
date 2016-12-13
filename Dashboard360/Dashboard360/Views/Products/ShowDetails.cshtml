@@ -18,137 +18,143 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
-                <!-- Total Sales -->
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-euro fa-3x"></i>
+            <div class="col-lg-8">
+                <div class="row">
+                    <!-- Total Sales -->
+                    <div class="col-lg-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <i class="fa fa-euro fa-3x"></i>
+                                    </div>
+                                    <div class="col-xs-10 text-right">
+                                        <div class="huge"><span class="loadingSalesTotal"></span><span class="totalSales"></span></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingSalesTotal"></span><span class="totalSales"></span></div>
-                            </div>
+                            <a href="#" data-toggle="modal" data-target="#salesList">
+                                <div class="panel-footer">
+                                    <span class="pull-right">Total Sales <i class="fa fa-plus-circle"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#salesList">
-                        <div class="panel-footer">
-                            <span class="pull-right">Total Sales <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <!-- Total Sales This Year -->
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-euro fa-3x"></i>
+                    <!-- Total Sales This Year -->
+                    <div class="col-lg-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <i class="fa fa-euro fa-3x"></i>
+                                    </div>
+                                    <div class="col-xs-10 text-right">
+                                        <div class="huge"><span class="loadingSalesTotalThisYear"></span><span class="totalSalesThisYear"></span></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingSalesTotalThisYear"></span><span class="totalSalesThisYear"></span></div>
-                            </div>
+                            <a href="#" data-toggle="modal" data-target="#salesYearList">
+                                <div class="panel-footer">
+                                    <span class="pull-right">Total Sales This Year <i class="fa fa-plus-circle"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#salesYearList">
-                        <div class="panel-footer">
-                            <span class="pull-right">Total Sales This Year <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- Value Orders -->
-            <div class="col-lg-4">
-                <div class="panel panel-orange">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-euro fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingTotalOrders"></span><span class="totalOrders"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" data-toggle="modal" data-target="#">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Value Of Orders</span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- Number of Orders -->
-            <div class="col-lg-4">
-                <div class="panel panel-purple">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-bars fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingNumberOrders"></span><span class="numberOrders"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" data-toggle="modal" data-target="#ordersList">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Number Of Orders <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- Unit Price -->
-            <div class="col-lg-4">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-euro fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingUnitPrice"></span><span class="unitPrice"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" data-toggle="modal" data-target="#">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Unit Price </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <!-- Units in inventory -->
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-plus fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingInventory"></span><span class="inventory"></span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" data-toggle="modal" data-target="#">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Units in Inventory </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
+                </div>
+                <div class="row margin">
+                    <!-- Unit Price -->
+                    <div class="col-lg-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <i class="fa fa-euro fa-3x"></i>
+                                    </div>
+                                    <div class="col-xs-10 text-right">
+                                        <div class="huge"><span class="loadingUnitPrice"></span><span class="unitPrice"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" data-toggle="modal" data-target="#">
+                                <div class="panel-footer">
+                                    <span class="pull-right"> Unit Price </span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Units in inventory -->
+                    <div class="col-lg-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <i class="fa fa-plus fa-3x"></i>
+                                    </div>
+                                    <div class="col-xs-10 text-right">
+                                        <div class="huge"><span class="loadingInventory"></span><span class="inventory"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" data-toggle="modal" data-target="#">
+                                <div class="panel-footer">
+                                    <span class="pull-right"> Units in Inventory </span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row margin">
+                    <!-- Number of Orders -->
+                    <div class="col-lg-6">
+                        <div class="panel panel-purple">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <i class="fa fa-bars fa-3x"></i>
+                                    </div>
+                                    <div class="col-xs-10 text-right">
+                                        <div class="huge"><span class="loadingNumberOrders"></span><span class="numberOrders"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" data-toggle="modal" data-target="#ordersList">
+                                <div class="panel-footer">
+                                    <span class="pull-right"> Number Of Orders <i class="fa fa-plus-circle"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Value Orders -->
+                    <div class="col-lg-6">
+                        <div class="panel panel-orange">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <i class="fa fa-euro fa-3x"></i>
+                                    </div>
+                                    <div class="col-xs-10 text-right">
+                                        <div class="huge"><span class="loadingTotalOrders"></span><span class="totalOrders"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" data-toggle="modal" data-target="#">
+                                <div class="panel-footer">
+                                    <span class="pull-right"> Value Of Orders</span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Seasonality of Sales -->
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class="row" style="text-align: center;">
@@ -163,8 +169,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <!-- Top Buyers -->
-            <div class="col-lg-6 col-md-12">
+            <div class="col-lg-12 col-md-12">
                 <div class="panel panel-yellow">
                     <div class="panel-heading">
                         <div class="row" style="text-align: center;">
@@ -180,7 +188,15 @@
                 </div>
             </div>
         </div>
+
+
     </div>
+
+    <div class="row">
+
+
+    </div>
+</div>
 </div>
 
 
