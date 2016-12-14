@@ -125,7 +125,34 @@ namespace Dashboard360.Controllers
         {
 
             IEnumerable<Lib_Primavera.Model.Empregado> humanResourcesExpenses = Lib_Primavera.PriIntegration.ListOfEmployees();
-            var res = new JavaScriptSerializer().Serialize(humanResourcesExpenses);
+            List<Lib_Primavera.Model.Empregado> TrabalhadoresYear = new List<Lib_Primavera.Model.Empregado>();
+
+
+
+            foreach (Empregado it in humanResourcesExpenses)
+            {
+
+                if (it.dataAdmissao.Year <= Convert.ToDouble(year))
+                {
+                    if (it.dataDemissao.Year >= Convert.ToDouble(year) || (it.dataDemissao.Year == 1))
+                    {
+                        TrabalhadoresYear.Add(new Empregado
+                        {
+                            nome = it.nome,
+                            sexo = it.sexo,
+                            dataNascimento = it.dataNascimento,
+                            salario = it.salario,
+                            dataAdmissao = it.dataAdmissao,
+                            dataDemissao = it.dataDemissao,
+                            subsidioAlim = it.subsidioAlim
+
+                        });
+                    }
+
+                }
+            }
+
+            var res = new JavaScriptSerializer().Serialize(TrabalhadoresYear);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
