@@ -433,7 +433,7 @@
     <Content Include="Scripts\Clients\clientManager.js" />
     <Content Include="Scripts\Financial\getAccountsPayable.js" />
     <Content Include="Scripts\Financial\getAccountsReceivable.js" />
-    <Content Include="Scripts\Financial\getAverageSalesPrice.js" />
+    <Content Include="Scripts\Financial\getFinancialData.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

@@ -1,57 +1,223 @@
 ﻿@section CustomScripts {
-    @Scripts.Render("~/Scripts/Financial/getAverageSalesPrice.js")
-    @Scripts.Render("~/Scripts/Financial/getAccountsReceivable.js")
-    @Scripts.Render("~/Scripts/Financial/getAccountsPayable.js")
+    @Scripts.Render("~/Scripts/Financial/getFinancialData.js")
 }
-<div class="col-lg-12 col-md-12 col-xs-12" style="text-align: center;">
-    <h1>Financial View </h1>
+
+@section CustomStyles{
+    @Styles.Render("~/Content/plugins/morris.css")
+}
+
+<!-- Page Title -->
+<div class="row page-title" style="text-align: center;">
+    <h2>
+        <a id="previousYear" href="#" style="text-decoration: none!important; color: #428bca!important;">
+            <i class="fa fa-arrow-left fa-1x"></i>
+        </a> |
+        <span id="yearTitle"> @ViewData["Year"] </span>|
+        <a id="nextYear" href="#" style="text-decoration: none!important; color: #428bca!important;">
+            <i class="fa fa-arrow-right fa-1x"></i>
+        </a>
+    </h2>
 </div>
+
 <div class="row">
-    <!-- Total Turnover -->
-    <div class="col col-lg-4 col-md-4">
-        <h3> Total Turnover </h3>
-    </div>
-
-    <!-- Total Expenses -->
-    <div class="col col-lg-4 col-md-4">
-        <h3> Total Expenses </h3>
-    </div>
-
-    <!-- Average Sales Price -->
-    <div class="col col-lg-4 col-md-4">
-        <h3> Average Sales Price </h3>
-        <span class="averageSalesPrice"></span>
-    </div>
-
-    <!-- Accounts Payable -->
-    <div class="col col-lg-4 col-md-4">
-        <h3> Accounts Payable </h3>
-        <span class="accountsPayable"></span>
-    </div>
-
-    <!-- Accounts Receivable -->
-    <div class="col col-lg-4 col-md-4">
-        <h3> Accounts Receivable </h3>
-        <span class="accountsReceivable"></span>
-    </div>
-
-    <!-- Cash Flow -->
-    <div class="col col-lg-4 col-md-4">
-        <h3> Cash Flow </h3>
-    </div>
-
-    <!-- Total Assets -->
-    <div class="col col-lg-4 col-md-4">
-        <h3> Total Assets </h3>
-    </div>
-
-    <!-- Total Liabilities -->
-    <div class="col col-lg-4 col-md-4">
-        <h3> Total Liabilities </h3>
-    </div>
-
-    <!-- Sales Revenue Growth -->
-    <div class="col col-lg-4 col-md-4">
-        <h3> Sales Revenue Growth </h3>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10 col-md-12">
+        <div class="row">
+            <!-- Total Turnover -->
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-euro fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge"><span class="loadingTotalTurnover"></span><span class="totalTurnover"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" data-toggle="modal" data-target="#salesList">
+                        <div class="panel-footer">
+                            <span class="pull-right"> Total turnover <i class="fa fa-plus-circle"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Total Expenses -->
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-euro fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge"><span class="loadingTotalExpenses"></span><span class="totalExpenses"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" data-toggle="modal" data-target="#expenseslist">
+                        <div class="panel-footer">
+                            <span class="pull-right"> Total Expenses <i class="fa fa-plus-circle"></i> </span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Average Sales Price -->
+            <div class="col-lg-4 col-md-12">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-euro fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge"><span class="loadingAverageSalesPrice"></span><span class="averageSalesPrice"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" data-toggle="modal" data-target="#totalClientsList">
+                        <div class="panel-footer">
+                            <span class="pull-right"> Average Sales Price <i class="fa fa-plus-circle"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Row 2 -->
+        <div class="row margin">
+            <!-- Accounts Payable -->
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-euro fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge"><span class="loadingAccountsPayable"></span><span class="accountsPayable"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" data-toggle="modal" data-target="#salesList">
+                        <div class="panel-footer">
+                            <span class="pull-right"> Accounts Payable <i class="fa fa-plus-circle"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Accounts Receivable -->
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-euro fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge"><span class="loadingAccountsReceivable"></span><span class="accountsReceivable"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" data-toggle="modal" data-target="#expenseslist">
+                        <div class="panel-footer">
+                            <span class="pull-right"> Accounts Receivable <i class="fa fa-plus-circle"></i> </span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Cash Flow -->
+            <div class="col-lg-4 col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-euro fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge"><span class="loadingCashFlow"></span><span class="cashFlow"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" data-toggle="modal" data-target="#totalClientsList">
+                        <div class="panel-footer">
+                            <span class="pull-right"> Cash Flow <i class="fa fa-plus-circle"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Row 3 -->
+        <div class="row margin">
+            <!-- Total Assets -->
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-euro fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge"><span class="loadingTotalAssets"></span><span class="totalAssets"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" data-toggle="modal" data-target="#salesList">
+                        <div class="panel-footer">
+                            <span class="pull-right"> Total Assets <i class="fa fa-plus-circle"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Total Liabilities -->
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-euro fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge"><span class="loadingTotalLiabilities"></span><span class="totalLiabilities"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" data-toggle="modal" data-target="#expenseslist">
+                        <div class="panel-footer">
+                            <span class="pull-right"> Total Liabilities <i class="fa fa-plus-circle"></i> </span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Sales Revenue Growth -->
+            <div class="col-lg-4 col-md-12">
+                <div class="panel panel-purple">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-euro fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge"><span class="loadingSalesRevenueGrowth"></span><span class="salesRevenueGrowth"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" data-toggle="modal" data-target="#totalClientsList">
+                        <div class="panel-footer">
+                            <span class="pull-right"> Sales Revenue Growth <i class="fa fa-plus-circle"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

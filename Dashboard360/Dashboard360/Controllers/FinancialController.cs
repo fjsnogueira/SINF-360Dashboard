@@ -11,8 +11,12 @@ namespace Dashboard360.Controllers
 {
     public class FinancialController : Controller
     {
+        int Year;
+
         public ActionResult Index()
         {
+            Year = DateTime.Today.Year;
+            ViewData["Year"] = Year;
             return View();
         }
     }
