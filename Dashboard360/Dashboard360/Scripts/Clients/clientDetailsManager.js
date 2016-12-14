@@ -23,9 +23,10 @@ var getAllSales = function () {
                 if (temp.TipoDoc.charAt(0) == 'F' || $.inArray(temp.TipoDoc, salesDocs) !== -1) {
                     var liquid = 0;
                     for (var j = 0; j < temp.LinhasDoc.length; j++) {
+                        console.log(temp.LinhasDoc);
                         liquid += temp.LinhasDoc[j].TotalLiquido;
                         if (temp.LinhasDoc[j].TotalLiquido > 0)
-                            $(".sales-modal-body").append("<tr> <td>" + temp.LinhasDoc[j].DescArtigo + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(temp.LinhasDoc[j].TotalLiquido.toFixed(2)) + "€ </td></tr>");
+                            $(".sales-modal-body").append("<tr> <td> <a href='localhost:49751/Products/ShowDetails/" + temp.LinhasDoc[j].CodArtigo + "' target='_blank'>" + temp.LinhasDoc[j].DescArtigo + " </a> <td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(temp.LinhasDoc[j].TotalLiquido.toFixed(2)) + "€ </td></tr>");
                     }
                     var month = moment(temp.Data).month();
                     if (month == 12 || month == 1 || month == 2)
@@ -45,7 +46,7 @@ var getAllSales = function () {
                         // Modal Year Sales
                         for (var k = 0; k < temp.LinhasDoc.length; k++) {
                             if (temp.LinhasDoc[k].TotalLiquido > 0)
-                                $(".sales-year-modal-body").append("<tr> <td>" + temp.LinhasDoc[k].DescArtigo + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(temp.LinhasDoc[k].TotalLiquido.toFixed(2)) + "€ </td></tr>");
+                                $(".sales-year-modal-body").append("<tr><td> <a href='localhost:49751/Products/ShowDetails/" + temp.LinhasDoc[k].CodArtigo + "' target='_blank'>" + temp.LinhasDoc[k].DescArtigo + " </a> <td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(temp.LinhasDoc[k].TotalLiquido.toFixed(2)) + "€ </td></tr>");
                         }
 
                     }
@@ -56,7 +57,7 @@ var getAllSales = function () {
                     for (var j = 0; j < temp.LinhasDoc.length; j++) {
                         ecl += temp.LinhasDoc[j].TotalLiquido;
                         if (temp.LinhasDoc[j].TotalLiquido > 0)
-                            $(".orders-modal-body").append("<tr> <td>" + temp.LinhasDoc[j].DescArtigo + "</td> <td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(temp.LinhasDoc[j].TotalLiquido.toFixed(2)) + "€ </td></tr>");
+                            $(".orders-modal-body").append("<tr> <td> <a href='localhost:49751/Products/ShowDetails/" + temp.LinhasDoc[j].CodArtigo + "' target='_blank'>"  + temp.LinhasDoc[j].DescArtigo + " </a> </td> <td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(temp.LinhasDoc[j].TotalLiquido.toFixed(2)) + "€ </td></tr>");
                     }
                     totalOrders += ecl;
                 }
@@ -159,12 +160,13 @@ var getTopProducts = function () {
                 xkey: 'prod',
                 ykeys: ['sale'],
                 hoverCallback: function (index, options, content) {
-                    console.log(content.prod);
                     content += descriptions[index];
                     return (content);
                 },
                 labels: ['Value [€]']
-            });
+            }).on('click', function (i, row) {
+                window.location = "http://localhost:49751/Products/ShowDetails/" + row.prod;
+            });;
         }
 
     }).fail(function () {

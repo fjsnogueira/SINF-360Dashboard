@@ -105,7 +105,7 @@ var top10Products = function (year) {
         dataType: "json",
         url: "http://localhost:49751/api/Products/GetTop10ProductsSold/" + year,
         success: function (topProductsSold) {
-            
+
             topProductsSold = JSON.parse(topProductsSold);
             console.log(topProductsSold);
             for (var i = 0; i < 10; i++) {
@@ -126,14 +126,14 @@ var top10Products = function (year) {
                 element: 'top-products',
                 data: productData,
                 hoverCallback: function (index, options, content) {
-                    console.log(content.prod);
                     content += descriptions[index];
-
                     return (content);
                 },
                 xkey: 'prod',
-                ykeys: [/*'desc', */'sale'],
+                ykeys: ['sale'],
                 labels: ['Value [€]']
+            }).on('click', function (i, row) {
+                window.location = "http://localhost:49751/Products/ShowDetails/" + row.prod;
             });
         }
 
@@ -207,7 +207,7 @@ var getTopClients = function (year) {
             topClients = JSON.parse(topClients);
 
             for (var i = 0; i < topClients.length; i++) {
-                $(".active-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td>" + topClients[i].CodCliente + "</td><td>" + topClients[i].NumeroCompras + "</td><td style='text-align:right;'>" + formatPrice(topClients[i].TotalCompras.toFixed(2)) + " €</td>");
+                $(".active-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td> <a href='localhost:49751/Clients/ShowDetails/" + topClients[i].CodCliente + "' target='_blank'>" + topClients[i].CodCliente + "</td><td>" + topClients[i].NumeroCompras + "</td><td style='text-align:right;'>" + formatPrice(topClients[i].TotalCompras.toFixed(2)) + " €</td>");
             }
 
             // treat array      
@@ -227,6 +227,8 @@ var getTopClients = function (year) {
             Morris.Donut({
                 element: 'top-clients',
                 data: clientData
+            }).on('click', function (i, row) {
+                window.location = "http://localhost:49751/Clients/ShowDetails/" + row.label;
             });
         }
     }).fail(function () {
@@ -325,9 +327,9 @@ var getValues = function (year) {
     getTotalClients(year);
     getSalesList(year);
     getTotalSales(year);
-    
+
     getTotalActiveClients(year);
-    
+
     getTopClients(year);
     top10Products(year);
 };
