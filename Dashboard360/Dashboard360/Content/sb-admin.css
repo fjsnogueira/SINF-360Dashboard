@@ -13,8 +13,16 @@
     display: none;
 }
 
-.margin {
-    margin-top: 3.5%;
+.margin-clients {
+    margin-top:29px;
+}
+
+.margin-client-details {
+    margin-top:40px;
+}
+
+.margin-products {
+    margin-top: 21px;
 }
 
 .navbar {
