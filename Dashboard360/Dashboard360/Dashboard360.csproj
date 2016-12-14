@@ -428,6 +428,10 @@
     <Content Include="Scripts\Financial\getAccountsPayable.js" />
     <Content Include="Scripts\Financial\getAccountsReceivable.js" />
     <Content Include="Scripts\Financial\getAverageSalesPrice.js" />
+    <Content Include="Scripts\HumanResources\getAverageEmplyomentInCompany.js" />
+    <Content Include="Scripts\HumanResources\getCustomersPerEmployees.js" />
+    <Content Include="Scripts\HumanResources\getHumanResourcesExpenses.js" />
+    <Content Include="Scripts\HumanResources\getRevenuePerEmployee.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -475,6 +479,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Sales\getSales.js" />
     <Content Include="Scripts\Sales\Sales.js" />
+    <Content Include="Scripts\Supply\getAveragePurchasedValue.js" />
+    <Content Include="Scripts\Supply\getTopSuppliers.js" />
+    <Content Include="Scripts\Supply\getTotalPurchasedValue.js" />
     <Content Include="Scripts\Supply\getTotalValueOfInventory.js" />
     <Content Include="Scripts\Supply\getTopProductsPurchased.js" />
     <Content Include="Web.config" />

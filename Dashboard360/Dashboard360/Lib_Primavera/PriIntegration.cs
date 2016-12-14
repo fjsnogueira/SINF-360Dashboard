@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -263,8 +264,6 @@ namespace Dashboard360.Lib_Primavera
                 }
 
 
-
-
                 return ListaVendas;
             }
             else
@@ -360,6 +359,7 @@ namespace Dashboard360.Lib_Primavera
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
                 objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, TotalDespesasAdicionais, TipoDoc, TotalOutros, TotalDesc, Serie From CabecCompras");
+
                 while (!objListCab.NoFim())
                 {
                     dc = new Model.DocCompra();
@@ -752,55 +752,117 @@ namespace Dashboard360.Lib_Primavera
 
         # region Supply
 
-        public static List<Model.FornecedorProductCounter> ListTopProducts()
+        public static List<Model.LinhaDocCompra> ListTopProducts(string ano)
         {
+             
             StdBELista objList;
-            List<Model.FornecedorProductCounter> listTopProducts = new List<Model.FornecedorProductCounter>();
+
+            List<Model.LinhaDocCompra> ListaVendas = new List<Model.LinhaDocCompra>();
+
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, UnidadeEntrada FROM ARTIGO"); //ORDER BY UnidadeEntrada DESC
-
-
+                objList = PriEngine.Engine.Consulta("SELECT IdCabecCompras, DataDoc, TipoDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TaxaIva, PrecoLiquido from LinhasCompras WHERE year(DataDoc)=" + ano);
                 while (!objList.NoFim())
                 {
-                    listTopProducts.Add(new Model.FornecedorProductCounter
+                    ListaVendas.Add(new Model.LinhaDocCompra
                     {
+                        IdCabecDoc = objList.Valor("IdCabecCompras"),
                         CodArtigo = objList.Valor("Artigo"),
                         DescArtigo = objList.Valor("Descricao"),
-                        UnidadeEntrada = objList.Valor("UnidadeEntrada"),
-                    });
-                    objList.Seguinte();
+                        Quantidade = objList.Valor("Quantidade"),
+                        Unidade = objList.Valor("Unidade"),
+                        Desconto = objList.Valor("Desconto1"),
+                        PrecoUnitario = objList.Valor("PrecUnit"),
+                        TotalLiquido = objList.Valor("PrecoLiquido"),
+                        TipoDoc = objList.Valor("TipoDoc"),
+                        Data = objList.Valor("DataDoc")
 
+                    });
+
+
+                    objList.Seguinte();
                 }
 
-                return listTopProducts;
+
+
+
+                return ListaVendas;
             }
             else
                 return null;
         }
+        
 
 
-        public static List<Model.Inventario> InventaryValue()
+        public static List<Model.DocCompra> InventaryValue()
         {
             StdBELista objList;
-            List<Model.Inventario> InventaryValue = new List<Model.Inventario>();
+            List<Model.DocCompra> InventaryValue = new List<Model.DocCompra>();
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT SUM(PCPadrao) AS Soma FROM  ARTIGO");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, STKActual, PCMedio FROM ARTIGO"); 
 
-                InventaryValue.Add(new Model.Inventario
+
+                while (!objList.NoFim())
                 {
-                    Valor = objList.Valor("Soma"),
-                });
+                    InventaryValue.Add(new Model.DocCompra
+                    {
+                        Nome = objList.Valor("Artigo"),
+                        stockAtual = objList.Valor("STKActual"),
+                        PrecoMedio = objList.Valor("PCMedio")
+                    });
+                    objList.Seguinte();
 
+                }
 
                 return InventaryValue;
             }
             else
                 return null;
         }
+
+
+        public static List<Model.DocCompra> TotalPurchasedValue()
+        {
+            StdBELista objList;
+            List<Model.DocCompra> purchasedlist = new List<Model.DocCompra>();
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT Nome, TipoDoc, TotalMerc, TotalDesc, TotalOutros, TotalIva, DataIntroducao FROM  CabecCompras");
+
+                while (!objList.NoFim())
+                {
+                    DateTime d = new DateTime(2016,01,01);
+
+                    int diff = DateTime.Compare(d, objList.Valor("DataIntroducao"));
+
+                    if (diff < 0)
+                    {
+                        purchasedlist.Add(new Model.DocCompra
+                        {
+                            Nome = objList.Valor("Nome"),
+                            TotalMerc = objList.Valor("TotalMerc"),
+                            TotalDesc = objList.Valor("TotalDesc"),
+                            TotalOutros = objList.Valor("TotalOutros"),
+                            TotalIva = objList.Valor("TotalIva"),
+                            TipoDoc = objList.Valor("TipoDoc")
+                        });
+
+                    }
+                    
+                    objList.Seguinte();
+                }
+
+
+                return purchasedlist;
+            }
+            else
+                return null;
+        }
+
 
         #endregion Supply
 
@@ -814,14 +876,43 @@ namespace Dashboard360.Lib_Primavera
             if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT COUNT(*) AS Numero FROM  FUNCIONARIOS");
+                objList = PriEngine.Engine.Consulta("SELECT Nome, Sexo, DataNascimento, VencimentoMensal, DataDemissao, DataAdmissao, ValorSubsAlim FROM FUNCIONARIOS");
 
 
-                listOfEmployees.Add(new Model.Empregado
+                while (!objList.NoFim())
                 {
-                    numeroEmpregados = objList.Valor("Numero"),
 
-                });
+                    if (!(objList.Valor("DataDemissao").GetType() == typeof(DateTime)))
+                    {
+                        listOfEmployees.Add(new Model.Empregado
+                        {
+                            nome = objList.Valor("Nome"),
+                            sexo = objList.Valor("Sexo"),
+                            dataNascimento = objList.Valor("DataNascimento"),
+                            salario = objList.Valor("VencimentoMensal"),
+                            dataAdmissao = objList.Valor("DataAdmissao"),
+                            subsidioAlim = System.Convert.ToDouble(objList.Valor("ValorSubsAlim"))
+                        });
+
+                    }
+                    else
+                    {
+                        
+                        listOfEmployees.Add(new Model.Empregado
+                        {
+                            nome = objList.Valor("Nome"),
+                            sexo = objList.Valor("Sexo"),
+                            dataNascimento = objList.Valor("DataNascimento"),
+                            salario = objList.Valor("VencimentoMensal"),
+                            dataAdmissao = objList.Valor("DataAdmissao"),
+                            dataDemissao = objList.Valor("DataDemissao"),
+                            subsidioAlim = System.Convert.ToDouble(objList.Valor("ValorSubsAlim"))
+                        });
+
+                    }
+ 
+                    objList.Seguinte();
+                }
 
 
 
@@ -830,88 +921,6 @@ namespace Dashboard360.Lib_Primavera
             else
                 return null;
         }
-
-
-        public static List<Model.Empregado> ListOfFemaleEmployees()
-        {
-            StdBELista objList;
-            List<Model.Empregado> listOfFemaleEmployees = new List<Model.Empregado>();
-            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
-            {
-
-                objList = PriEngine.Engine.Consulta("SELECT COUNT(Sexo) AS Numero FROM  FUNCIONARIOS WHERE Sexo=1");
-
-
-                listOfFemaleEmployees.Add(new Model.Empregado
-                {
-                    numeroRaparigasEmpregadas = objList.Valor("Numero"),
-
-                });
-
-
-
-                return listOfFemaleEmployees;
-            }
-            else
-                return null;
-        }
-
-        public static List<Model.Empregado> ListOfAgeOfEmployees()
-        {
-            StdBELista objList;
-            List<Model.Empregado> listOfAgeOfEmployees = new List<Model.Empregado>();
-            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
-            {
-
-                objList = PriEngine.Engine.Consulta("SELECT DataNascimento FROM FUNCIONARIOS");
-                while (!objList.NoFim())
-                {
-                    listOfAgeOfEmployees.Add(new Model.Empregado
-                    {
-                        dataNascimento = objList.Valor("DataNascimento"),
-
-                    });
-                    objList.Seguinte();
-                }
-
-                return listOfAgeOfEmployees;
-
-                // objList = PriEngine.Engine.Consulta("SELECT AVG (SELECT )")
-            }
-            else
-                return null;
-        }
-
-
-        // Get Salarios
-        public static List<Model.Empregado> ListOfEmployeeSalary()
-        {
-            StdBELista objList;
-            List<Model.Empregado> listofEmployeeSalary = new List<Model.Empregado>();
-            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
-            {
-
-                objList = PriEngine.Engine.Consulta("SELECT VencimentoMensal FROM FUNCIONARIOS");
-                while (!objList.NoFim())
-                {
-                    listofEmployeeSalary.Add(new Model.Empregado
-                    {
-                        salario = objList.Valor("VencimentoMensal"),
-
-                    });
-                    objList.Seguinte();
-                }
-
-                return listofEmployeeSalary;
-
-                // objList = PriEngine.Engine.Consulta("SELECT AVG (SELECT )")
-            }
-            else
-                return null;
-        }
-
-
-
 
         #endregion HumanResources
 

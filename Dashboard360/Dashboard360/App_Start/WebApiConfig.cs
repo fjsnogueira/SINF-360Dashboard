@@ -102,15 +102,35 @@ namespace Dashboard360
             // Get Top Products Purchased
             config.Routes.MapHttpRoute(
                 name: "GetTopProductsPurchased",
-                routeTemplate: "api/getTopProductsPurchased",
+                routeTemplate: "api/GetTopProductsPurchased",
                 defaults: new { controller = "SupplyApi", Action = "GetTopProductsPurchased" }
             );
 
+            // Get total value of Inventory
             config.Routes.MapHttpRoute(
                 name: "GetTotalValueOfInventory",
-                routeTemplate: "api/getTotalValueOfInventory",
+                routeTemplate: "api/GetTotalValueOfInventory",
                 defaults: new { controller = "SupplyApi", Action = "GetTotalValueOfInventory" }
             );
+
+            // Get total purchased value
+            config.Routes.MapHttpRoute(
+                name: "GetTotalPurchasedValue",
+                routeTemplate: "api/GetTotalPurchasedValue",
+                defaults: new { controller = "SupplyApi", Action = "GetTotalPurchasedValue" }
+            );
+
+            // Get average purchased value
+            config.Routes.MapHttpRoute(
+                name: "GetAveragePurchasedValue",
+                routeTemplate: "api/GetAveragePurchasedValue",
+                defaults: new { controller = "SupplyApi", Action = "GetAveragePurchasedValue" }
+            );
+
+
+
+
+
 
             /*
             * Human Resources
@@ -119,22 +139,50 @@ namespace Dashboard360
             // Get Number Of Employees
             config.Routes.MapHttpRoute(
                 name: "GetNumberOfEmployees",
-                routeTemplate: "api/getNumberOfEmployees",
+                routeTemplate: "api/GetNumberOfEmployees/{year}",
                 defaults: new { controller = "HumanResourcesApi", Action = "GetNumberOfEmployees" }
             );
 
             // Get Number Of Female Employees
             config.Routes.MapHttpRoute(
                 name: "GetNumberOfFemaleEmployees",
-                routeTemplate: "api/getNumberOfFemaleEmployees",
+                routeTemplate: "api/getNumberOfFemaleEmployees/{year}",
                 defaults: new { controller = "HumanResourcesApi", Action = "GetNumberOfFemaleEmployees" }
             );
 
             // Get Average of employees by Age
             config.Routes.MapHttpRoute(
                 name: "GetAverageEmployeeByAge",
-                routeTemplate: "api/GetAverageEmployeeByAge",
+                routeTemplate: "api/GetAverageEmployeeByAge/{year}",
                 defaults: new { controller = "HumanResourcesApi", Action = "GetAverageEmployeeByAge" }
+            );
+
+            // Get Human Resources Expenses
+            config.Routes.MapHttpRoute(
+                name: "GetHumanResourcesExpenses",
+                routeTemplate: "api/GetHumanResourcesExpenses/{year}",
+                defaults: new { controller = "HumanResourcesApi", Action = "GetHumanResourcesExpenses" }
+            );
+
+            // Get Customers Per Employees
+            config.Routes.MapHttpRoute(
+                name: "GetCustomersPerEmployees",
+                routeTemplate: "api/GetCustomersPerEmployees/{year}",
+                defaults: new { controller = "HumanResourcesApi", Action = "GetCustomersPerEmployees" }
+            );
+
+            // Get Customers Per Employees
+            config.Routes.MapHttpRoute(
+                name: "GetAverageEmplyomentInCompany",
+                routeTemplate: "api/GetAverageEmplyomentInCompany",
+                defaults: new { controller = "HumanResourcesApi", Action = "GetAverageEmplyomentInCompany" }
+            );
+
+            // Get Revenue Per Employee
+            config.Routes.MapHttpRoute(
+                name: "GetRevenuePerEmployee",
+                routeTemplate: "api/GetRevenuePerEmployee/{year}",
+                defaults: new { controller = "HumanResourcesApi", Action = "GetRevenuePerEmployee" }
             );
 
             /*

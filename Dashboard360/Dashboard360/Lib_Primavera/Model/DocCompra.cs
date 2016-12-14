@@ -25,7 +25,7 @@ namespace Dashboard360.Lib_Primavera.Model
             get;
             set;
         }
-
+        
         public string NumDocExterno
         {
             get;
@@ -98,5 +98,18 @@ namespace Dashboard360.Lib_Primavera.Model
             get;
             set;
         }
+
+        public double stockAtual
+        {
+            get;
+            set;
+        }
+
+        public double PrecoMedio
+        {
+            get;
+            set;
+        }
+
     }
 }
