@@ -25,6 +25,74 @@
     return defer;
 };
 
+var getAccountsPayable = function (year) {
+    console.log("getAccountsPayable");
+
+    var defer = $.Deferred();
+
+    $.getScript("Scripts/moment.min.js");
+
+    $.ajax({
+        dataType: "json",
+        url: "http://localhost:49751/api/payables/" + year,
+        success: function (pending) {
+            pending = JSON.parse(pending);
+            console.log(pending)
+            if (pending.length == 0) {
+                $(".accountsPayable").append("<p>No entries found.</p>");
+            }
+            else {
+                var total = 0;
+                for (i in pending) {
+                    console.log(i);
+                    total += pending[i].PendingValue;
+                }
+                $(".accountsPayable").append("<p>" + total.toFixed(2) + "</p>");
+            }
+        }
+    }).fail(function () {
+        alert("ERROR: getting accounts payable");
+    });
+    setTimeout(function () {
+        defer.resolve();
+    }, 5000);
+    return defer;
+};
+
+var getAccountsReceivable = function (year) {
+    console.log("getAccountsReceivable");
+
+    var defer = $.Deferred();
+
+    $.getScript("Scripts/moment.min.js");
+
+    $.ajax({
+        dataType: "json",
+        url: "http://localhost:49751/api/receivables/" + year,
+        success: function (pending) {
+            pending = JSON.parse(pending);
+            console.log(pending)
+            if (pending.length == 0) {
+                $(".accountsReceivable").append("<p>No entries found.</p>");
+            }
+            else {
+                var total = 0;
+                for (i in pending) {
+                    console.log(i);
+                    total += pending[i].PendingValue;
+                }
+                $(".accountsReceivable").append("<p>" + total.toFixed(2) + "</p>");
+            }
+        }
+    }).fail(function () {
+        alert("ERROR: getting accounts receivable");
+    });
+    setTimeout(function () {
+        defer.resolve();
+    }, 5000);
+    return defer;
+};
+
 // Chekc if year is valid
 var validYear = function (year) {
     var control = false;
@@ -48,6 +116,8 @@ var validYear = function (year) {
 
 var getValues = function (year) {
     getAverageSalesPrice(year);
+    getAccountsPayable(year);
+    getAccountsReceivable(year);
 };
 
 var updateValues = function (newYear) {
@@ -72,6 +142,8 @@ $("#previousYear").click(function () {
 
 var hideValues = function () {
     $(".averageSalesPrice").html("");
+    $(".accountsPayable").html("");
+    $(".accountsReceivable").html("");
     // Clear Modals
     $(".sales-modal-body").html("");
     $(".total-clients-modal-body").html("");
@@ -83,6 +155,8 @@ var hideValues = function () {
 var showLoading = function ()
 {
     $(".loadingAverageSalesPrice").show();
+    $(".loadingAccountsPayable").show();
+    $(".loadingAccountsReceivable").show();
 }
 
 $("#nextYear").click(function () {

@@ -927,7 +927,7 @@ namespace Dashboard360.Lib_Primavera
 
 
         #region Pendentes
-        public static List<Model.Pendente> GetPending(bool receivable)
+        public static List<Model.Pendente> GetPending(string year, bool receivable)
         {
             StdBELista objListCab;
             List<Model.Pendente> result = new List<Model.Pendente>();
@@ -937,7 +937,8 @@ namespace Dashboard360.Lib_Primavera
                 objListCab = PriEngine.Engine.Consulta(
                     "SELECT ValorPendente, Moeda " +
                     "FROM Pendentes " +
-                    "WHERE TipoEntidade = " + (receivable ? "'C'" : "'F'"));
+                    "WHERE TipoEntidade =" + (receivable ? " 'C' " : " 'F' ") +
+                    "AND YEAR(DataDoc) = " + year);
                 while (!objListCab.NoFim())
                 {
                     Model.Pendente p = new Model.Pendente();

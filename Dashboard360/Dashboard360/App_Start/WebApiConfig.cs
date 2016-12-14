@@ -201,7 +201,20 @@ namespace Dashboard360
                 defaults: new { controller = "HumanResourcesApi", Action = "GetAverageEmployeeByAge" }
             );
 
-            
+            /*
+             * Financial
+             */
+            config.Routes.MapHttpRoute(
+                name: "GetAllPayables",
+                routeTemplate: "api/payables/{year}",
+                defaults: new { controller = "FinancialApi", Action = "GetAllPayables" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "GetAllReceivables",
+                routeTemplate: "api/receivables/{year}",
+                defaults: new { controller = "FinancialApi", Action = "GetAllReceivables" }
+            );
 
             /*
              * Other
