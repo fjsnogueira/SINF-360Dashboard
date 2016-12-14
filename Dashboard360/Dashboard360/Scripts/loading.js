@@ -1,4 +1,10 @@
 ﻿$(document).ready(function () {
+
+    // Enterprise View
+    $(".loadingTopCustomers").append("<img src='/Content/images/loading.gif' width='328px' height='328px'>");
+    $(".loadingTotalPurchases").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingTopProducts1").append("<img src='/Content/images/loading.gif' width='328px' height='328px'>");
+    
     // Client View
     $("#top-clients").hide();
     $(".loadingSalesTotal").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
@@ -23,5 +29,5 @@
     $(".loadingNumberOrders").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingUnitPrice").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingTopBuyers").append("<img src='/Content/images/loading.gif' width='342' height='342'>");
-    
+
 });
