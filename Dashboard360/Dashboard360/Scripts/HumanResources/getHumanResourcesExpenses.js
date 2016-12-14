@@ -17,11 +17,19 @@
                 sum = sum + (humanResourcesExpenses[i].salario * 14) + (humanResourcesExpenses[i].subsidioAlim * 21 * 12) + (humanResourcesExpenses[i].salario * 0.2375 * 14);
             }
 
-            $(".loadingSalesTotal").hide();
-            $(".humanResourcesExpenses").html("<p>" + sum + "</p>");
+            $(".loadingHRexpenses").hide();
+            $(".humanResourcesExpenses").append(formatPrice(Math.floor(sum).toString()) + " <span style='font-size: 20px!important;'>" + sum.toString().split(".")[1].slice(0, 2) + "</span>");
 
         }
     }).fail(function () {
         alert("ERROR: getting human resources expenses!");
     });
 });
+
+String.prototype.reverse = function () {
+    return this.split('').reverse().join('');
+}
+
+function formatPrice(price) {
+    return price.reverse().replace(/((?:\d{2})\d)/g, '$1 ').reverse();
+}

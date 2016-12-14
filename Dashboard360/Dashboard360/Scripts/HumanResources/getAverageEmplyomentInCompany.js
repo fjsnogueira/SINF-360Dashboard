@@ -48,9 +48,7 @@
             var final = Math.round((sum / averageEmplyomentInCompany.length)*10)/10;
             
 
-            $(".loadingSalesTotal").hide();
-
-            $(".loadingNumCustomers").remove();
+            $(".loadingEmploymentTime").hide();
             $(".averageEmplTimeComp").append(final + " Years");
 
         }

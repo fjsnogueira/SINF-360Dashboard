@@ -11,173 +11,168 @@
     @Scripts.Render("~/Scripts/HumanResources/getRevenuePerEmployee.js")
 }
 
-
 @section CustomStyles{
     @Styles.Render("~/Content/plugins/morris.css")
 }
-
 
 <!-- Page Title -->
 <div class="row page-title" style="text-align: center;">
     <h2> <a id="previousYear" href="#"> <i class="fa fa-arrow-left fa-1x"></i> </a> | 2016 | </h2>
 </div>
 
-<div class="row">
-    <div class="col-lg-1"></div>
-    <div class="col-lg-6 col-md-12">
-        <div class="row">
-            <div class="col-lg-6 col-md-4">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-users fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingNumCustomers"></span><span class="numberOfEmployees"></span></div>
-                            </div>
+<div class="container">
+    <div class="row margin-client-details">
+        <!-- Total Number of Employees -->
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-purple">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-users fa-3x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge"><span class="loadingNumEmployees"></span><span class="numberOfEmployees"></span></div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#totalEmployeesList">
-                        <div class="panel-footer">
-                            <span class="pull-right">Number of Employees <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
                 </div>
-            </div>
-            <!-- Average expenses per customer -->
-            <div class="col-lg-6 col-md-6">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-euro fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingNumCustomers"></span><span class="humanResourcesExpenses"></span></div>
-
-                            </div>
-                        </div>
+                <a href="#" data-toggle="modal" data-target="#totalEmployeesList">
+                    <div class="panel-footer">
+                        <span class="pull-right">Number of Employees <i class="fa fa-plus-circle"></i></span>
+                        <div class="clearfix"></div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#totalHumanResourcesExpenses">
-                        <div class="panel-footer">
-                            <span class="pull-right">Human Resources Expenses <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
+                </a>
             </div>
         </div>
+        <!-- Human Resources Expenses -->
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-euro fa-3x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge"><span class="loadingHRexpenses"></span><span class="humanResourcesExpenses"></span></div>
 
-        <div class="row margin">
-            <!-- Avg Sale Per Customer -->
-            <div class="col-lg-6 col-md-6">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-minus-square-o fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingNumCustomers"></span><span class="revenuePerEmployee"></span></div>
-                            </div>
                         </div>
                     </div>
-                    <a href="#">
-                        <div class="panel-footer">
-                            <span class="pull-right">Revenue Per Employee</span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-user fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingNumCustomers"></span><span class="costumersPerEmployee"></span></div>
-
-                            </div>
-                        </div>
+                <a href="#" data-toggle="modal" data-target="#totalHumanResourcesExpenses">
+                    <div class="panel-footer">
+                        <span class="pull-right">Human Resources Expenses <i class="fa fa-plus-circle"></i></span>
+                        <div class="clearfix"></div>
                     </div>
-                    <a href="#">
-                        <div class="panel-footer">
-                            <span class="pull-right">Number Of Costumers Per Employee</span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
+                </a>
             </div>
         </div>
-
-        <div class="row margin">
-            <!-- Avg Sale Per Customer -->
-            <div class="col-lg-6 col-md-6">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-user fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingNumCustomers"></span><span class="averageEmplTimeComp"></span></div>
-                            </div>
+        <!-- Revenue Per Employee -->
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-minus-square-o fa-3x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge"><span class="loadingRevEmployee"></span><span class="revenuePerEmployee"></span></div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#totalAverageTimeEmplymentComapany">
-                        <div class="panel-footer">
-                            <span class="pull-right">Average Emplyoment Time in the Company <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
                 </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-right">Revenue Per Employee</span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
             </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-users fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingSalesTotal"></span><span class="numberOfFemaleEmployees"></span></div>
-
-                            </div>
+        </div>
+    </div>
+    <div class="row margin-client-details">
+        <!-- Number Of Costumers Per Employee -->
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-orange">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-user fa-3x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge"><span class="loadingCustomersEmployee"></span><span class="costumersPerEmployee"></span></div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#totalFemaleEmployees">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Number Of Female Employees <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
                 </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-right">Number Of Costumers Per Employee</span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
             </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-user fa-3x"></i>
-                            </div>
-                            <div class="col-xs-10 text-right">
-                                <div class="huge"><span class="loadingSalesTotal"></span><span class="averageEmployeeAge"></span></div>
-
-                            </div>
+        </div>
+        <!-- Average Emplyoment Time in the Company -->
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-user fa-3x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge"><span class="loadingEmploymentTime"></span><span class="averageEmplTimeComp"></span></div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#totalaverageEmployeeAgee">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Average Employee By Age <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
                 </div>
+                <a href="#" data-toggle="modal" data-target="#totalAverageTimeEmplymentComapany">
+                    <div class="panel-footer">
+                        <span class="pull-right">Average Emplyoment Time in the Company <i class="fa fa-plus-circle"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- Number Of Female Employees-->
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-users fa-3x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge"><span class="loadingFemale"></span><span class="numberOfFemaleEmployees"></span></div>
+
+                        </div>
+                    </div>
+                </div>
+                <a href="#" data-toggle="modal" data-target="#totalFemaleEmployees">
+                    <div class="panel-footer">
+                        <span class="pull-right"> Number Of Female Employees <i class="fa fa-plus-circle"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row margin-client-details">
+        <div class="col-lg-4 col-lg-offset-4 col-md-6">
+            <div class="panel panel-purple">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-user fa-3x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge"><span class="loadingAge"></span><span class="averageEmployeeAge"></span></div>
+
+                        </div>
+                    </div>
+                </div>
+                <a href="#" data-toggle="modal" data-target="#totalaverageEmployeeAgee">
+                    <div class="panel-footer">
+                        <span class="pull-right"> Average Age of Employees <i class="fa fa-plus-circle"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

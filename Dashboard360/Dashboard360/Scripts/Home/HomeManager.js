@@ -33,6 +33,8 @@ function getTop10Clients() {
             Morris.Donut({
                 element: 'top-clients',
                 data: clientData
+            }).on('click', function (i, row) {
+                window.location = "http://localhost:49751/Clients/ShowDetails/" + row.label;
             });
         }
     }).fail(function () {
@@ -75,7 +77,9 @@ function getTop10ProductsSold() {
                 xkey: 'prod',
                 ykeys: [/*'desc', */'sale'],
                 labels: ['Value [€]']
-            });
+            }).on('click', function (i, row) {
+                window.location = "http://localhost:49751/Products/ShowDetails/" + row.prod;
+            });;
         }
 
     }).fail(function () {

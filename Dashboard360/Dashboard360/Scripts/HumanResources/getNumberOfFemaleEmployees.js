@@ -15,16 +15,14 @@
                 }
             }
 
-            $(".loadingSalesTotal").hide();
-
-            //$(".numberOfFemaleEmployees").html("<p>" + totalFemalesInCompany + "</p>");
+         
 
 
             for (var i = 0; i < totalFemalesInCompany.length; i++) {
                 $(".total-female-employees-modal-body").append("<tr> <td>" + (i + 1) + "</td><td>" + totalFemalesInCompany[i].nome + "</td><td>");
             }
 
-            $(".loadingNumCustomers").remove();
+            $(".loadingFemale").hide();
             $(".numberOfFemaleEmployees").append(totalFemalesInCompany.length);
 
 

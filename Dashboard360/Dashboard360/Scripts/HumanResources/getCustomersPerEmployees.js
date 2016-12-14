@@ -8,10 +8,8 @@
             customersPerEmployees = JSON.parse(customersPerEmployees);
             console.log(customersPerEmployees);
 
-            $(".loadingSalesTotal").hide();
-
-            $(".loadingNumCustomers").remove();
-            $(".costumersPerEmployee").append(customersPerEmployees);
+            $(".loadingCustomersEmployee").hide();
+            $(".costumersPerEmployee").append(customersPerEmployees.toFixed(2));
 
         }
     }).fail(function () {

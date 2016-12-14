@@ -1,5 +1,14 @@
 ﻿$(document).ready(function () {
-
+    console.log("loading");
+    // Human Resources
+    $(".loadingNumEmployees").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingHRexpenses").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingRevEmployee").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingCustomersEmployee").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingEmploymentTime").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingFemale").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingAge").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+        
     // Enterprise View
     $(".loadingTopCustomers").append("<img src='/Content/images/loading.gif' width='328px' height='328px'>");
     $(".loadingTotalPurchases").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");

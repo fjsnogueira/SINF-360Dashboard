@@ -20,7 +20,7 @@
             }
 
             totalAverage = Math.round((sum / averageEmployeeByAge.length)*10) /10;
-
+            $(".loadingAge").hide();
             $(".averageEmployeeAge").html("<p>" + totalAverage + "</p>");
 
 
