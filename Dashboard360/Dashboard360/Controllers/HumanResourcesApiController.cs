@@ -133,9 +133,8 @@ namespace Dashboard360.Controllers
         {
 
             IEnumerable<Lib_Primavera.Model.Empregado> employees = Lib_Primavera.PriIntegration.ListOfEmployees();
-            IEnumerable<Lib_Primavera.Model.Cliente> clients = Lib_Primavera.PriIntegration.ListaClientes();
+            int clients = GetNumActiveClients(year);
             List<Lib_Primavera.Model.Empregado> TrabalhadoresYear = new List<Lib_Primavera.Model.Empregado>();
-
 
 
             foreach (Empregado it in employees)
@@ -160,7 +159,7 @@ namespace Dashboard360.Controllers
                 }
             }
 
-            var ratio = Math.Truncate(Decimal.Divide(clients.Count(), TrabalhadoresYear.Count()) * 1000) / 1000;
+            var ratio = Math.Truncate(Decimal.Divide(clients, TrabalhadoresYear.Count()) * 1000) / 1000;
 
             var res = new JavaScriptSerializer().Serialize(ratio);
             return Request.CreateResponse(HttpStatusCode.OK, res);
@@ -228,6 +227,27 @@ namespace Dashboard360.Controllers
             }
 
             return totalSales;
+        }
+
+        public int GetNumActiveClients(string year)
+        {
+            System.Diagnostics.Debug.WriteLine(year);
+            List<Lib_Primavera.Model.ClienteCounter> CliCounter = new List<Lib_Primavera.Model.ClienteCounter>();
+            IEnumerable<Lib_Primavera.Model.DocVenda> salesList = Lib_Primavera.PriIntegration.ListaVendas(year);
+
+            foreach (DocVenda it in salesList)
+            {
+                if (!CliCounter.Exists(cli => cli.CodCliente == it.Entidade))
+                {
+                    CliCounter.Add(new ClienteCounter
+                    {
+                        CodCliente = it.Entidade,
+                        Nome = it.Entidade,
+                    });
+                }
+
+            }
+            return CliCounter.Count();
         }
     }
 }
