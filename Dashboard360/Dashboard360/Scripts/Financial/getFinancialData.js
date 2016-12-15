@@ -126,8 +126,7 @@ var getFlow = function (year) {
     return defer;
 };
 
-var getAverageSalesPrice = function (year) {
-    console.log("getAverageSalesPrice");
+var getSalesRevenueGrowth = function (year) {
 
     var defer = $.Deferred();
 
@@ -151,7 +150,10 @@ var getAverageSalesPrice = function (year) {
                     for (var i = 0; i < sales2.length; i++) {
                         totalSales1 += sales2[i].TotalMerc;
                     }
-                    $(".salesRevenueGrowth").append("<p> " + 100 * (totalSales / totalSales1 - 1).toFixed(2) + "% </p>");
+                    if (totalSales1 == 0)
+                        $(".salesRevenueGrowth").append("<p> - </p>");
+                    else
+                        $(".salesRevenueGrowth").append("<p> " + 100 * (totalSales / totalSales1 - 1).toFixed(2) + "% </p>");
                     $(".loadingSalesRevenueGrowth").hide();
                 }
             }).fail(function () {
@@ -302,7 +304,7 @@ var showLoading = function ()
     $(".loadingCashFlow").show();
     $(".loadingTotalAssets").show();
     $(".loadingTotalLiabilities").show();
-    $(".loadingSalesRevenuwGrowth").show();
+    $(".loadingSalesRevenueGrowth").show();
 }
 
 $("#nextYear").click(function () {
