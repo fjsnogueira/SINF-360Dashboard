@@ -13,7 +13,7 @@
             for (var i = 0; i < sales.length; i++) {
                 totalSales += sales[i].TotalMerc;
             }
-            $(".averageSalesPrice").append("<p> " + (totalSales / sales.length).toFixed(2) + "€ </p>");
+            $(".averageSalesPrice").append("<p> " + (totalSales / sales.length).toFixed(2) + " </p>");
             $(".loadingAverageSalesPrice").hide();
         }
     }).fail(function () {
