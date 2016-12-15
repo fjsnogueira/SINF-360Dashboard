@@ -7,7 +7,6 @@
     @Scripts.Render("~/Scripts/plugins/morris/morris.min.js")
     @Scripts.Render("~/Scripts/plugins/morris/raphael.min.js")
     @Scripts.Render("~/Scripts/Home/HomeManager.js")
-    @Scripts.Render("~/Scripts/HumanResources/getHumanResourcesExpenses.js")
 }
 
 <!-- Page Title -->
@@ -28,8 +27,8 @@
                         </div>
                         <div class="col-xs-10 text-right">
                             <div class="huge">
-                                <span class="loading"></span>
-                                <span class="salesTotalThisYear"></span>
+                                <span class="loadingTotalTurnover"></span>
+                                <span class="totalTurnover"></span>
                             </div>
                         </div>
                     </div>
@@ -72,11 +71,11 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-2">
-                            <i class="fa fa-minus-square-o fa-3x"></i>
+                            <i class="fa fa-euro fa-3x"></i>
                         </div>
                         <div class="col-xs-10 text-right">
-                            <span class="loadingHRexpenses"></span>
-                            <div class="huge"><span class="humanResourcesExpenses"></span></div>
+                            
+                            <div class="huge"><span class="loadingHR"></span> <span class="humanResourcesExpenses"></span></div>
 
                         </div>
                     </div>
@@ -90,6 +89,80 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <!-- Average Expense Per Customer-->
+
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-euro fa-3x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge">
+                                <span class="loadingAvgExpense"></span>
+                                <span class="avgExpenseCustomer"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-right">Average Expense Per Customer</span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-euro fa-3x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge"><span class="loadingAverageSalesPrice"></span><span class="averageSalesPrice"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-right">Average Sale Price </span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="panel panel-orange">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-euro fa-3x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge"><span class="loadingSalesRevenueGrowth"></span><span class="salesRevenueGrowth"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-right">Sales Revenue Growth </span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="row">
         <!-- Top Products -->
         <div class="col-lg-8 col-md-12">
@@ -109,7 +182,7 @@
         </div>
         <!-- Top Customers-->
         <div class="col-lg-4 col-md-6">
-            <div class="panel panel-primary">
+            <div class="panel panel-purple">
                 <div class="panel-heading">
                     <div class="row" style="text-align: center;">
                         <div class="col-xs-12">
@@ -120,99 +193,6 @@
                 <div class="panel-footer">
                     <div class="loadingTopCustomers" style="width:100%"></div>
                     <div id="top-clients"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-
-        <div class="col-lg-4 col-md-6">
-            <div class="row">
-                <!-- Average Expense Per Customer-->
-                <div class="col-lg-12 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <i class="fa fa-minus-square-o fa-3x"></i>
-                                </div>
-                                <div class="col-xs-10 text-right">
-                                    <div class="huge">
-                                        <span class="loadingAvgExpense"></span>
-                                        <span class="avgExpenseCustomer"></span>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-right">Average Expense Per Customer</span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <!-- Turnover -->
-                <div class="col-lg-12 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <i class="fa fa-euro fa-3x"></i>
-                                </div>
-                                <div class="col-xs-10 text-right">
-                                    <div class="huge"><span class="salesTotalThisYear"></span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-right">Average Sale Price </span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-8 col-md-12">
-            <!-- Sales Revenue Growth-->
-            <div class="row">
-                <div class="col-lg-12 col-md-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row" style="text-align: center;">
-                                <div class="col-xs-12">
-                                    <div style="font-size: 25px;">Sales Revenue Growth </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-footer">
-                            <div id="bar-example"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="row" style="text-align: center;">
-                        <div class="col-xs-12">
-                            <div style="font-size: 25px;">Orders / Inventory Ratio [Top Products]</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <div id="bar-example"></div>
                 </div>
             </div>
         </div>

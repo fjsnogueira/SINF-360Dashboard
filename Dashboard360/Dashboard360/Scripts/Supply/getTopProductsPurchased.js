@@ -1,21 +1,69 @@
-﻿$(function () {
+﻿// Formatting price
+function formatPrice(price) {
+    return price.reverse().replace(/((?:\d{2})\d)/g, '$1 ').reverse();
+}
+String.prototype.reverse = function () {
+    return this.split('').reverse().join('');
+}
+
+$(function () {
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/GetTopProductsPurchased",
+        url: "http://localhost:49751/api/GetTopProductsPurchased/" + parseInt($('#yearTitle').text()),
         success: function (topProductsPurchased) {
+
             topProductsPurchased = JSON.parse(topProductsPurchased);
+
             console.log(topProductsPurchased);
-            var clientInfoHTML;
-            $(".topProductsPurchased").append("<p>");
+       
+
             for (var i = 0; i < 10; i++) {
-                clientInfoHTML = (i + 1) + " - " + topProductsPurchased[i].DescArtigo + " <br>";
-                $(".topProductsPurchased").append(clientInfoHTML);
+                console.log(topProductsPurchased[i].CodArtigo + ": " + topProductsPurchased[i].VolumeVendas.toFixed(2));
+                $(".top-products-modal-body").append("<tr> <td>" + topProductsPurchased[i].CodArtigo + "</td><td>" + topProductsPurchased[i].DescArtigo + "</td><td>" + topProductsPurchased[i].QuantidadeVendida + "</td><td>" + formatPrice(topProductsPurchased[i].VolumeVendas.toFixed(2)) + " €</td>");
             }
-            $(".topProductsPurchased").append("</p>");
+
+            var productData = [];
+            for (var i = 0; i < 10; i++) {
+                var temp = { prod: topProductsPurchased[i].CodArtigo, purchased: Math.abs(topProductsPurchased[i].VolumeVendas.toFixed(2)) };
+                productData.push(temp);
+            }
+
+            function shuffle(array) {
+                var currentIndex = array.length, temporaryValue, randomIndex;
+
+                // While there remain elements to shuffle...
+                while (0 !== currentIndex) {
+
+                    // Pick a remaining element...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    // And swap it with the current element.
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+
+                return array;
+            }
+
+            productData = shuffle(productData);
+            $(".loadingTopProducts").remove()
+            Morris.Bar({
+                element: 'top-products-purchased',
+                data: productData,
+                xkey: 'prod',
+                ykeys: ['purchased'],
+                labels: ['Value [€]']
+            });
+
+
+
         }
+
     }).fail(function () {
-        alert("ERROR: getting top products purchased list");
+        console.log("ERROR: getting top 10 products purchased");
     });
 
 

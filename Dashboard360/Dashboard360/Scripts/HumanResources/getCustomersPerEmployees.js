@@ -11,7 +11,7 @@ $(function () {
             console.log(customersPerEmployees);
 
             $(".loadingCustomersEmployee").hide();
-            $(".costumersPerEmployee").append(formatPrice(Math.floor(customersPerEmployees).toString()) + " <span style='font-size: 20px!important;'>" + customersPerEmployees.toString().split(".")[1].slice(0, 2) + "</span>");
+            $(".costumersPerEmployee").append(customersPerEmployees);
 
         }
     }).fail(function () {

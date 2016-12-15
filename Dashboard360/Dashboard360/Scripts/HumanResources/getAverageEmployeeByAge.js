@@ -23,7 +23,7 @@ $(function () {
 
             totalAverage = Math.round((sum / averageEmployeeByAge.length)*10) /10;
             $(".loadingAge").hide();
-            $(".averageEmployeeAge").append(formatPrice(Math.floor(totalAverage).toString()) + " <span style='font-size: 20px!important;'>" + totalAverage.toString().split(".")[1].slice(0, 2) + "</span>");
+            $(".averageEmployeeAge").append(totalAverage.toFixed(1) + " years");
 
             $(".total-name-age-employees-modal-body").empty();
 

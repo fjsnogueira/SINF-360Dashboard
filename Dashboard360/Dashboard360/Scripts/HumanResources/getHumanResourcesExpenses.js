@@ -1,10 +1,9 @@
 ﻿var year = moment().year();
-
-$(function () {
+$(document).ready(function(){
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/GetHumanResourcesExpenses/" + +parseInt($('#yearTitle').text()),
+        url: "http://localhost:49751/api/GetHumanResourcesExpenses/" + parseInt($('#yearTitle').text()),
         success: function (humanResourcesExpenses) {
 
             humanResourcesExpenses = JSON.parse(humanResourcesExpenses);
@@ -62,7 +61,7 @@ $(function () {
 
         }
     }).fail(function () {
-        alert("ERROR: getting human resources expenses!");
+       // alert("ERROR: getting human resources expenses!");
     });
 });
 

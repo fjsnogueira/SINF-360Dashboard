@@ -20,6 +20,18 @@ namespace Dashboard360.Lib_Primavera.Model
             set;
         }
 
+        public string TipoDoc
+        {
+            get;
+            set;
+        }
+
+        public DateTime Data
+        {
+            get;
+            set;
+        }
+
         public string IdCabecDoc
         {
             get;

@@ -20,6 +20,20 @@ namespace Dashboard360.Lib_Primavera.Model
             set;
         }
 
+        public double stockAtual
+        {
+            get;
+            set;
+        }
+
+        public double PrecoMedio
+        {
+            get;
+            set;
+        }
+
+        
+
         public double TotalDespesasAdicionais
         {
             get;

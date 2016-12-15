@@ -52,7 +52,7 @@
             
 
             $(".loadingEmploymentTime").hide();
-            $(".averageEmplTimeComp").append(formatPrice(Math.floor(final).toString()) + " <span style='font-size: 20px!important;'>" + final.toString().split(".")[1].slice(0, 2) + "</span>");
+            $(".averageEmplTimeComp").append(final.toFixed() + " years");
 
         }
     }).fail(function () {

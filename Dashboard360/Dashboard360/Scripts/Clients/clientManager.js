@@ -100,7 +100,6 @@ var getTotalActiveClients = function (year) {
 
 // Get Top 10 products for Year 'year'
 var top10Products = function (year) {
-
     $.ajax({
         dataType: "json",
         url: "http://localhost:49751/api/Products/GetTop10ProductsSold/" + year,
@@ -220,7 +219,7 @@ var getTopClients = function (year) {
             var clientData = [];
             for (var i = 0; i < topClients.length; i++) {
                 clientData.push({ label: topClients[i].CodCliente, value: topClients[i].TotalCompras.toFixed(2) });
-                console.log({ label: topClients[i].CodCliente, value: topClients[i].TotalCompras.toFixed(2) });
+              //  console.log({ label: topClients[i].CodCliente, value: topClients[i].TotalCompras.toFixed(2) });
             }
             $(".loadingTopClients").hide();
             $("#top-clients").show();
@@ -329,7 +328,7 @@ var getValues = function (year) {
     getTotalSales(year);
 
     getTotalActiveClients(year);
-
+    getTotalExpenses(year)
     getTopClients(year);
     top10Products(year);
 };

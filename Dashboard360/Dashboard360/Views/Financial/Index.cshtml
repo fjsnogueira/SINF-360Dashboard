@@ -1,5 +1,8 @@
 ﻿@section CustomScripts {
     @Scripts.Render("~/Scripts/Financial/getFinancialData.js")
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/plugins/morris/raphael.min.js")
+    @Scripts.Render("~/Scripts/plugins/morris/morris.min.js")
 }
 
 @section CustomStyles{
@@ -19,32 +22,30 @@
     </h2>
 </div>
 
-<div class="row">
+<div class="row" style="padding-bottom: 300px;">
     <div class="col-lg-1"></div>
     <div class="col-lg-10 col-md-12">
-        <div class="row">
-            <!-- Total Turnover -->
+        <div class="row margin-client-details ">
+<!-- Total Turnover -->
             <div class="col-lg-4 col-md-6">
-                <div class="panel panel-green">
+                <div class="panel panel-purple">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-2">
-                                <i class="fa fa-euro fa-3x"></i>
+                                <i class="fa-plus fa-3x"></i>
                             </div>
                             <div class="col-xs-10 text-right">
                                 <div class="huge"><span class="loadingTotalTurnover"></span><span class="totalTurnover"></span></div>
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#salesList">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Total turnover <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <div class="panel-footer">
+                        <span class="pull-right" style="color:#9370DB"> Total Turnover </span>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
-            <!-- Total Expenses -->
+<!-- Total Expenses -->
             <div class="col-lg-4 col-md-6">
                 <div class="panel panel-red">
                     <div class="panel-heading">
@@ -57,15 +58,13 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#expenseslist">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Total Expenses <i class="fa fa-plus-circle"></i> </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <div class="panel-footer">
+                        <span class="pull-right" style="color:#d9534f"> Total Expenses </span>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
-            <!-- Average Sales Price -->
+<!-- Average Sales Price -->
             <div class="col-lg-4 col-md-12">
                 <div class="panel panel-yellow">
                     <div class="panel-heading">
@@ -78,18 +77,16 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#totalClientsList">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Average Sales Price <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <div class="panel-footer">
+                        <span class="pull-right" style="color:#f0ad4e"> Average Sales Price </span>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Row 2 -->
-        <div class="row margin">
-            <!-- Accounts Payable -->
+<!-- Row 2 -->
+        <div class="row margin-client-details ">
+<!-- Accounts Payable -->
             <div class="col-lg-4 col-md-6">
                 <div class="panel panel-red">
                     <div class="panel-heading">
@@ -102,15 +99,13 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#salesList">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Accounts Payable <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <div class="panel-footer">
+                        <span class="pull-right" style="color:#d9534f"> Accounts Payable</span>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
-            <!-- Accounts Receivable -->
+<!-- Accounts Receivable -->
             <div class="col-lg-4 col-md-6">
                 <div class="panel panel-green">
                     <div class="panel-heading">
@@ -123,15 +118,13 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#expenseslist">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Accounts Receivable <i class="fa fa-plus-circle"></i> </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <div class="panel-footer">
+                        <span class="pull-right" style="color:green"> Accounts Receivable </span>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
-            <!-- Cash Flow -->
+<!-- Cash Flow -->
             <div class="col-lg-4 col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -144,18 +137,16 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#totalClientsList">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Cash Flow <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <div class="panel-footer">
+                        <span class="pull-right" style="color:blue"> Cash Flow</span>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Row 3 -->
-        <div class="row margin">
-            <!-- Total Assets -->
+<!-- Row 3 -->
+        <div class="row margin-client-details ">
+<!-- Total Assets -->
             <div class="col-lg-4 col-md-6">
                 <div class="panel panel-green">
                     <div class="panel-heading">
@@ -168,15 +159,13 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#salesList">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Total Assets <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <div class="panel-footer">
+                        <span class="pull-right" style="color:green"> Total Assets</span>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
-            <!-- Total Liabilities -->
+<!-- Total Liabilities -->
             <div class="col-lg-4 col-md-6">
                 <div class="panel panel-red">
                     <div class="panel-heading">
@@ -189,33 +178,29 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#expenseslist">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Total Liabilities <i class="fa fa-plus-circle"></i> </span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <div class="panel-footer">
+                        <span class="pull-right" style="color:#d9534f"> Total Liabilities </span>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
-            <!-- Sales Revenue Growth -->
-            <div class="col-lg-4 col-md-12">
+<!-- Sales Revenue Growth -->
+            <div class="col-lg-4 col-md-6">
                 <div class="panel panel-purple">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-2">
-                                <i class="fa fa-euro fa-3x"></i>
+                                <i class="fa fa-arrow-up" aria-hidden="true"></i>
                             </div>
                             <div class="col-xs-10 text-right">
                                 <div class="huge"><span class="loadingSalesRevenueGrowth"></span><span class="salesRevenueGrowth"></span></div>
                             </div>
                         </div>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#totalClientsList">
-                        <div class="panel-footer">
-                            <span class="pull-right"> Sales Revenue Growth <i class="fa fa-plus-circle"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <div class="panel-footer">
+                        <span class="pull-right" style="color:#9370DB"> Sales Revenue Growth </span>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
         </div>

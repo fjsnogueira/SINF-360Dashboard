@@ -160,20 +160,49 @@ namespace Dashboard360
 
 
             /*
-             * Supply
-             */
+            * Supply
+            */
+
+
+            config.Routes.MapHttpRoute(
+                name: "GetOrdersInventory",
+                routeTemplate: "api/GetOrdersInventory/{year}",
+                defaults: new { controller = "SupplyApi", Action = "GetOrdersInventory" }
+            );
 
             // Get Top Products Purchased
             config.Routes.MapHttpRoute(
                 name: "GetTopProductsPurchased",
-                routeTemplate: "api/getTopProductsPurchased",
+                routeTemplate: "api/GetTopProductsPurchased/{year}",
                 defaults: new { controller = "SupplyApi", Action = "GetTopProductsPurchased" }
             );
 
+            // Get total value of Inventory
             config.Routes.MapHttpRoute(
                 name: "GetTotalValueOfInventory",
-                routeTemplate: "api/getTotalValueOfInventory",
+                routeTemplate: "api/GetTotalValueOfInventory/{year}",
                 defaults: new { controller = "SupplyApi", Action = "GetTotalValueOfInventory" }
+            );
+
+            // Get total purchased value
+            config.Routes.MapHttpRoute(
+                name: "GetTotalPurchasedValue",
+                routeTemplate: "api/GetTotalPurchasedValue/{year}",
+                defaults: new { controller = "SupplyApi", Action = "GetTotalPurchasedValue" }
+            );
+
+            // Get average purchased value
+            config.Routes.MapHttpRoute(
+                name: "GetAveragePurchasedValue",
+                routeTemplate: "api/GetAveragePurchasedValue/{year}",
+                defaults: new { controller = "SupplyApi", Action = "GetAveragePurchasedValue" }
+            );
+
+            // Get Top Suppliers
+            config.Routes.MapHttpRoute(
+                name: "GetTopSuppliers",
+                routeTemplate: "api/GetTopSuppliers/{year}",
+                defaults: new { controller = "SupplyApi", Action = "GetTopSuppliers" }
             );
 
             /*
@@ -229,6 +258,33 @@ namespace Dashboard360
                 name: "GetRevenuePerEmployee",
                 routeTemplate: "api/GetRevenuePerEmployee/{year}",
                 defaults: new { controller = "HumanResourcesApi", Action = "GetRevenuePerEmployee" }
+            );
+
+            /*
+             * Financial
+             */
+            config.Routes.MapHttpRoute(
+                name: "GetAllPayables",
+                routeTemplate: "api/payables/{year}",
+                defaults: new { controller = "FinancialApi", Action = "GetAllPayables" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "GetAllReceivables",
+                routeTemplate: "api/receivables/{year}",
+                defaults: new { controller = "FinancialApi", Action = "GetAllReceivables" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "GetFlow",
+                routeTemplate: "api/flow/{year}",
+                defaults: new { controller = "FinancialApi", Action = "GetFlow" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "GetBalance",
+                routeTemplate: "api/balance/{year}",
+                defaults: new { controller = "FinancialApi", Action = "GetBalance" }
             );
             
 

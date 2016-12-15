@@ -14,8 +14,12 @@ namespace Dashboard360.Controllers
     {
         // Supply View
 
+        int Year;
+
         public ActionResult Index()
         {
+            Year = DateTime.Today.Year;
+            ViewData["Year"] = Year;
             return View();
         }
     }

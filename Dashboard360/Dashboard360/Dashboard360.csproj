@@ -268,6 +268,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\FinancialApiController.cs" />
     <Compile Include="Controllers\FinancialController.cs" />
     <Compile Include="Controllers\HomeApiController.cs" />
     <Compile Include="Controllers\HumanResourcesController.cs" />
@@ -288,6 +289,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Lib_Primavera\Model\AcumuladosContas.cs" />
+    <Compile Include="Lib_Primavera\Model\AcumuladosFluxos.cs" />
     <Compile Include="Lib_Primavera\Model\Empregado.cs" />
     <Compile Include="Lib_Primavera\Model\Fornecedor.cs" />
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
@@ -433,10 +436,7 @@
     <Content Include="Scripts\Clients\clientManager.js" />
     <Content Include="Scripts\Financial\getAccountsPayable.js" />
     <Content Include="Scripts\Financial\getAccountsReceivable.js" />
-<<<<<<< HEAD
     <Content Include="Scripts\Financial\getFinancialData.js" />
-=======
-    <Content Include="Scripts\Financial\getAverageSalesPrice.js" />
     <Content Include="Scripts\Home\HomeManager.js" />
     <Content Include="Scripts\HumanResources\getAverageEmployeeByAge.js" />
     <Content Include="Scripts\HumanResources\getAverageEmplyomentInCompany.js" />
@@ -447,7 +447,6 @@
     <Content Include="Scripts\HumanResources\getRevenuePerEmployee.js" />
     <Content Include="Scripts\HumanResources\HumanResourcesManager.js" />
     <Content Include="Scripts\HumanResources\pointer.js" />
->>>>>>> origin/master
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -487,8 +486,13 @@
     <Content Include="Scripts\Purchases\listPurchases.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Supply\getAveragePurchasedValue.js" />
+    <Content Include="Scripts\Supply\getOrdersInventory.js" />
+    <Content Include="Scripts\Supply\getTopSuppliers.js" />
+    <Content Include="Scripts\Supply\getTotalPurchasedValue.js" />
     <Content Include="Scripts\Supply\getTotalValueOfInventory.js" />
     <Content Include="Scripts\Supply\getTopProductsPurchased.js" />
+    <Content Include="Scripts\Supply\SupplyManager.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

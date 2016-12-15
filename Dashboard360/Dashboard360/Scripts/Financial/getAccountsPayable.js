@@ -1,5 +1,5 @@
 ﻿var getAccountsPayable = function () {
-    console.log("getAccountsPayable");
+
 
     var defer = $.Deferred();
 
@@ -21,7 +21,7 @@
                     total += pending[i].PendingValue;
                 }
                 $(".accountsPayable").append("<p>Total accounts payable: " + total.toFixed(2) + " €</p>");
-           }
+            }
         }
     }).fail(function () {
         alert("ERROR: getting accounts payable");

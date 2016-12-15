@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    console.log("loading");
+
     // Human Resources
     $(".loadingNumEmployees").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingHRexpenses").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
@@ -8,6 +8,7 @@
     $(".loadingEmploymentTime").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingFemale").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingAge").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingHR").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
         
     // Enterprise View
     $(".loadingTopCustomers").append("<img src='/Content/images/loading.gif' width='328px' height='328px'>");
@@ -38,5 +39,16 @@
     $(".loadingNumberOrders").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingUnitPrice").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingTopBuyers").append("<img src='/Content/images/loading.gif' width='342' height='342'>");
+
+    // Financial Details
+    $(".loadingTotalAssets").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingTotalLiabilities").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingSalesRevenueGrowth").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingTotalTurnover").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingTotalExpenses").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingAverageSalesPrice").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingAccountsPayable").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingAccountsReceivable").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingCashFlow").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
 
 });

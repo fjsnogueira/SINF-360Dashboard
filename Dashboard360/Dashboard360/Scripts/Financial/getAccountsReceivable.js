@@ -1,5 +1,4 @@
 ﻿var getAccountsReceivable = function () {
-    console.log("getAccountsReceivable");
 
     var defer = $.Deferred();
 
@@ -16,8 +15,7 @@
             }
             else {
                 var total = 0;
-                for (i in pending)
-                {
+                for (i in pending) {
                     total += pending[i].PendingValue;
                 }
                 $(".accountsReceivable").append("<p>Total accounts receivable: " + total.toFixed(2) + " €</p>");
