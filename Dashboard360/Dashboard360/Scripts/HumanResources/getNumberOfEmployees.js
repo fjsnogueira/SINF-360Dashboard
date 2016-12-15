@@ -1,8 +1,11 @@
-﻿$(function () {
+﻿var year = moment().year();
+
+
+$(function () {
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/GetNumberOfEmployees/2016",
+        url: "http://localhost:49751/api/GetNumberOfEmployees/" + +parseInt($('#yearTitle').text()),
         success: function (numberOfEmployees) {
             
             numberOfEmployees = JSON.parse(numberOfEmployees);
@@ -10,7 +13,8 @@
 
             var totaEmployees = numberOfEmployees.length;
 
-
+            $(".total-employees-modal-body").empty();
+            $(".total-employees-modal-body").append("<strong>" + "Name" + "</strong>");
 
             for (var i = 0; i < numberOfEmployees.length; i++) {
                 

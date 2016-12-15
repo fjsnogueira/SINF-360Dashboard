@@ -9,6 +9,9 @@
             
             var sum = 0;
 
+            $(".total-time-employment-modal-body").empty();
+            $(".total-time-employment-modal-body").append("<th><strong>Name</strong></th> <th><strong>Years of work</strong></th>");
+
             for (i = 0; i < averageEmplyomentInCompany.length; i++) {
 
                 d = new Date(-62135596800000);
@@ -49,10 +52,14 @@
             
 
             $(".loadingEmploymentTime").hide();
-            $(".averageEmplTimeComp").append(final + " Years");
+            $(".averageEmplTimeComp").append(formatPrice(Math.floor(final).toString()) + " <span style='font-size: 20px!important;'>" + final.toString().split(".")[1].slice(0, 2) + "</span>");
 
         }
     }).fail(function () {
         alert("ERROR: getting average employees times in company");
     });
 });
+
+function formatPrice(price) {
+    return price.reverse().replace(/((?:\d{2})\d)/g, '$1 ').reverse();
+}

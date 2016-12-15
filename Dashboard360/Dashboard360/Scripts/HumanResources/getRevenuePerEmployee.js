@@ -1,8 +1,10 @@
-﻿$(function () {
+﻿var year = moment().year();
+
+$(function () {
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/GetRevenuePerEmployee/2016",
+        url: "http://localhost:49751/api/GetRevenuePerEmployee/" + +parseInt($('#yearTitle').text()),
         success: function (revenuePerEmployee) {
 
             revenuePerEmployee = JSON.parse(revenuePerEmployee);

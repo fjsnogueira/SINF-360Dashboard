@@ -1,8 +1,10 @@
-﻿$(function () {
+﻿var year = moment().year();
+
+$(function () {
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/GetNumberOfFemaleEmployees/2016",
+        url: "http://localhost:49751/api/GetNumberOfFemaleEmployees/" + +parseInt($('#yearTitle').text()),
         success: function (numberOfFemaleEmployees) {
             numberOfFemaleEmployees = JSON.parse(numberOfFemaleEmployees);
             console.log(numberOfFemaleEmployees);
@@ -15,7 +17,8 @@
                 }
             }
 
-         
+            $(".total-female-employees-modal-body").empty();
+            $(".total-female-employees-modal-body").append("<th><strong> Name</strong></th>");
 
 
             for (var i = 0; i < totalFemalesInCompany.length; i++) {

@@ -1,8 +1,10 @@
-﻿$(function () {
+﻿var year = moment().year();
+
+$(function () {
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/GetAverageEmployeeByAge/2016",
+        url: "http://localhost:49751/api/GetAverageEmployeeByAge/" + parseInt($('#yearTitle').text()),
         success: function (averageEmployeeByAge) {
             averageEmployeeByAge = JSON.parse(averageEmployeeByAge);
             console.log(averageEmployeeByAge);
@@ -21,9 +23,11 @@
 
             totalAverage = Math.round((sum / averageEmployeeByAge.length)*10) /10;
             $(".loadingAge").hide();
-            $(".averageEmployeeAge").html("<p>" + totalAverage + "</p>");
+            $(".averageEmployeeAge").append(formatPrice(Math.floor(totalAverage).toString()) + " <span style='font-size: 20px!important;'>" + totalAverage.toString().split(".")[1].slice(0, 2) + "</span>");
 
+            $(".total-name-age-employees-modal-body").empty();
 
+            $(".total-name-age-employees-modal-body").append("<th><strong> Name </strong></th> <th><strong>Age</strong></th>");
             for (var i = 0; i < averageEmployeeByAge.length; i++) {
 
                 var s = 0;
@@ -44,3 +48,7 @@
 
 
 });
+
+function formatPrice(price) {
+    return price.reverse().replace(/((?:\d{2})\d)/g, '$1 ').reverse();
+}

@@ -1,8 +1,10 @@
-﻿$(function () {
+﻿var year = moment().year();
+
+$(function () {
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49751/api/GetHumanResourcesExpenses/2015",
+        url: "http://localhost:49751/api/GetHumanResourcesExpenses/" + +parseInt($('#yearTitle').text()),
         success: function (humanResourcesExpenses) {
 
             humanResourcesExpenses = JSON.parse(humanResourcesExpenses);
@@ -10,6 +12,15 @@
 
             var sum = 0;
             d = new Date(-62135596800000);
+
+            $(".total-human-resources-modal-body").empty();
+            $(".total-human-resources-modal-body").append("<th><strong>" +
+                "Name" + "</strong></th>" +
+                "<th><strong>" +
+                "Annual Base Salary (€)" +
+                "</strong></th> <th><strong>" +
+                "Annual Holiday and Christmas Subsidy (€)" + "</strong></th> <th><strong>" +
+                "Annual Food Allowance (€) </strong></th> <th><strong>" + "Annual Social Security Expenses With Employee (€) </strong></th>");
 
             for (i = 0; i < humanResourcesExpenses.length; i++) {
 
@@ -23,9 +34,7 @@
 
                     dataDemissao = new Date(humanResourcesExpenses[i].dataDemissao.match(/(?:\-\d*)?\d+/g)[0] * 1);
 
-                    var year = parseInt($(".header-year").text());
-
-                    dataInicial = new Date(year, 0, 1, 1, 0, 0, 0);
+                    dataInicial = new Date(parseInt($('#yearTitle').text()), 0, 1, 1, 0, 0, 0);
 
                     console.log(dataDemissao);
                     console.log(dataInicial);
@@ -49,10 +58,16 @@
             }
 
             $(".loadingSalesTotal").hide();
-            $(".humanResourcesExpenses").html("<p>" + sum + "</p>");
+            $(".humanResourcesExpenses").append(formatPrice(Math.floor(sum).toString()) + " <span style='font-size: 20px!important;'>" + sum.toString().split(".")[1].slice(0, 2) + "</span>");
 
         }
     }).fail(function () {
         alert("ERROR: getting human resources expenses!");
     });
 });
+
+
+function formatPrice(price) {
+    return price.reverse().replace(/((?:\d{2})\d)/g, '$1 ').reverse();
+}
+

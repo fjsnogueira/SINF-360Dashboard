@@ -442,6 +442,8 @@
     <Content Include="Scripts\HumanResources\getNumberOfEmployees.js" />
     <Content Include="Scripts\HumanResources\getNumberOfFemaleEmployees.js" />
     <Content Include="Scripts\HumanResources\getRevenuePerEmployee.js" />
+    <Content Include="Scripts\HumanResources\HumanResourcesManager.js" />
+    <Content Include="Scripts\HumanResources\pointer.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

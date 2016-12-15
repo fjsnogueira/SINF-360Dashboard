@@ -178,10 +178,9 @@ namespace Dashboard360
 
             /*
             * Human Resources
+            *
             */
-            /*
-                        * Human Resources
-                        */
+                
 
             // Get Number Of Employees
             config.Routes.MapHttpRoute(
