@@ -38,5 +38,14 @@ namespace Dashboard360.Controllers
             var res = new JavaScriptSerializer().Serialize(pendingList);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
+        
+        // GET:     api/balance/{year}
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage GetBalance(string year)
+        {
+            IEnumerable<Lib_Primavera.Model.AcumuladosContas> pendingList = Lib_Primavera.PriIntegration.GetBalance(year);
+            var res = new JavaScriptSerializer().Serialize(pendingList);
+            return Request.CreateResponse(HttpStatusCode.OK, res);
+        }
     }
 }

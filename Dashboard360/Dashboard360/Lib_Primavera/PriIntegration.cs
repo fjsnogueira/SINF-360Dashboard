@@ -961,7 +961,7 @@ namespace Dashboard360.Lib_Primavera
                 objListCab = PriEngine.Engine.Consulta(
                     "SELECT * " +
                     "FROM AcumuladosFluxos " +
-                    "WHERE Fluxo = 11 " + 
+                    "WHERE Fluxo = 11 " +
                     "AND Ano = " + year);
                 while (!objListCab.NoFim())
                 {
@@ -984,6 +984,62 @@ namespace Dashboard360.Lib_Primavera
                     p.Mes13 = objListCab.Valor("Mes13");
                     p.Mes14 = objListCab.Valor("Mes14");
                     p.Mes15 = objListCab.Valor("Mes15");
+                    result.Add(p);
+                    objListCab.Seguinte();
+                }
+            }
+            return result;
+        }
+
+        public static List<Model.AcumuladosContas> GetBalance(string year)
+        {
+            StdBELista objListCab;
+            List<Model.AcumuladosContas> result = new List<Model.AcumuladosContas>();
+
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objListCab = PriEngine.Engine.Consulta(
+                    "SELECT * " +
+                    "FROM AcumuladosContas " +
+                    "WHERE LEN(Conta) < 3 " +
+                    "AND Ano = " + year);
+                while (!objListCab.NoFim())
+                {
+                    Model.AcumuladosContas p = new Model.AcumuladosContas();
+                    p.Conta = objListCab.Valor("Conta");
+                    p.Mes00CR = objListCab.Valor("Mes00CR");
+                    p.Mes00DB = objListCab.Valor("Mes00DB");
+                    p.Mes01CR = objListCab.Valor("Mes01CR");
+                    p.Mes01DB = objListCab.Valor("Mes01DB");
+                    p.Mes02CR = objListCab.Valor("Mes02CR");
+                    p.Mes02DB = objListCab.Valor("Mes02DB");
+                    p.Mes03CR = objListCab.Valor("Mes03CR");
+                    p.Mes03DB = objListCab.Valor("Mes03DB");
+                    p.Mes04CR = objListCab.Valor("Mes04CR");
+                    p.Mes04DB = objListCab.Valor("Mes04DB");
+                    p.Mes05CR = objListCab.Valor("Mes05CR");
+                    p.Mes05DB = objListCab.Valor("Mes05DB");
+                    p.Mes06CR = objListCab.Valor("Mes06CR");
+                    p.Mes06DB = objListCab.Valor("Mes06DB");
+                    p.Mes07CR = objListCab.Valor("Mes07CR");
+                    p.Mes07DB = objListCab.Valor("Mes07DB");
+                    p.Mes08CR = objListCab.Valor("Mes08CR");
+                    p.Mes08DB = objListCab.Valor("Mes08DB");
+                    p.Mes09CR = objListCab.Valor("Mes09CR");
+                    p.Mes09DB = objListCab.Valor("Mes09DB");
+                    p.Mes10CR = objListCab.Valor("Mes10CR");
+                    p.Mes10DB = objListCab.Valor("Mes10DB");
+                    p.Mes11CR = objListCab.Valor("Mes11CR");
+                    p.Mes11DB = objListCab.Valor("Mes11DB");
+                    p.Mes12CR = objListCab.Valor("Mes12CR");
+                    p.Mes12DB = objListCab.Valor("Mes12DB");
+                    p.Mes13CR = objListCab.Valor("Mes13CR");
+                    p.Mes13DB = objListCab.Valor("Mes13DB");
+                    p.Mes14CR = objListCab.Valor("Mes14CR");
+                    p.Mes14DB = objListCab.Valor("Mes14DB");
+                    p.Mes15CR = objListCab.Valor("Mes15CR");
+                    p.Mes15DB = objListCab.Valor("Mes15DB");
+                    p.Moeda = objListCab.Valor("Moeda");
                     result.Add(p);
                     objListCab.Seguinte();
                 }

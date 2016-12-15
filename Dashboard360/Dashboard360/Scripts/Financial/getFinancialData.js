@@ -95,8 +95,7 @@ var getAccountsReceivable = function (year) {
     return defer;
 };
 
-var getFlow = function (year)
-{
+var getFlow = function (year) {
     var defer = $.Deferred();
 
     $.getScript("Scripts/moment.min.js");
@@ -112,8 +111,7 @@ var getFlow = function (year)
             }
             else {
                 var total = 0;
-                for (i in flow)
-                {
+                for (i in flow) {
                     total += flow[i].Mes00;
                     total += flow[i].Mes01 + flow[i].Mes02 + flow[i].Mes03 + flow[i].Mes04 + flow[i].Mes05 + flow[i].Mes06 + flow[i].Mes07
                         + flow[i].Mes08 + flow[i].Mes09 + flow[i].Mes10 + flow[i].Mes11 + flow[i].Mes12 + flow[i].Mes13 + flow[i].Mes14 + flow[i].Mes15;
@@ -125,6 +123,48 @@ var getFlow = function (year)
     }).fail(function () {
         alert("ERROR: getting cash flow");
         $(".loadingCashFlow").hide();
+    });
+    setTimeout(function () {
+        defer.resolve();
+    }, 5000);
+    return defer;
+};
+
+var getBalance = function (year) {
+    var defer = $.Deferred();
+
+    $.getScript("Scripts/moment.min.js");
+
+    $.ajax({
+        dataType: "json",
+        url: "http://localhost:49751/api/balance/" + year,
+        success: function (balance) {
+            balance = JSON.parse(balance);
+            if (balance.length == 0) {
+                $(".totalAssets").append("<p>No entries found.</p>");
+                $(".totalLiabilities").append("<p>No entries found.</p>");
+            }
+            else {
+                var totalAssets = 0;
+                var totalLiabilities = 0;
+                for (i in balance) {
+                    totalLiabilities += balance[i].Mes00CR + balance[i].Mes01CR + balance[i].Mes02CR + balance[i].Mes03CR + balance[i].Mes04CR
+                         + balance[i].Mes05CR + balance[i].Mes06CR + balance[i].Mes07CR + balance[i].Mes08CR + balance[i].Mes09CR + balance[i].Mes10CR
+                         + balance[i].Mes11CR + balance[i].Mes12CR + balance[i].Mes13CR + balance[i].Mes14CR + balance[i].Mes15CR;
+                    totalAssets += balance[i].Mes00DB + balance[i].Mes01DB + balance[i].Mes02DB + balance[i].Mes03DB + balance[i].Mes04DB
+                         + balance[i].Mes05DB + balance[i].Mes06DB + balance[i].Mes07DB + balance[i].Mes08DB + balance[i].Mes09DB + balance[i].Mes10DB
+                         + balance[i].Mes11DB + balance[i].Mes12DB + balance[i].Mes13DB + balance[i].Mes14DB + balance[i].Mes15DB;
+                }
+                $(".totalAssets").append("<p>" + totalAssets.toFixed(2) + "</p>");
+                $(".totalLiabilities").append("<p>" + totalLiabilities.toFixed(2) + "</p>");
+                $(".loadingTotalAssets").hide();
+                $(".loadingTotalLiabilities").hide();
+            }
+        }
+    }).fail(function () {
+        alert("ERROR: getting cash flow");
+        $(".loadingTotalAssets").hide();
+        $(".loadingTotalLiabilities").hide();
     });
     setTimeout(function () {
         defer.resolve();
@@ -158,6 +198,7 @@ var getValues = function (year) {
     getAccountsPayable(year);
     getAccountsReceivable(year);
     getFlow(year);
+    getBalance(year);
 };
 
 var updateValues = function (newYear) {
@@ -199,6 +240,8 @@ var hideValues = function () {
     $(".accountsPayable").html("");
     $(".accountsReceivable").html("");
     $(".cashFlow").html("");
+    $(".totalAssets").html("");
+    $(".totalLiabilities").html("");
     // Clear Modals
     $(".sales-modal-body").html("");
     $(".total-clients-modal-body").html("");
@@ -213,6 +256,8 @@ var showLoading = function ()
     $(".loadingAccountsPayable").show();
     $(".loadingAccountsReceivable").show();
     $(".loadingCashFlow").show();
+    $(".loadingTotalAssets").show();
+    $(".loadingTotalLiabilities").show();
 }
 
 $("#nextYear").click(function () {

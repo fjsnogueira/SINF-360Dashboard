@@ -29,4 +29,6 @@
     $(".loadingAccountsReceivable").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingAccountsPayable").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingCashFlow").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingTotalAssets").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingTotalLiabilities").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
 });
