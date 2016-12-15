@@ -1,5 +1,4 @@
 ﻿var getAverageSalesPrice = function (year) {
-    console.log("getAverageSalesPrice");
 
     var defer = $.Deferred();
 
@@ -28,7 +27,6 @@
 };
 
 var getAccountsPayable = function (year) {
-    console.log("getAccountsPayable");
 
     var defer = $.Deferred();
 
@@ -61,9 +59,8 @@ var getAccountsPayable = function (year) {
     return defer;
 };
 
-var getAccountsReceivable = function (year) {
-    console.log("getAccountsReceivable");
-
+var getAccountsReceivable = function (year)
+{
     var defer = $.Deferred();
 
     $.getScript("Scripts/moment.min.js");
@@ -105,7 +102,6 @@ var getFlow = function (year) {
         url: "http://localhost:49751/api/flow/" + year,
         success: function (flow) {
             flow = JSON.parse(flow);
-            console.log(flow);
             if (flow.length == 0) {
                 $(".cashFlow").append("<p>No entries found.</p>");
             }
@@ -123,6 +119,52 @@ var getFlow = function (year) {
     }).fail(function () {
         alert("ERROR: getting cash flow");
         $(".loadingCashFlow").hide();
+    });
+    setTimeout(function () {
+        defer.resolve();
+    }, 5000);
+    return defer;
+};
+
+var getAverageSalesPrice = function (year) {
+    console.log("getAverageSalesPrice");
+
+    var defer = $.Deferred();
+
+    $.getScript("Scripts/moment.min.js");
+
+    $.ajax({
+        dataType: "json",
+        url: "http://localhost:49751/api/sales/" + year,
+        success: function (sales) {
+            sales = JSON.parse(sales);
+            var totalSales = 0;
+            for (var i = 0; i < sales.length; i++) {
+                totalSales += sales[i].TotalMerc;
+            }
+            $.ajax({
+                dataType: "json",
+                url: "http://localhost:49751/api/sales/" + (year - 1),
+                success: function (sales2) {
+                    sales2 = JSON.parse(sales2);
+                    var totalSales1 = 0;
+                    for (var i = 0; i < sales2.length; i++) {
+                        totalSales1 += sales2[i].TotalMerc;
+                    }
+                    $(".salesRevenueGrowth").append("<p> " + 100 * (totalSales / totalSales1 - 1).toFixed(2) + "% </p>");
+                    $(".loadingSalesRevenueGrowth").hide();
+                }
+            }).fail(function () {
+                alert("ERROR: getting sales list");
+                $(".loadingSalesRevenueGrowth").hide();
+            });
+            setTimeout(function () {
+                defer.resolve();
+            }, 5000);
+        }
+    }).fail(function () {
+        alert("ERROR: getting sales list");
+        $(".loadingSalesRevenueGrowth").hide();
     });
     setTimeout(function () {
         defer.resolve();
@@ -199,6 +241,7 @@ var getValues = function (year) {
     getAccountsReceivable(year);
     getFlow(year);
     getBalance(year);
+    getSalesRevenueGrowth(year);
 };
 
 var updateValues = function (newYear) {
@@ -242,6 +285,7 @@ var hideValues = function () {
     $(".cashFlow").html("");
     $(".totalAssets").html("");
     $(".totalLiabilities").html("");
+    $(".salesRevenueGrowth").html("");
     // Clear Modals
     $(".sales-modal-body").html("");
     $(".total-clients-modal-body").html("");
@@ -258,6 +302,7 @@ var showLoading = function ()
     $(".loadingCashFlow").show();
     $(".loadingTotalAssets").show();
     $(".loadingTotalLiabilities").show();
+    $(".loadingSalesRevenuwGrowth").show();
 }
 
 $("#nextYear").click(function () {
