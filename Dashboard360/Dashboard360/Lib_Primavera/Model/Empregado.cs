@@ -7,7 +7,32 @@ namespace Dashboard360.Lib_Primavera.Model
 {
     public class Empregado
     {
-        public int numeroEmpregados
+
+        public string nome
+        {
+            get;
+            set;
+        }
+
+        public DateTime dataAdmissao
+        {
+            get;
+            set;
+        }
+
+        public DateTime dataDemissao
+        {
+            get;
+            set;
+        }
+
+        public string sexo
+        {
+            get;
+            set;
+        }
+
+        public double subsidioAlim
         {
             get;
             set;

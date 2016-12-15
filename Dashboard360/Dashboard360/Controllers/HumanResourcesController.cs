@@ -12,10 +12,14 @@ namespace Dashboard360.Controllers
 {
     public class HumanResourcesController : Controller
     {
-        // Supply View
+        // Human Resources View
+
+        int Year;
 
         public ActionResult Index()
         {
+            Year = DateTime.Today.Year;
+            ViewData["Year"] = Year;
             return View();
         }
     }

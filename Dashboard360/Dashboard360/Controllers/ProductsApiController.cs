@@ -191,8 +191,10 @@ namespace Dashboard360.Controllers
             }
 
             var toReturn = TopArtigos.OrderByDescending(prod => prod.VolumeVendas).ToList();
-
-            toReturn = toReturn.GetRange(0, 10);
+            if (toReturn.Count() > 10)
+            {
+                toReturn = toReturn.GetRange(0, 9);
+            }
             var res = new JavaScriptSerializer().Serialize(toReturn);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }

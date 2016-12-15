@@ -7,76 +7,6 @@ console.log("year : " + year);
 console.log("===================================");
 
 
-var getTotalSales = function () {
-
-
-    var salesDocs = ["NC", "ND", "VD", "DV", "AVE"];
-    $.ajax({
-        dataType: "json",
-        url: "http://localhost:49751/api/products/GetSales/" + productID,
-        success: function (sales) {
-            var totalSales = 0;
-            var totalSalesThisYear = 0;
-            var totalOrders = 0;
-            var ordersCounter = 0;
-            var winter = 0;
-            var spring = 0;
-            var summer = 0;
-            var fall = 0;
-            var unitPrice = 0;
-
-            for (var i = 0; i < sales.length; i++) {
-                var temp = sales[i];
-                if (temp.TipoDoc.charAt(0) == 'F' || $.inArray(temp.TipoDoc, salesDocs) !== -1) {
-                    if (temp.LinhasDoc.length > 0) {
-                        console.log(temp);
-                        var linha = temp.LinhasDoc;
-                        for (var j = 0; j < linha; j++) {
-                            totalSales += linha[i].TotalLiquido;
-                        }
-                        var liquid = temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
-                        
-                        if (unitPrice == 0) {
-                            unitPrice = temp.LinhasDoc[0].PrecoUnitario;
-                        }
-                        //totalSales += liquid;
-                        // Get Seasonality
-                        var month = moment(temp.Data).month();
-                        if (month == 12 || month == 1 || month == 2)
-                            winter++;
-                        if (month == 3 || month == 4 || month == 5)
-                            spring++;
-                        if (month == 6 || month == 7 || month == 8)
-                            summer++;
-                        if (month == 9 || month == 10 || month == 11)
-                            fall++;
-
-                        if (moment(temp.Data).year() == 2016) {
-                            $(".sales-year-modal-body").append("<tr> <td>" + temp.Entidade + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(liquid.toFixed(2)) + "€ </td></tr>");
-                            totalSalesThisYear += liquid;
-                        }
-                    }
-                } else if (temp.TipoDoc == "ECL" && moment(temp.Data).year() == 2016) {
-                    ordersCounter++;
-                    var liq = temp.TotalMerc + temp.TotalOutros - temp.TotalDesc;
-                    totalOrders += liq;
-                    $(".sales-year-modal-body").append("<tr> <td>" + temp.Entidade + "</td><td>" + moment.utc(temp.Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(liq.toFixed(2)) + "€ </td></tr>");
-                }
-            }
-
-
-
-
-
-
-
-        }
-    }).fail(function () {
-        console.log("ERROR: getting total sales value");
-    });
-
-}
-
 
 
 var getTopBuyers = function () {
@@ -85,8 +15,6 @@ var getTopBuyers = function () {
         url: "http://localhost:49751/api/products/" + productID + "/GetTopBuyers/" + year,
         success: function (topBuyers) {
             topBuyers = JSON.parse(topBuyers);
-            console.log(topBuyers);
-
 
             // Get Total Sales This Year
             var totalSalesThisYear = 0;
@@ -104,7 +32,7 @@ var getTopBuyers = function () {
 
             for (var i = 0; i < len; i++) {
                 if (topBuyers[i].TotalCompras > 0) {
-                    var temp = { name: topBuyers[i].Nome, sale: topBuyers[i].TotalCompras.toFixed(2) };
+                    var temp = { name: topBuyers[i].Nome, cod: topBuyers[i].CodCliente, sale: topBuyers[i].TotalCompras.toFixed(2) };
                     productData.push(temp);
                 }
             }
@@ -119,6 +47,8 @@ var getTopBuyers = function () {
                 xkey: 'name',
                 ykeys: ['sale'],
                 labels: ['Value [€]']
+            }).on('click', function (i, row) {
+                window.location = "http://localhost:49751/Clients/ShowDetails/" + row.cod;
             });
         }
 
@@ -176,11 +106,11 @@ var getValues = function () {
                         for (var j = 0; j < linha.length; j++) {
                             // Total Sales
                             totalSales += linha[j].TotalLiquido;
-                            $(".sales-modal-body").append("<tr> <td>" + sales[i].Entidade + "</td><td>" + moment.utc(sales[i].Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(linha[j].TotalLiquido.toFixed(2)) + "€ </td></tr>");
+                            $(".sales-modal-body").append("<tr> <td> <a href='localhost:49751/Clients/ShowDetails/" + sales[i].Entidade + "' target='_blank'>" + sales[i].Entidade + "</a> </td><td>" + moment.utc(sales[i].Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(linha[j].TotalLiquido.toFixed(2)) + "€ </td></tr>");
                             // Total Sales This Year
                             if (moment(sales[i].Data).year() == 2016) {
                                 totalSalesThisYear += linha[j].TotalLiquido;
-                                $(".sales-year-modal-body").append("<tr> <td>" + sales[i].Entidade + "</td><td>" + moment.utc(sales[i].Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(linha[j].TotalLiquido.toFixed(2)) + "€ </td></tr>");
+                                $(".sales-year-modal-body").append("<tr> <td> <a href='localhost:49751/Clients/ShowDetails/" + sales[i].Entidade + "' target='_blank'>" + sales[i].Entidade + "</a></td><td>" + moment.utc(sales[i].Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(linha[j].TotalLiquido.toFixed(2)) + "€ </td></tr>");
                                 // Get Seasonality
                                 var month = moment(sales[i].Data).month();
                                 if (month == 12 || month == 1 || month == 2)
@@ -208,6 +138,7 @@ var getValues = function () {
                             totalOrders += linhaEnc[k].TotalLiquido;
                             // Num Orders
                             numOrders += linhaEnc[k].Quantidade;
+                            $(".orders-modal-body").append("<tr> <td> <a href='localhost:49751/Clients/ShowDetails/" + sales[i].Entidade + "' target='_blank'>" + sales[i].Entidade + "</a></td><td>" + moment.utc(sales[i].Data).format('LLL') + "</td><td style='text-align: right;'>" + formatPrice(linhaEnc[k].TotalLiquido.toFixed(2)) + "€ </td></tr>");
                         }
 
                     }

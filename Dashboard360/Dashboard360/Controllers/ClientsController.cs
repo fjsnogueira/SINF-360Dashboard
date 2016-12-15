@@ -28,8 +28,7 @@ namespace Dashboard360.Controllers
         }
 
         int Year;
-        // Customer View
-        // --/Clients/
+      
         public ActionResult Index()
         {
             Year = DateTime.Today.Year;

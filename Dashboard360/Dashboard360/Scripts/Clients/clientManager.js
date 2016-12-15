@@ -69,7 +69,7 @@ var getTotalClients = function (year) {
             $(".loadingAvgSalePerCustomer").hide();
             $(".avgSalePerCustomer").append(formatPrice(Math.floor(avg).toString()) +
                 " <span style='font-size: 20px!important;'>" + avg.toString().split(".")[1].slice(0, 2) + "</span>");
-
+            getTotalExpenses(year);
         }
     }).fail(function () {
         console.log("ERROR: getting total clients");
@@ -105,7 +105,7 @@ var top10Products = function (year) {
         dataType: "json",
         url: "http://localhost:49751/api/Products/GetTop10ProductsSold/" + year,
         success: function (topProductsSold) {
-            
+
             topProductsSold = JSON.parse(topProductsSold);
             console.log(topProductsSold);
             for (var i = 0; i < 10; i++) {
@@ -126,14 +126,14 @@ var top10Products = function (year) {
                 element: 'top-products',
                 data: productData,
                 hoverCallback: function (index, options, content) {
-                    console.log(content.prod);
                     content += descriptions[index];
-
                     return (content);
                 },
                 xkey: 'prod',
-                ykeys: [/*'desc', */'sale'],
+                ykeys: ['sale'],
                 labels: ['Value [€]']
+            }).on('click', function (i, row) {
+                window.location = "http://localhost:49751/Products/ShowDetails/" + row.prod;
             });
         }
 
@@ -184,7 +184,12 @@ var getTotalExpenses = function (year) {
             var avgExpense = totalExpenses / totalClients;
             $(".loadingAvgExpense").hide();
             $(".avgExpenseCustomer").append(formatPrice(Math.abs(Math.floor(avgExpense)).toString()) + " <span style='font-size: 20px!important;'>" + totalExpenses.toString().split(".")[1].slice(0, 2) + "</span>");
-
+            console.log("F0001: " + purchasesF0001);
+            console.log("F0002: " + purchasesF0002);
+            console.log("F0003: " + purchasesF0003);
+            console.log("F0004: " + purchasesF0004);
+            console.log("F0005: " + purchasesF0005);
+            console.log("SER: " + purchasesSER);
 
         }
     }).fail(function () {
@@ -202,7 +207,7 @@ var getTopClients = function (year) {
             topClients = JSON.parse(topClients);
 
             for (var i = 0; i < topClients.length; i++) {
-                $(".active-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td>" + topClients[i].CodCliente + "</td><td>" + topClients[i].NumeroCompras + "</td><td style='text-align:right;'>" + formatPrice(topClients[i].TotalCompras.toFixed(2)) + " €</td>");
+                $(".active-clients-modal-body").append("<tr> <td>" + (i + 1) + "</td><td> <a href='localhost:49751/Clients/ShowDetails/" + topClients[i].CodCliente + "' target='_blank'>" + topClients[i].CodCliente + "</td><td>" + topClients[i].NumeroCompras + "</td><td style='text-align:right;'>" + formatPrice(topClients[i].TotalCompras.toFixed(2)) + " €</td>");
             }
 
             // treat array      
@@ -222,47 +227,9 @@ var getTopClients = function (year) {
             Morris.Donut({
                 element: 'top-clients',
                 data: clientData
+            }).on('click', function (i, row) {
+                window.location = "http://localhost:49751/Clients/ShowDetails/" + row.label;
             });
-
-            /*
-            $("#").show();
-
-            var graphLabels = [];
-            var graphValues = [];
-            var graphColors = ["#FF6384", "#36A2EB", "#FFCE56", "#9370DB", "#FF6384", "#36A2EB", "#FFCE56", "#9370DB", "#FF6384", "#36A2EB" ];
-            for (var i = 0; i < topClients.length; i++) {
-                if (topClients[i].TotalCompras.toFixed(2) > 0) {
-                    graphLabels.push(topClients[i].CodCliente);
-                    graphValues.push(topClients[i].TotalCompras.toFixed(2));
-                }
-            }
-
-            graphColors.slice(0, graphValues.length);
-
-            var data = {
-                labels: graphLabels,
-                datasets: [
-                    {
-                        data: graphValues,
-                        backgroundColor: graphColors,
-                        hoverBackgroundColor: graphColors
-                    }]
-            };
-            var ctx = $("#top-clients");
-            var myPieChart = new Chart(ctx, {
-                type: 'pie',
-                data: data,
-                options: {
-                    scales: {
-
-                    }
-                }
-            });
-
-            
-            ////////
-
-            console.log("pintou");*/
         }
     }).fail(function () {
         console.log("ERROR: getting top 10 clients");
@@ -357,11 +324,12 @@ var validYear = function (year) {
 //Controlling Functions
 
 var getValues = function (year) {
+    getTotalClients(year);
     getSalesList(year);
     getTotalSales(year);
-    getTotalClients(year);
+
     getTotalActiveClients(year);
-    getTotalExpenses(year);
+
     getTopClients(year);
     top10Products(year);
 };
