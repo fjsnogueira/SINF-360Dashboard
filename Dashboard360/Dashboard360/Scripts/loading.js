@@ -32,4 +32,6 @@
     $(".loadingTotalAssets").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingTotalLiabilities").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingSalesRevenueGrowth").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingTotalTurnover").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".loadingTotalExpenses").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
 });

@@ -1,5 +1,4 @@
 ﻿var getAverageSalesPrice = function (year) {
-
     var defer = $.Deferred();
 
     $.getScript("Scripts/moment.min.js");
@@ -19,6 +18,80 @@
     }).fail(function () {
         alert("ERROR: getting sales list");
         $(".loadingAverageSalesPrice").hide();
+    });
+    setTimeout(function () {
+        defer.resolve();
+    }, 5000);
+    return defer;
+};
+
+var getTotalTurnover = function (year) {
+    var defer = $.Deferred();
+
+    $.getScript("Scripts/moment.min.js");
+
+    $.ajax({
+        dataType: "json",
+        url: "http://localhost:49751/api/sales/" + year,
+        success: function (sales)
+        {
+            sales = JSON.parse(sales);
+            var totalSales = 0;
+            for (var i = 0; i < sales.length; i++)
+            {
+                totalSales += sales[i].TotalMerc;
+            }
+            $.ajax(
+            {
+                dataType: "json",
+                url: "http://localhost:49751/api/balance/" + year,
+                success: function (balance) {
+                    balance = JSON.parse(balance);
+                    var totalAssets = 0;
+                    for (i in balance) {
+                        totalAssets += balance[i].Mes00DB + balance[i].Mes01DB + balance[i].Mes02DB + balance[i].Mes03DB + balance[i].Mes04DB
+                            + balance[i].Mes05DB + balance[i].Mes06DB + balance[i].Mes07DB + balance[i].Mes08DB + balance[i].Mes09DB + balance[i].Mes10DB
+                            + balance[i].Mes11DB + balance[i].Mes12DB + balance[i].Mes13DB + balance[i].Mes14DB + balance[i].Mes15DB;
+                    }
+                    if (totalAssets == 0)
+                        $(".totalTurnover").append("<p> - </p>");
+                    else
+                        $(".totalTurnover").append("<p>" + (totalSales / totalAssets).toFixed(2) + "</p>");
+                    $(".loadingTotalTurnover").hide();
+                }
+            });
+        }
+    }).fail(function () {
+        alert("ERROR: getting sales list");
+        $(".loadingTotalTurnover").hide();
+    });
+    setTimeout(function () {
+        defer.resolve();
+    }, 5000);
+    return defer;
+};
+
+var getTotalExpenses = function (year) {
+    var defer = $.Deferred();
+
+    $.getScript("Scripts/moment.min.js");
+
+    $.ajax({
+        dataType: "json",
+        url: "http://localhost:49751/api/purchases/" + year,
+        success: function (purchases) {
+            purchases = JSON.parse(purchases);
+            var totalExpenses = 0;
+            for (var i = 0; i < purchases.length; i++) {
+                if (purchases[i].TipoDoc[0] == 'V')
+                    totalExpenses += purchases[i].TotalMerc;
+            }
+            $(".totalExpenses").append("<p> " + totalExpenses.toFixed(2) + " </p>");
+            $(".loadingTotalExpenses").hide();
+        }
+    }).fail(function () {
+        alert("ERROR: getting expenses");
+        $(".loadingTotalExpenses").hide();
     });
     setTimeout(function () {
         defer.resolve();
@@ -244,6 +317,8 @@ var getValues = function (year) {
     getFlow(year);
     getBalance(year);
     getSalesRevenueGrowth(year);
+    getTotalExpenses(year);
+    getTotalTurnover(year);
 };
 
 var updateValues = function (newYear) {
@@ -288,6 +363,8 @@ var hideValues = function () {
     $(".totalAssets").html("");
     $(".totalLiabilities").html("");
     $(".salesRevenueGrowth").html("");
+    $(".totalExpenses").html("");
+    $(".totalTurnover").html("");
     // Clear Modals
     $(".sales-modal-body").html("");
     $(".total-clients-modal-body").html("");
@@ -305,6 +382,8 @@ var showLoading = function ()
     $(".loadingTotalAssets").show();
     $(".loadingTotalLiabilities").show();
     $(".loadingSalesRevenueGrowth").show();
+    $(".loadingTotalExpenses").show();
+    $(".loadingTotalTurnover").show();
 }
 
 $("#nextYear").click(function () {
