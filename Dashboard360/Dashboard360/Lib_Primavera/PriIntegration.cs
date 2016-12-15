@@ -926,7 +926,7 @@ namespace Dashboard360.Lib_Primavera
         #endregion DocsVenda
 
 
-        #region Pendentes
+        #region Financial
         public static List<Model.Pendente> GetPending(string year, bool receivable)
         {
             StdBELista objListCab;
@@ -944,6 +944,46 @@ namespace Dashboard360.Lib_Primavera
                     Model.Pendente p = new Model.Pendente();
                     p.PendingValue = objListCab.Valor("ValorPendente");
                     p.PendingCurrency = objListCab.Valor("Moeda");
+                    result.Add(p);
+                    objListCab.Seguinte();
+                }
+            }
+            return result;
+        }
+
+        public static List<Model.AcumuladosFluxos> GetFlow(string year)
+        {
+            StdBELista objListCab;
+            List<Model.AcumuladosFluxos> result = new List<Model.AcumuladosFluxos>();
+
+            if (PriEngine.InitializeCompany(Dashboard360.Properties.Settings.Default.Company.Trim(), Dashboard360.Properties.Settings.Default.User.Trim(), Dashboard360.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objListCab = PriEngine.Engine.Consulta(
+                    "SELECT * " +
+                    "FROM AcumuladosFluxos " +
+                    "WHERE Fluxo = 11 " + 
+                    "AND Ano = " + year);
+                while (!objListCab.NoFim())
+                {
+                    Model.AcumuladosFluxos p = new Model.AcumuladosFluxos();
+                    p.Fluxo = objListCab.Valor("Fluxo");
+                    p.Moeda = objListCab.Valor("Moeda");
+                    p.Mes00 = objListCab.Valor("Mes00");
+                    p.Mes01 = objListCab.Valor("Mes01");
+                    p.Mes02 = objListCab.Valor("Mes02");
+                    p.Mes03 = objListCab.Valor("Mes03");
+                    p.Mes04 = objListCab.Valor("Mes04");
+                    p.Mes05 = objListCab.Valor("Mes05");
+                    p.Mes06 = objListCab.Valor("Mes06");
+                    p.Mes07 = objListCab.Valor("Mes07");
+                    p.Mes08 = objListCab.Valor("Mes08");
+                    p.Mes09 = objListCab.Valor("Mes09");
+                    p.Mes10 = objListCab.Valor("Mes10");
+                    p.Mes11 = objListCab.Valor("Mes11");
+                    p.Mes12 = objListCab.Valor("Mes12");
+                    p.Mes13 = objListCab.Valor("Mes13");
+                    p.Mes14 = objListCab.Valor("Mes14");
+                    p.Mes15 = objListCab.Valor("Mes15");
                     result.Add(p);
                     objListCab.Seguinte();
                 }

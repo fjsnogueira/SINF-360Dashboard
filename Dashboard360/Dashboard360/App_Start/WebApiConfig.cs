@@ -216,6 +216,12 @@ namespace Dashboard360
                 defaults: new { controller = "FinancialApi", Action = "GetAllReceivables" }
             );
 
+            config.Routes.MapHttpRoute(
+                name: "GetFlow",
+                routeTemplate: "api/flow/{year}",
+                defaults: new { controller = "FinancialApi", Action = "GetFlow" }
+            );
+
             /*
              * Other
              */

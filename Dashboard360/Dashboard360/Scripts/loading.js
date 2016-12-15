@@ -24,4 +24,9 @@
     $(".loadingUnitPrice").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
     $(".loadingTopBuyers").append("<img src='/Content/images/loading.gif' width='342' height='342'>");
     
+    //Financial
+    $(".averageSalesPrice").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".accountsReceivable").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".accountsPayable").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
+    $(".cashFlow").append("<img src='/Content/images/loading.gif' width='50px' height='50px'>");
 });
